@@ -1,2 +1,2 @@
 # README
-Gonna fill in later when i know the theme lmao
+Apeiros' entry to the 2021 Slimefun Addon Jam
