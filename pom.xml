@@ -49,14 +49,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.4</version>
                 
                 <configuration>
                     <relocations>
-                    <!-- This is the relocation, make sure to replace the package name -->
                         <relocation>
                             <pattern>io.github.mooy1.infinitylib</pattern>
-                            <shadedPattern>YOUR.MAIN.PACKAGE.NAME.infinitylib</shadedPattern>
+                            <shadedPattern>me.Apeiros.SlimefunAddon.infinitylib</shadedPattern>
                         </relocation>
                     </relocations>
                     
