@@ -2,23 +2,23 @@
 name: SlimefunAddon
 
 ## CHANGE this to your username.
-author: CHANGEME
+author: Apeiros
 
 ## CHANGE this to a meaninful but short description of your plugin.
-description: A generic Slimefun4-Addon
+description: My entry to the 2021 Slimefun Addon Jam
 
 ## CHANGE this to the path of the class that extends JavaPlugin.
-main: me.CHANGEME.slimefunaddon.ExampleAddon
+main: me.Apeiros.slimefunaddon.SlimefunAddon
 
 ## You can change this to link to your website or repository. You can also remove this line if you want to.
-website: https://github.com/Slimefun/Addon-Template
+website: https://github.com/Apeiros-46B/AddonJam2021Entry
 
 ## This value is automatically replaced by the version specified in your pom.xml file.
 ## Do not change this.
 version: ${project.version}
 
 ## This is the minimum minecraft version required to run your plugin.
-api-version: 1.14
+api-version: 1.16
 
 ## This is required and marks Slimefun as a plugin dependency.
 depend:
