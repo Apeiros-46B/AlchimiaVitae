@@ -3,18 +3,20 @@ package me.apeiros.alchimiavitae;
 import io.github.mooy1.infinitylib.AbstractAddon;
 import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import lombok.Getter;
 import lombok.SneakyThrows;
+import me.apeiros.alchimiavitae.setup.AlchimiaVitaeSetup;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
+import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.markdown.DiscordFlavor;
 import net.kyori.adventure.text.minimessage.transformation.TransformationType;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
 
-    @Getter private static AlchimiaVitae instance;
+    private static AlchimiaVitae instance;
 
     public static final MiniMessage mm = MiniMessage.builder()
             .removeDefaultTransformations()
@@ -28,17 +30,25 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     @SneakyThrows
     @Override
     public void onEnable() {
+        // Instance and super
         instance = this;
         super.onEnable();
 
-        // Read something from your config.yml
-        Config cfg = new Config(instance);
+        // Config and auto-updates
+        Config cfg = new Config(this);
 
         if (cfg.getBoolean("options.auto-update")) {
-            // You could start an Auto-Updater for example
+            if (this.getDescription().getVersion().startsWith("DEV - ")) {
+                (new GitHubBuildsUpdater(this, this.getFile(), this.getGithubPath())).start();
+            }
+        } else {
+            this.runSync(() -> {
+                this.log("#######################################", "Auto Updates have been disabled for " + this.getName(), "You will receive no support for bugs", "Until you update to the latest version!", "#######################################");
+            });
         }
 
-
+        // Setup
+        AlchimiaVitaeSetup.setup(this);
     }
 
     @Override
@@ -53,8 +63,13 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     }
 
     @Override
+    @Nonnull
     protected String getGithubPath() {
         return "https://github.com/Apeiros-46B/AddonJam2021Entry";
+    }
+
+    public static AlchimiaVitae inst() {
+        return instance;
     }
 
 }

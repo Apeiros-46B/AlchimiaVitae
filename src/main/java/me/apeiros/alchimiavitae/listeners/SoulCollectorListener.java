@@ -13,11 +13,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
 
 public class SoulCollectorListener implements Listener {
+
+    public SoulCollectorListener(JavaPlugin plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerHit(EntityDamageByEntityEvent e) {
