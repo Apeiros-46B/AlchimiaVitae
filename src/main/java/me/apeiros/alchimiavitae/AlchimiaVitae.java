@@ -42,9 +42,12 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
                 (new GitHubBuildsUpdater(this, this.getFile(), this.getGithubPath())).start();
             }
         } else {
-            this.runSync(() -> {
-                this.log("#######################################", "Auto Updates have been disabled for " + this.getName(), "You will receive no support for bugs", "Until you update to the latest version!", "#######################################");
-            });
+            this.runSync(() -> this.log(
+                    "#######################################",
+                    "Auto Updates have been disabled for " + this.getName(),
+                    "You will receive no support for bugs",
+                    "Until you update to the latest version!",
+                    "#######################################"));
         }
 
         // Setup
