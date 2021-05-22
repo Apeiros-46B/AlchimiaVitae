@@ -34,20 +34,11 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
         instance = this;
         super.onEnable();
 
-        // Config and auto-updates
+        // Read something from your config.yml
         Config cfg = new Config(this);
 
         if (cfg.getBoolean("options.auto-update")) {
-            if (this.getDescription().getVersion().startsWith("DEV - ")) {
-                (new GitHubBuildsUpdater(this, this.getFile(), this.getGithubPath())).start();
-            }
-        } else {
-            this.runSync(() -> this.log(
-                    "#######################################",
-                    "Auto Updates have been disabled for " + this.getName(),
-                    "You will receive no support for bugs",
-                    "Until you update to the latest version!",
-                    "#######################################"));
+            // You could start an Auto-Updater for example
         }
 
         // Setup
