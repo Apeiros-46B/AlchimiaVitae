@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.apeiros</groupId>
-    <artifactId>SlimefunAddon</artifactId>
+    <artifactId>AlchimiaVitae</artifactId>
     <version>1.0.0</version>
 
     <properties>
@@ -16,7 +16,12 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        
+
+        <repository>
+            <id>sonatype-oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+
         <repository>
             <id>paper-repo</id>
             <url>https://repo.destroystokyo.com/repository/maven-public/</url>
@@ -42,21 +47,21 @@
                 </includes>
             </resource>
         </resources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
-                
+
                 <configuration>
                     <relocations>
                         <relocation>
                             <pattern>io.github.mooy1.infinitylib</pattern>
-                            <shadedPattern>me.apeiros.slimefunaddon.infinitylib</shadedPattern>
+                            <shadedPattern>me.apeiros.alchimiavitae.infinitylib</shadedPattern>
                         </relocation>
                     </relocations>
-                    
+
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
@@ -66,7 +71,7 @@
                         </filter>
                     </filters>
                 </configuration>
-                
+
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -76,10 +81,11 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
@@ -108,11 +114,39 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.github.mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>17ac27f</version>
+            <version>eda888c</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
