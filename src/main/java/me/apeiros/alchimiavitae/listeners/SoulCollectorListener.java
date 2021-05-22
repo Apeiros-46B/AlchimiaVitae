@@ -48,7 +48,7 @@ public class SoulCollectorListener implements Listener {
             if (r.nextInt(2) == 0 && SlimefunUtils.isItemSimilar(killer.getInventory().getItemInMainHand(),
                     AlchimiaVitaeItems.SOUL_COLLECTOR, false, false)) {
                 String mobName = WordUtils.capitalize(e.getEntity().getType().toString().replace("_", " ").toLowerCase());
-                killer.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<aqua>You extracted a soul from a <gradient:#1cbbff:#6692f2>" + mobName + "</gradient><aqua>!")));
+                killer.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<aqua>You extracted a soul from a <gradient:#6baefa:#7145b0>" + mobName + "</gradient><aqua>!")));
                 killer.playSound(killer.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1,1);
 
                 if (e.getEntity() instanceof Wither /*(1.17) || e.getEntity() instanceof Warden */) {
@@ -62,6 +62,7 @@ public class SoulCollectorListener implements Listener {
                 } else if (e.getEntity() instanceof EnderDragon) {
                     e.getDrops().add(AlchimiaVitaeItems.CONDENSED_SOUL);
                 } else {
+                    e.getDrops().add(AlchimiaVitaeItems.CONDENSED_SOUL);
                     e.setDroppedExp(e.getDroppedExp() * 3);
                 }
             }

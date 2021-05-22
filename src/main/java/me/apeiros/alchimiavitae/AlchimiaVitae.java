@@ -4,9 +4,9 @@ import io.github.mooy1.infinitylib.AbstractAddon;
 import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.SneakyThrows;
+import me.apeiros.alchimiavitae.listeners.SoulCollectorListener;
 import me.apeiros.alchimiavitae.setup.AlchimiaVitaeSetup;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
-import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.markdown.DiscordFlavor;
 import net.kyori.adventure.text.minimessage.transformation.TransformationType;
@@ -41,8 +41,8 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
             // You could start an Auto-Updater for example
         }
 
-        // Setup
-        AlchimiaVitaeSetup.setup(this);
+        // Setup category, items, and listeners
+        AlchimiaVitaeSetup.setup(instance);
     }
 
     @Override

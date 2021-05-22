@@ -10,6 +10,6 @@ import org.bukkit.NamespacedKey;
 public class AlchimiaVitaeRecipeTypes {
 
     public static final RecipeType SOUL_COLLECTOR_TYPE = new RecipeType(new NamespacedKey(AlchimiaVitae.inst(), "soul_collector_type"), AlchimiaVitaeItems.SOUL_COLLECTOR, "", "&bExtract using the Soul Collector");
-    public static final RecipeType ADVANCED_BREWING_CHAMBER_TYPE = new RecipeType(new NamespacedKey(AlchimiaVitae.inst(), "advanced_brewing_chamber_type"), AlchimiaVitaeItems.ADVANCED_BREWING_CHAMBER, "", "&bBrew using the Advanced", "&bBrewing Chamber");
+    public static final RecipeType PLANT_INFUSION_CHAMBER_TYPE = new RecipeType(new NamespacedKey(AlchimiaVitae.inst(), "plant_infusion_chamber_type"), AlchimiaVitaeItems.PLANT_INFUSION_CHAMBER, "", "&bInfuse using the Plant Infusion Chamber");
 
 }
