@@ -9,6 +9,8 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class PlantInfusionChamber extends AContainer implements RecipeDisplayItem {
 
     public PlantInfusionChamber() {
@@ -19,11 +21,11 @@ public class PlantInfusionChamber extends AContainer implements RecipeDisplayIte
                 SlimefunItems.HEATING_COIL, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.HEATING_COIL
         });
 
-        this.setProcessingSpeed(1).setEnergyConsumption(32);
+        this.setProcessingSpeed(1).setCapacity(128).setEnergyConsumption(32);
 
     }
 
-    protected void registerDefaultRecipes() {
+    public void registerDefaultRecipes() {
 
         this.registerRecipe(300,
                 new ItemStack[]{
@@ -41,11 +43,14 @@ public class PlantInfusionChamber extends AContainer implements RecipeDisplayIte
 
     }
 
+    @Override
     public ItemStack getProgressBar() {
         return new ItemStack(Material.GRASS);
     }
 
+    @Nonnull
+    @Override
     public String getMachineIdentifier() {
-        return "PLANT_INFUSION_CHAMBER";
+        return "AV_PLANT_INFUSION_CHAMBER";
     }
 }

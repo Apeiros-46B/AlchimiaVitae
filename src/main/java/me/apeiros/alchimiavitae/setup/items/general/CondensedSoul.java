@@ -1,6 +1,5 @@
 package me.apeiros.alchimiavitae.setup.items.general;
 
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.apeiros.alchimiavitae.setup.AlchimiaVitaeItems;
 import me.apeiros.alchimiavitae.utils.AlchimiaVitaeRecipeTypes;
 import me.apeiros.alchimiavitae.utils.Categories;

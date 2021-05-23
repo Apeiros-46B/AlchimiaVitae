@@ -8,11 +8,11 @@ import me.apeiros.alchimiavitae.utils.Categories;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class GoodMagicalPlant extends UnplaceableBlock {
+public class GoodMagicPlant extends UnplaceableBlock {
 
-    public GoodMagicalPlant() {
+    public GoodMagicPlant() {
 
-        super(Categories.GENERAL, AlchimiaVitaeItems.CONDENSED_SOUL, AlchimiaVitaeRecipeTypes.PLANT_INFUSION_CHAMBER_TYPE, new ItemStack[] {
+        super(Categories.PLANTS, AlchimiaVitaeItems.GOOD_MAGIC_PLANT, AlchimiaVitaeRecipeTypes.PLANT_INFUSION_CHAMBER_TYPE, new ItemStack[] {
                 new ItemStack(Material.OAK_SAPLING), SlimefunItems.MAGIC_LUMP_3, null,
                 null, null, null,
                 null, null, null

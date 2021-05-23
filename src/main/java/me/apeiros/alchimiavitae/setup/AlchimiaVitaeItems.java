@@ -15,9 +15,9 @@ import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
 public class AlchimiaVitaeItems {
 
     public static final SlimefunItemStack SOUL_COLLECTOR = new SlimefunItemStack("AV_SOUL_COLLECTOR",
-        Material.DIAMOND_SWORD, BukkitComponentSerializer.legacy().serialize
-        (mm.parse("<gradient:#6BAEFA:#7145B0>Soul Collector</gradient>")),
-        "&bCollects Souls", "&bKill any mob with this", "&bto extract its Soul.");
+            Material.DIAMOND_SWORD, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#6baefa:#7145b0>Soul Collector</gradient>")),
+            "&bCollects Souls", "&bKill any mob with this", "&bto extract its Soul.");
 
     static {
         ItemMeta meta = SOUL_COLLECTOR.getItemMeta();
@@ -28,9 +28,9 @@ public class AlchimiaVitaeItems {
     }
 
     public static final SlimefunItemStack CONDENSED_SOUL = new SlimefunItemStack("AV_CONDENSED_SOUL",
-        Material.LIGHT_BLUE_DYE, BukkitComponentSerializer.legacy().serialize
-        (mm.parse("<gradient:#6BAEFA:#7145B0>Condensed Soul</gradient>")),
-        "&9A Soul, condensed into an orb.", "&9&oPerhaps there is a way", "&9&oto manipulate its power...");
+            Material.LIGHT_BLUE_DYE, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#6baefa:#7145b0>Condensed Soul</gradient>")),
+            "&9A Soul, condensed into an orb.", "&9&oPerhaps there is a way", "&9&oto manipulate its power...");
 
     static {
         CONDENSED_SOUL.addUnsafeEnchantment(Enchantment.LUCK, 1);
@@ -39,16 +39,16 @@ public class AlchimiaVitaeItems {
 
     public static final SlimefunItemStack PLANT_INFUSION_CHAMBER = new SlimefunItemStack("AV_PLANT_INFUSION_CHAMBER",
             Material.LIME_STAINED_GLASS, BukkitComponentSerializer.legacy().serialize
-            (mm.parse("<gradient:#549C64:#1DE078>Plant Infusion Chamber</gradient>")),
+            (mm.parse("<gradient:#549c64:#1de078>Plant Infusion Chamber</gradient>")),
             "&bCan infuse plants with dark", "&bor light energy using", "&bSouls and Magical Lumps", "",
             LoreBuilder.machine(MachineTier.END_GAME, MachineType.MACHINE),
             LoreBuilder.speed(1),
             LoreBuilder.powerPerSecond(64));
 
     public static final SlimefunItemStack GOOD_MAGIC_PLANT = new SlimefunItemStack("AV_GOOD_MAGIC_PLANT",
-        Material.OAK_SAPLING, BukkitComponentSerializer.legacy().serialize
-        (mm.parse("<gradient:#2DDAE0:#31F876>Benevolent Magical Plant</gradient>")),
-        "&7Light Magic III", "", "&aRadiates with an empyreal", "&aglow like no other...");
+            Material.OAK_SAPLING, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#2ddae0:#31f876>Benevolent Magical Plant</gradient>")),
+            "&7Light Magic III", "", "&aRadiates with an empyreal", "&aglow like no other...");
 
     static {
         GOOD_MAGIC_PLANT.addUnsafeEnchantment(Enchantment.LUCK, 1);
@@ -56,13 +56,61 @@ public class AlchimiaVitaeItems {
     }
 
     public static final SlimefunItemStack EVIL_MAGIC_PLANT = new SlimefunItemStack("AV_EVIL_MAGIC_PLANT",
-        Material.OAK_SAPLING, BukkitComponentSerializer.legacy().serialize
-        (mm.parse("<gradient:#5555FF:#9300FF>Malevolent Magical Plant</gradient>")),
-        "&7Dark Magic III", "", "&cContains untold amounts of dark", "&cenergy locked away in its xylems...");
+            Material.OAK_SAPLING, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#ff5555:#ffa012>Malevolent Magical Plant</gradient>")),
+            "&7Dark Magic III", "", "&cContains untold amounts of dark", "&cenergy locked away in its xylems...");
 
     static {
         EVIL_MAGIC_PLANT.addUnsafeEnchantment(Enchantment.LUCK, 1);
         EVIL_MAGIC_PLANT.addFlags(ItemFlag.HIDE_ENCHANTS);
     }
+
+    public static final SlimefunItemStack EXP_CRYSTALLIZER = new SlimefunItemStack("AV_EXP_CRYSTALLIZER",
+            Material.LIME_STAINED_GLASS, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#50fa75:#ffa012>Experience Crystallizer</gradient>")),
+            "&aForms EXP orbs into a crystalline,", "&adurable, and energetic form.",
+            LoreBuilder.machine(MachineTier.END_GAME, MachineType.MACHINE),
+            LoreBuilder.speed(1),
+            LoreBuilder.powerPerSecond(32));
+
+    public static final SlimefunItemStack EXP_CRYSTAL = new SlimefunItemStack("AV_EXP_CRYSTAL",
+            Material.EMERALD, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#50fa75:#ffa012>Experience Crystal</gradient>")),
+            "", "&aA chunk of crystalline experience");
+
+    static {
+        EXP_CRYSTAL.addUnsafeEnchantment(Enchantment.LUCK, 1);
+        EXP_CRYSTAL.addFlags(ItemFlag.HIDE_ENCHANTS);
+    }
+
+    public static final SlimefunItemStack ILLUMIUM = new SlimefunItemStack("AV_ILLUMIUM",
+            Material.IRON_INGOT, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#2ddae0:#31f876>Illumium Ingot</gradient>")),
+            "", "&aIt energetically effuses light in your hand");
+
+    static {
+        ILLUMIUM.addUnsafeEnchantment(Enchantment.LUCK, 1);
+        ILLUMIUM.addFlags(ItemFlag.HIDE_ENCHANTS);
+    }
+
+    public static final SlimefunItemStack DARKSTEEL = new SlimefunItemStack("AV_DARKSTEEL",
+            Material.NETHERITE_INGOT, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#ff5555:#ffa012>Darksteel Ingot</gradient>")),
+            "", "&cIt radiates... with darkness?");
+
+    static {
+        DARKSTEEL.addUnsafeEnchantment(Enchantment.LUCK, 1);
+        DARKSTEEL.addFlags(ItemFlag.HIDE_ENCHANTS);
+    }
+
+    public static final SlimefunItemStack MOLTEN_MYSTERY_METAL = new SlimefunItemStack("AV_MOLTEN_MYSTERY_METAL",
+            Material.LAVA_BUCKET, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#ff6745:#ff5555>Molten Mystery Metal</gradient>")),
+            "", "&6A conglomerate of different metals");
+
+    public static final SlimefunItemStack MYSTERY_METAL = new SlimefunItemStack("AV_MYSTERY_METAL",
+            Material.IRON_INGOT, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#ff6745:#ff5555>Mystery Metal Ingot</gradient>")),
+            "", "&6Contains many metals");
 
 }
