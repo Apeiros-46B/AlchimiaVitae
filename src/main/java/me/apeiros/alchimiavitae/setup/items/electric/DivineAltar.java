@@ -66,9 +66,6 @@ public class DivineAltar extends AbstractContainer {
 
     @Override
     protected void setupMenu(@NotNull BlockMenuPreset blockMenuPreset) {
-        // Size of 5 rows (45 slots)
-        blockMenuPreset.setSize(45);
-
         // Input background
         for (int slot : IN_BG) {
             blockMenuPreset.addItem(slot, ChestMenuItems.IN_BG, ChestMenuUtils.getEmptyClickHandler());
@@ -103,9 +100,6 @@ public class DivineAltar extends AbstractContainer {
                 return false;
             });
         }
-
-        // Last slot temp fix
-        menu.addItem(44, ChestMenuItems.CRAFT_BG, ChestMenuUtils.getEmptyClickHandler());
 
         // Menu close handler
         menu.addMenuCloseHandler(player -> menu.dropItems(player.getLocation(), IN_SLOTS));
