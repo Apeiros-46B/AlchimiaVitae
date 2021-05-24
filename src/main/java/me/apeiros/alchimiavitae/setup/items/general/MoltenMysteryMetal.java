@@ -16,7 +16,7 @@ public class MoltenMysteryMetal extends SimpleSlimefunItem<ItemUseHandler> imple
 
     public MoltenMysteryMetal(Category c) {
 
-        super(c, Items.MOLTEN_MYSTERY_METAL, RecipeTypes.SOUL_COLLECTOR_TYPE, new ItemStack[] {
+        super(c, Items.MOLTEN_MYSTERY_METAL, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL

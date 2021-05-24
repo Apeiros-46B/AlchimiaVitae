@@ -12,6 +12,7 @@ import me.apeiros.alchimiavitae.setup.items.plants.EvilMagicPlant;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodMagicPlant;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class Setup {
@@ -36,6 +37,30 @@ public class Setup {
                 Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                 null, SlimefunItems.DAMASCUS_STEEL_INGOT, null
         }), new SlimefunItemStack(SlimefunItems.REINFORCED_ALLOY_INGOT, 2));
+
+        DivineAltar.RECIPES.put(new MultiInput(new ItemStack[]{
+                null, SlimefunItems.STEEL_INGOT, null,
+                Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                null, SlimefunItems.STEEL_INGOT, null
+        }), new SlimefunItemStack(SlimefunItems.HARDENED_METAL_INGOT, 2));
+
+        DivineAltar.RECIPES.put(new MultiInput(new ItemStack[]{
+                null, new ItemStack(Material.IRON_BLOCK), null,
+                Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                null, SlimefunItems.COMPRESSED_CARBON, null
+        }), new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8));
+
+        DivineAltar.RECIPES.put(new MultiInput(new ItemStack[]{
+                null, new ItemStack(Material.IRON_BLOCK), null,
+                Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                null, SlimefunItems.CARBON, null
+        }), new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8));
+
+        DivineAltar.RECIPES.put(new MultiInput(new ItemStack[] {
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
+                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
+        }), new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8));
 
         new DivineAltar(c).register(plugin);
 

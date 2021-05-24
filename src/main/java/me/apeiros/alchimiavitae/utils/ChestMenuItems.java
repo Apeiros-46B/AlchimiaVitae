@@ -24,7 +24,15 @@ public class ChestMenuItems {
     public static final ItemStack OUT_BG = new CustomItem(Material.CYAN_STAINED_GLASS_PANE,
             BukkitComponentSerializer.legacy().serialize(mm.parse("<gradient:#39f792:#5c95ff>Output</gradient>")));
 
+    public static final ItemStack OUT_BG_CLICK_CRAFT = new CustomItem(Material.CYAN_STAINED_GLASS_PANE,
+            BukkitComponentSerializer.legacy().serialize(mm.parse("<gradient:#39f792:#5c95ff>Output</gradient>")),
+            "&aClick to craft");
+
     public static final ItemStack IN_BG = new CustomItem(Material.ORANGE_STAINED_GLASS_PANE,
             BukkitComponentSerializer.legacy().serialize(mm.parse("<gradient:#ff68fc:#ff9a5c>Input</gradient>")));
+
+    public static final ItemStack IN_BG_CLICK_CRAFT = new CustomItem(Material.ORANGE_STAINED_GLASS_PANE,
+            BukkitComponentSerializer.legacy().serialize(mm.parse("<gradient:#ff68fc:#ff9a5c>Input</gradient>")),
+            "&aClick to craft");
 
 }

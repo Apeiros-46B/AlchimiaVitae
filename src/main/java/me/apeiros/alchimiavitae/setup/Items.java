@@ -113,7 +113,10 @@ public class Items {
         DARKSTEEL.addFlags(ItemFlag.HIDE_ENCHANTS);
     }
 
-
+    public static final SlimefunItemStack DIVINE_ALTAR = new SlimefunItemStack("AV_DIVINE_ALTAR",
+            Material.ENCHANTING_TABLE, BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#ff5555:#ff6cfd>Divine Altar</gradient>")),
+            "&5A sacred apparatus for the", "&5performance of ancient rituals");
 
     public static final SlimefunItemStack MOLTEN_MYSTERY_METAL = new SlimefunItemStack("AV_MOLTEN_MYSTERY_METAL",
             Material.LAVA_BUCKET, BukkitComponentSerializer.legacy().serialize
