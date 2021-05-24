@@ -4,9 +4,9 @@ import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
-import me.apeiros.alchimiavitae.setup.AlchimiaVitaeItems;
-import me.apeiros.alchimiavitae.utils.AlchimiaVitaeRecipeTypes;
-import me.apeiros.alchimiavitae.utils.Categories;
+import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,12 +14,12 @@ import javax.annotation.Nonnull;
 
 public class MoltenMysteryMetal extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
 
-    public MoltenMysteryMetal() {
+    public MoltenMysteryMetal(Category c) {
 
-        super(Categories.ALCHEMY, AlchimiaVitaeItems.MOLTEN_MYSTERY_METAL, AlchimiaVitaeRecipeTypes.SOUL_COLLECTOR_TYPE, new ItemStack[] {
-                AlchimiaVitaeItems.EXP_CRYSTAL, AlchimiaVitaeItems.ILLUMIUM, AlchimiaVitaeItems.EXP_CRYSTAL,
-                AlchimiaVitaeItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaVitaeItems.DARKSTEEL,
-                AlchimiaVitaeItems.EXP_CRYSTAL, AlchimiaVitaeItems.ILLUMIUM, AlchimiaVitaeItems.EXP_CRYSTAL
+        super(c, Items.MOLTEN_MYSTERY_METAL, RecipeTypes.SOUL_COLLECTOR_TYPE, new ItemStack[] {
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
+                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
         });
 
     }

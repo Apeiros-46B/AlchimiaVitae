@@ -1,7 +1,7 @@
 package me.apeiros.alchimiavitae.listeners;
 
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import me.apeiros.alchimiavitae.setup.AlchimiaVitaeItems;
+import me.apeiros.alchimiavitae.setup.Items;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Sound;
@@ -19,9 +19,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
 
-public class SoulCollectorListener implements Listener {
+public class EntityDeathListener implements Listener {
 
-    public SoulCollectorListener(JavaPlugin plugin) {
+    public EntityDeathListener(JavaPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -31,7 +31,7 @@ public class SoulCollectorListener implements Listener {
             Player damager = (Player) e.getDamager();
 
             if (SlimefunUtils.isItemSimilar(damager.getInventory().getItemInMainHand(),
-                    AlchimiaVitaeItems.SOUL_COLLECTOR, false, false)) {
+                    Items.SOUL_COLLECTOR, false, false)) {
                 e.setCancelled(true);
                 damager.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<red>You cannot hurt a player using the Soul Collector!")));
                 damager.playSound(damager.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 1);
@@ -46,23 +46,23 @@ public class SoulCollectorListener implements Listener {
             ThreadLocalRandom r = ThreadLocalRandom.current();
 
             if (r.nextInt(2) == 0 && SlimefunUtils.isItemSimilar(killer.getInventory().getItemInMainHand(),
-                    AlchimiaVitaeItems.SOUL_COLLECTOR, false, false)) {
+                    Items.SOUL_COLLECTOR, false, false)) {
                 String mobName = WordUtils.capitalize(e.getEntity().getType().toString().replace("_", " ").toLowerCase());
                 killer.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<aqua>You extracted a soul from a <gradient:#6baefa:#7145b0>" + mobName + "</gradient><aqua>!")));
                 killer.playSound(killer.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1,1);
 
                 if (e.getEntity() instanceof Wither /*(1.17) || e.getEntity() instanceof Warden */) {
                     for (int i = 0; i < r.nextInt(9); i++) {
-                        e.getDrops().add(AlchimiaVitaeItems.CONDENSED_SOUL);
+                        e.getDrops().add(Items.CONDENSED_SOUL);
                     }
                 } else if (e.getEntity() instanceof WitherSkeleton) {
                     for (int i = 0; i < r.nextInt(4); i++) {
-                        e.getDrops().add(AlchimiaVitaeItems.CONDENSED_SOUL);
+                        e.getDrops().add(Items.CONDENSED_SOUL);
                     }
                 } else if (e.getEntity() instanceof EnderDragon) {
-                    e.getDrops().add(AlchimiaVitaeItems.CONDENSED_SOUL);
+                    e.getDrops().add(Items.CONDENSED_SOUL);
                 } else {
-                    e.getDrops().add(AlchimiaVitaeItems.CONDENSED_SOUL);
+                    e.getDrops().add(Items.CONDENSED_SOUL);
                     e.setDroppedExp(e.getDroppedExp() * 3);
                 }
             }

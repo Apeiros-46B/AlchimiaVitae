@@ -3,13 +3,16 @@ package me.apeiros.alchimiavitae;
 import io.github.mooy1.infinitylib.AbstractAddon;
 import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import lombok.Getter;
 import lombok.SneakyThrows;
-import me.apeiros.alchimiavitae.listeners.SoulCollectorListener;
-import me.apeiros.alchimiavitae.setup.AlchimiaVitaeSetup;
-import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
+import me.apeiros.alchimiavitae.setup.Setup;
+import me.mrCookieSlime.Slimefun.Objects.Category;
+import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.markdown.DiscordFlavor;
 import net.kyori.adventure.text.minimessage.transformation.TransformationType;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,6 +30,9 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
             .markdownFlavor(DiscordFlavor.get())
             .build();
 
+    @Getter
+    private static final Category category = new Category(new NamespacedKey(instance, "av_category"), new CustomItem(Material.TOTEM_OF_UNDYING, "&aAlchimia Vitae", "&8> &aClick to open"));
+
     @SneakyThrows
     @Override
     public void onEnable() {
@@ -34,15 +40,8 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
         instance = this;
         super.onEnable();
 
-        // Read something from your config.yml
-        Config cfg = new Config(this);
-
-        if (cfg.getBoolean("options.auto-update")) {
-            // You could start an Auto-Updater for example
-        }
-
         // Setup category, items, and listeners
-        AlchimiaVitaeSetup.setup(instance);
+        Setup.setup(instance);
     }
 
     @Override

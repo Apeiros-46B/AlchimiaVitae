@@ -1,18 +1,18 @@
-package me.apeiros.alchimiavitae.setup.items.plants.good;
+package me.apeiros.alchimiavitae.setup.items.plants;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
-import me.apeiros.alchimiavitae.setup.AlchimiaVitaeItems;
-import me.apeiros.alchimiavitae.utils.AlchimiaVitaeRecipeTypes;
-import me.apeiros.alchimiavitae.utils.Categories;
+import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class GoodMagicPlant extends UnplaceableBlock {
 
-    public GoodMagicPlant() {
+    public GoodMagicPlant(Category c) {
 
-        super(Categories.PLANTS, AlchimiaVitaeItems.GOOD_MAGIC_PLANT, AlchimiaVitaeRecipeTypes.PLANT_INFUSION_CHAMBER_TYPE, new ItemStack[] {
+        super(c, Items.GOOD_MAGIC_PLANT, RecipeTypes.PLANT_INFUSION_CHAMBER_TYPE, new ItemStack[] {
                 new ItemStack(Material.OAK_SAPLING), SlimefunItems.MAGIC_LUMP_3, null,
                 null, null, null,
                 null, null, null
