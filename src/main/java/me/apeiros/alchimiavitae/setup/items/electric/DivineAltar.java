@@ -123,23 +123,28 @@ public class DivineAltar extends AbstractContainer {
             }
         }
 
-        // First pre-craft effect burst
-        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 20, 0.1, 0.1, 0.1);
-
         // Pre-craft effects
-        for (int i = 0; i < 3; i ++) {
-            Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
-                b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-                b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 20, 0.1, 0.1, 0.1);
-            }, 30);
-        }
+        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
+            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+        }, 30);
 
+        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
+            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+        }, 30);
+
+        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
+            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+        }, 30);
+
+        // Post-craft effects
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
             // Post-craft effects
             b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
             b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 30, 0.1, 0.1, 0.1);
+            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 5, 0.1, 0.1, 0.1);
             b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 300, 2, 2, 2);
 
             // Drop item
@@ -148,6 +153,6 @@ public class DivineAltar extends AbstractContainer {
             // Send message
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse(
                     "<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>")));
-        }, 150);
+        }, 30);
     }
 }
