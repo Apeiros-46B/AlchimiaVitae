@@ -28,8 +28,6 @@ public class Setup {
         new EXPCrystal(c).register(plugin);
         new Illumium(c).register(plugin);
         new Darksteel(c).register(plugin);
-        new MoltenMysteryMetal(c).register(plugin);
-        new MysteryMetal(c).register(plugin);
 
         // Divine Altar
         DivineAltar.RECIPES.put(new MultiInput(new ItemStack[]{
@@ -60,11 +58,13 @@ public class Setup {
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
-        }), new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8));
+        }), new SlimefunItemStack(Items.MOLTEN_MYSTERY_METAL, 1));
 
         new DivineAltar(c).register(plugin);
 
         // Items cont.d
+        new MoltenMysteryMetal(c).register(plugin);
+        new MysteryMetal(c).register(plugin);
 
         // Listeners
         new EntityDeathListener(plugin);
