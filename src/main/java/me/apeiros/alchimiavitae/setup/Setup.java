@@ -8,7 +8,9 @@ import me.apeiros.alchimiavitae.setup.items.electric.DivineAltar;
 import me.apeiros.alchimiavitae.setup.items.electric.EXPCrystallizer;
 import me.apeiros.alchimiavitae.setup.items.electric.PlantInfusionChamber;
 import me.apeiros.alchimiavitae.setup.items.general.*;
+import me.apeiros.alchimiavitae.setup.items.plants.EvilEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.EvilMagicPlant;
+import me.apeiros.alchimiavitae.setup.items.plants.GoodEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodMagicPlant;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -24,6 +26,8 @@ public class Setup {
         new PlantInfusionChamber(c).register(plugin);
         new GoodMagicPlant(c).register(plugin);
         new EvilMagicPlant(c).register(plugin);
+        new GoodEssence(c).register(plugin);
+        new EvilEssence(c).register(plugin);
         new EXPCrystallizer(c).register(plugin);
         new EXPCrystal(c).register(plugin);
         new Illumium(c).register(plugin);
@@ -45,14 +49,14 @@ public class Setup {
         DivineAltar.RECIPES.put(new MultiInput(new ItemStack[]{
                 null, new ItemStack(Material.IRON_BLOCK), null,
                 Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
-                null, SlimefunItems.COMPRESSED_CARBON, null
-        }), new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8));
+                null, SlimefunItems.CARBON, null
+        }), new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8));
 
         DivineAltar.RECIPES.put(new MultiInput(new ItemStack[]{
                 null, new ItemStack(Material.IRON_BLOCK), null,
                 Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
-                null, SlimefunItems.CARBON, null
-        }), new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8));
+                null, SlimefunItems.COMPRESSED_CARBON, null
+        }), new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8));
 
         DivineAltar.RECIPES.put(new MultiInput(new ItemStack[] {
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,

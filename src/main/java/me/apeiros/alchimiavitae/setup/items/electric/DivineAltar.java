@@ -123,27 +123,23 @@ public class DivineAltar extends AbstractContainer {
             }
         }
 
+        // First pre-craft effect burst
+        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+
         // Pre-craft effects
-        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
-        }, 30);
+        for (int i = 0; i < 3; i ++) {
+            Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
+                b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+            }, 30);
+        }
 
-        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
-        }, 30);
-
-        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
-        }, 30);
-
-        // Post-craft effects
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
             // Post-craft effects
             b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
             b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
+            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
             b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 5, 0.1, 0.1, 0.1);
             b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 300, 2, 2, 2);
 
