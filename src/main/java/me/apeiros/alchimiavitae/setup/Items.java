@@ -3,12 +3,15 @@ package me.apeiros.alchimiavitae.setup;
 import io.github.thebusybiscuit.slimefun4.core.attributes.MachineTier;
 import io.github.thebusybiscuit.slimefun4.core.attributes.MachineType;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
+import me.apeiros.alchimiavitae.utils.PotionUtils;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
 
@@ -128,6 +131,8 @@ public class Items {
             (mm.parse("<gradient:#ff6745:#ff5555>Mystery Metal Ingot</gradient>")),
             "&6Contains many metals");
 
-
+    public static final SlimefunItemStack POTION_OF_EXCHANGE = PotionUtils.makePotion(new PotionEffect[]{},
+            BukkitComponentSerializer.legacy().serialize
+            (mm.parse("<gradient:#6274e7:#8752a3>Potion of Exchange</gradient>")), "", Color.FUCHSIA);
 
 }

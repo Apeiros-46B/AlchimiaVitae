@@ -6,6 +6,9 @@ import me.apeiros.alchimiavitae.setup.Items;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import org.bukkit.NamespacedKey;
 
+/**
+ * Holds this addon's {@link RecipeType}s
+ */
 @UtilityClass
 public class RecipeTypes {
 

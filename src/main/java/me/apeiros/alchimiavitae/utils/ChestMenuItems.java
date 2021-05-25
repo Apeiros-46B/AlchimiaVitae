@@ -2,6 +2,7 @@ package me.apeiros.alchimiavitae.utils;
 
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import lombok.experimental.UtilityClass;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Material;
@@ -10,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
 
 /**
- * This class holds ItemStacks that are frequently used in ChestMenus
- * @author Apeiros
+ * This class holds {@link ItemStack}s
+ * that are frequently used in {@link ChestMenu}s
  */
 @UtilityClass
 public class ChestMenuItems {
