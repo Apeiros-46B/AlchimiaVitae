@@ -12,6 +12,7 @@ import me.apeiros.alchimiavitae.setup.items.plants.EvilEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.EvilMagicPlant;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodMagicPlant;
+import me.apeiros.alchimiavitae.setup.items.potions.PotionOfExchange;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
@@ -19,28 +20,29 @@ import org.bukkit.inventory.ItemStack;
 
 public class Setup {
 
-    public static void setup(AlchimiaVitae plugin, Category c) {
+    public static void setup(AlchimiaVitae p, Category c) {
         // Items
-        new SoulCollector(c).register(plugin);
-        new CondensedSoul(c).register(plugin);
-        new PlantInfusionChamber(c).register(plugin);
-        new GoodMagicPlant(c).register(plugin);
-        new EvilMagicPlant(c).register(plugin);
-        new GoodEssence(c).register(plugin);
-        new EvilEssence(c).register(plugin);
-        new EXPCrystallizer(c).register(plugin);
-        new EXPCrystal(c).register(plugin);
-        new Illumium(c).register(plugin);
-        new Darksteel(c).register(plugin);
+        new SoulCollector(c).register(p);
+        new CondensedSoul(c).register(p);
+        new PlantInfusionChamber(c).register(p);
+        new GoodMagicPlant(c).register(p);
+        new EvilMagicPlant(c).register(p);
+        new GoodEssence(c).register(p);
+        new EvilEssence(c).register(p);
+        new EXPCrystallizer(c).register(p);
+        new EXPCrystal(c).register(p);
+        new Illumium(c).register(p);
+        new Darksteel(c).register(p);
 
         setupDivineAltarRecipes();
-        new DivineAltar(c).register(plugin);
+        new DivineAltar(c).register(p);
 
-        new MoltenMysteryMetal(c).register(plugin);
-        new MysteryMetal(c).register(plugin);
+        new MoltenMysteryMetal(c).register(p);
+        new MysteryMetal(c).register(p);
+        new PotionOfExchange(c, p).register(p);
 
         // Listeners
-        new EntityDeathListener(plugin);
+        new EntityDeathListener(p);
     }
 
     private static void setupDivineAltarRecipes() {
@@ -72,7 +74,13 @@ public class Setup {
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
-        }), new SlimefunItemStack(Items.MOLTEN_MYSTERY_METAL, 1));
+        }), Items.MOLTEN_MYSTERY_METAL);
+
+        DivineAltar.RECIPES.put(new MultiInput(new ItemStack[] {
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
+                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
+        }), Items.POTION_OF_EXCHANGE);
     }
 
 }

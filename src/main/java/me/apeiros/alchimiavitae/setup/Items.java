@@ -131,7 +131,7 @@ public class Items {
             (mm.parse("<gradient:#ff6745:#ff5555>Mystery Metal Ingot</gradient>")),
             "&6Contains many metals");
 
-    public static final SlimefunItemStack POTION_OF_EXCHANGE = PotionUtils.makePotion(new PotionEffect[]{},
+    public static final SlimefunItemStack POTION_OF_EXCHANGE = PotionUtils.makeExchangePotion(new PotionEffect[]{},
             BukkitComponentSerializer.legacy().serialize
             (mm.parse("<gradient:#6274e7:#8752a3>Potion of Exchange</gradient>")), "", Color.FUCHSIA);
 
