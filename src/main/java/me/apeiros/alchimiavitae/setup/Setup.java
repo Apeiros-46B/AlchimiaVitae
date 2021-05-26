@@ -12,7 +12,7 @@ import me.apeiros.alchimiavitae.setup.items.plants.EvilEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.EvilMagicPlant;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodMagicPlant;
-import me.apeiros.alchimiavitae.setup.items.potions.PotionOfExchange;
+import me.apeiros.alchimiavitae.setup.items.potions.PotionOfAbsorption;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
@@ -39,7 +39,7 @@ public class Setup {
 
         new MoltenMysteryMetal(c).register(p);
         new MysteryMetal(c).register(p);
-        new PotionOfExchange(c, p).register(p);
+        new PotionOfAbsorption(c).register(p);
 
         // Listeners
         new EntityDeathListener(p);
@@ -77,10 +77,10 @@ public class Setup {
         }), Items.MOLTEN_MYSTERY_METAL);
 
         DivineAltar.RECIPES.put(new MultiInput(new ItemStack[] {
-                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
-                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
-                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
-        }), Items.POTION_OF_EXCHANGE);
+                Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,
+                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.GOOD_ESSENCE,
+                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.ILLUMIUM
+        }), Items.POTION_OF_ABSORPTION);
     }
 
 }
