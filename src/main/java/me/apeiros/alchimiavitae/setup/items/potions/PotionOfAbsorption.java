@@ -43,6 +43,12 @@ public class PotionOfAbsorption extends SimpleSlimefunItem<ItemUseHandler> {
                 return;
             }
 
+            // If player has no effects
+            if (e.getPlayer().getActivePotionEffects().isEmpty()) {
+                e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<red>There are no effects to bottle!")));
+                return;
+            }
+
             // Make a new potion
             ItemStack item = PotionUtils.makePotion(
                     new PotionEffect[]{},
