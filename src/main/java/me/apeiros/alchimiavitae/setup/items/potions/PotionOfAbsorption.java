@@ -7,7 +7,6 @@ import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.PotionUtils;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
 import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
@@ -38,6 +37,12 @@ public class PotionOfAbsorption extends SimpleSlimefunItem<ItemUseHandler> {
     @Override
     public ItemUseHandler getItemHandler() {
         return e -> {
+            // If stack size more than 1
+            if (e.getItem().getAmount() > 1) {
+                e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<red>You cannot stack Potions of Absorption!")));
+                return;
+            }
+
             // Make a new potion
             ItemStack item = PotionUtils.makePotion(
                     new PotionEffect[]{},
@@ -73,7 +78,7 @@ public class PotionOfAbsorption extends SimpleSlimefunItem<ItemUseHandler> {
             item.setItemMeta(meta);
 
             // Remove absorption potion
-            e.getPlayer().getInventory().remove(new SlimefunItemStack((SlimefunItemStack) e.getItem(), 1));
+            e.getPlayer().getInventory().remove(e.getItem());
             
             // Effect
             e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
