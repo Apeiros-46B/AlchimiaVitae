@@ -1,4 +1,4 @@
-package me.apeiros.alchimiavitae.setup.items.electric;
+package me.apeiros.alchimiavitae.setup.items.crafters;
 
 import io.github.mooy1.infinitylib.recipes.inputs.MultiInput;
 import io.github.mooy1.infinitylib.slimefun.AbstractContainer;
@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.ChestMenuItems;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.apeiros.alchimiavitae.utils.RecipeTypes;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
@@ -25,29 +25,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
+import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
-public class DivineAltar extends AbstractContainer {
-
+public class OrnateCauldron extends AbstractContainer {
     private static final int[] IN_SLOTS = {10, 11, 12, 19, 20, 21, 28, 29, 30};
 
     private static final int[] IN_BG = {0, 1, 2, 3, 4, 9, 13, 18, 22, 27, 31, 36, 37, 38, 39, 40};
     private static final int[] CRAFT_BG = {5, 6, 7, 8, 14, 17, 23, 26, 32, 35, 41, 42, 43, 44};
 
     private static final int[] CRAFT_BUTTON = {15, 16, 24, 25, 33, 34};
-    private static final int OUT_SLOT = 24;
-
-    private static int timer = 0;
-    private static int count = 0;
 
     public static final Map<MultiInput, ItemStack> RECIPES = new HashMap<>();
 
-    public DivineAltar(Category c) {
+    public OrnateCauldron(Category c) {
 
-        super(c, Items.DIVINE_ALTAR, RecipeType.ANCIENT_ALTAR, new ItemStack[]{
-                Items.EXP_CRYSTAL, SlimefunItems.ELECTRIC_MOTOR, Items.EXP_CRYSTAL,
-                SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.BLISTERING_INGOT_3,
-                SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.HEATED_PRESSURE_CHAMBER_2, SlimefunItems.ANCIENT_PEDESTAL
+        super(c, Items.ORNATE_CAULDRON, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
+                Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
+                Items.DARKSTEEL, Items.DIVINE_ALTAR, Items.ILLUMIUM,
+                SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
         });
 
     }
@@ -60,8 +55,7 @@ public class DivineAltar extends AbstractContainer {
 
     @Override
     protected void tick(@NotNull Block block) {
-        // Spawn Standard Galactic symbol particles
-        block.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, block.getLocation(), 30, 0.5, 0.5, 0.5);
+
     }
 
     @Override
@@ -90,7 +84,7 @@ public class DivineAltar extends AbstractContainer {
     @Override
     protected void onNewInstance(@NotNull BlockMenu menu, @NotNull Block b) {
         // Spawn ender particles
-        b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 100, 0.5, 0.5, 0.5);
+        b.getWorld().spawnParticle(Particle.SPELL, b.getLocation(), 100, 3, 3, 3);
 
         // Craft button click handler
         for (int slot : CRAFT_BUTTON) {
@@ -111,8 +105,8 @@ public class DivineAltar extends AbstractContainer {
 
         // Invalid recipe
         if (output == null) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<red>That recipe is invalid!")));
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<red>Please try again.")));
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That recipe is invalid!")));
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
             return;
         }
 
@@ -124,31 +118,31 @@ public class DivineAltar extends AbstractContainer {
         }
 
         // First pre-craft effect burst
-        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
+            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
+            b.getWorld().spawnParticle(Particle.SPELL_WITCH, b.getLocation(), 2, 1, 1, 1);
+        }, 30);
 
         // Pre-craft effects
-        for (int i = 0; i < 3; i ++) {
-            Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
-                b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-                b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
-            }, 30);
-        }
+        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
+            b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
+            b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
+            b.getWorld().spawnParticle(Particle.CRIT_MAGIC, b.getLocation(), 2, 1, 1, 1);
+        }, 30);
 
-        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.inst(), () -> {
+        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
             // Post-craft effects
-            b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
-            b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
+            b.getWorld().playSound(b.getLocation(), Sound.ITEM_BOTTLE_FILL, 1, 1);
             b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 5, 0.1, 0.1, 0.1);
-            b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 300, 2, 2, 2);
+            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 1, 0.1, 0.1, 0.1);
+            b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation(), 200, 0.1, 8, 0.1);
 
             // Drop item
             b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), output.clone()).setGlowing(true);
 
             // Send message
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse(
-                    "<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>")));
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
+                    "<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>")));
         }, 30);
     }
 }

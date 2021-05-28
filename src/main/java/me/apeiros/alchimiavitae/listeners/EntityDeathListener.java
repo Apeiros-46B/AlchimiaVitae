@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static me.apeiros.alchimiavitae.AlchimiaVitae.mm;
+import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class EntityDeathListener implements Listener {
 
@@ -33,7 +33,7 @@ public class EntityDeathListener implements Listener {
             if (SlimefunUtils.isItemSimilar(damager.getInventory().getItemInMainHand(),
                     Items.SOUL_COLLECTOR, false, false)) {
                 e.setCancelled(true);
-                damager.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<red>You cannot hurt a player using the Soul Collector!")));
+                damager.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot hurt a player using the Soul Collector!")));
                 damager.playSound(damager.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 1);
             }
         }
@@ -48,7 +48,7 @@ public class EntityDeathListener implements Listener {
             if (r.nextInt(2) == 0 && SlimefunUtils.isItemSimilar(killer.getInventory().getItemInMainHand(),
                     Items.SOUL_COLLECTOR, false, false)) {
                 String mobName = WordUtils.capitalize(e.getEntity().getType().toString().replace("_", " ").toLowerCase());
-                killer.sendMessage(BukkitComponentSerializer.legacy().serialize(mm.parse("<aqua>You extracted a soul from a <gradient:#6baefa:#7145b0>" + mobName + "</gradient><aqua>!")));
+                killer.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<aqua>You extracted a soul from a <gradient:#6baefa:#7145b0>" + mobName + "</gradient><aqua>!")));
                 killer.playSound(killer.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1,1);
 
                 if (e.getEntity() instanceof Wither /*(1.17) || e.getEntity() instanceof Warden */) {
