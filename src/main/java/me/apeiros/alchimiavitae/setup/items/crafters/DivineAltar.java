@@ -119,30 +119,39 @@ public class DivineAltar extends AbstractContainer {
             }
         }
 
-        // First pre-craft effect burst
-        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
-
         // Pre-craft effects
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
             b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+            b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
             b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
-        }, 30);
 
-        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-            // Post-craft effects
-            b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
-            b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 5, 0.1, 0.1, 0.1);
-            b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 300, 2, 2, 2);
+            Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
+                b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
+                b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
 
-            // Drop item
-            b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), output.clone()).setGlowing(true);
+                Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
+                    b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                    b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
+                    b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
 
-            // Send message
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
-                    "<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>")));
+                    Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
+                        // Post-craft effects
+                        b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
+                        b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1, 1);
+                        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 5, 0.1, 0.1, 0.1);
+                        b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 300, 2, 2, 2);
+
+                        // Drop item
+                        b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), output.clone()).setGlowing(true);
+
+                        // Send message
+                        p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
+                                "<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>")));
+                    }, 30);
+                }, 30);
+            }, 30);
         }, 30);
     }
 }
