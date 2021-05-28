@@ -32,14 +32,18 @@ public class BenevolentBrew extends SlimefunItem implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPotionDrink(PlayerItemConsumeEvent e) {
         if (SlimefunUtils.isItemSimilar(e.getItem(), Items.BENEVOLENT_BREW, true, false)) {
-            e.getPlayer().getWorld().spawnParticle(Particle.TOTEM, e.getPlayer().getLocation(), 50, 1, 1, 1);
-            e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_TOTEM_USE, 0.5F, 1);
-            e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 1);
+            e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_TRIDENT_RETURN, 1, 1);
 
             Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
+                e.getPlayer().getWorld().spawnParticle(Particle.TOTEM, e.getPlayer().getLocation(), 200, 1, 1, 1);
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_TOTEM_USE, 0.5F, 1);
                 e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 1);
-                e.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, e.getPlayer().getLocation(), 50, 5, 5, 5);
+
+                Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
+                    e.getPlayer().getWorld().spawnParticle(Particle.BLOCK_CRACK, e.getPlayer().getLocation(), 200, 3, 3, 3, Material.EMERALD_BLOCK.createBlockData());
+                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
+                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 1);
+                }, 30);
             }, 30);
         }
     }
