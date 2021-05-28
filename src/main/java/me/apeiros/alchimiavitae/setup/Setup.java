@@ -39,7 +39,7 @@ public class Setup {
         new Illumium(Categories.GENERAL).register(p);
         new Darksteel(Categories.GENERAL).register(p);
 
-        // Divine altar
+        // Divine Altar
         setupDivineAltarRecipes();
         new DivineAltar(Categories.GENERAL).register(p);
 
@@ -47,8 +47,14 @@ public class Setup {
         new MoltenMysteryMetal(Categories.GENERAL).register(p);
         new MysteryMetal(Categories.GENERAL).register(p);
         new PotionOfOsmosis(Categories.GENERAL).register(p);
-        new BenevolentBrew(Categories.GENERAL, p).register(p);
+
+        // Ornate Cauldron
+        setupOrnateCauldronRecipes();
         new OrnateCauldron(Categories.GENERAL).register(p);
+
+        // Items cont.d
+        new BenevolentBrew(Categories.GENERAL, p).register(p);
+
 
         // Listeners
         new EntityDeathListener(p);
