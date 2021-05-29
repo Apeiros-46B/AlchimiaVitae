@@ -72,7 +72,7 @@ public class Items {
     }
 
     public static final SlimefunItemStack GOOD_ESSENCE = new SlimefunItemStack("AV_GOOD_ESSENCE",
-            Material.GLOWSTONE_DUST, BukkitComponentSerializer.legacy().serialize
+            Material.SUGAR, BukkitComponentSerializer.legacy().serialize
             (MM.parse("<gradient:#2ddae0:#31f876>Light Essence</gradient>")),
             "&7Light Magic III", "&aLife. Illumination. ");
 

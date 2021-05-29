@@ -58,6 +58,7 @@ public class EntityDeathListener implements Listener {
                 } else if (e.getEntity() instanceof WitherSkeleton) {
                     for (int i = 0; i < r.nextInt(4); i++) {
                         e.getDrops().add(Items.CONDENSED_SOUL);
+                        e.setDroppedExp(e.getDroppedExp() * 3);
                     }
                 } else if (e.getEntity() instanceof EnderDragon) {
                     e.getDrops().add(Items.CONDENSED_SOUL);
