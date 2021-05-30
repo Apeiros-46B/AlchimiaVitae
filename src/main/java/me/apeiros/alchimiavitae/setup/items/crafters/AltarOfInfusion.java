@@ -28,7 +28,7 @@ import java.util.Map;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
-public class InfusionAltar extends AbstractContainer {
+public class AltarOfInfusion extends AbstractContainer {
 
     private static final int[] IN_SLOTS = {10, 11, 12, 19, 20, 21, 28, 29, 30};
 
@@ -39,9 +39,9 @@ public class InfusionAltar extends AbstractContainer {
 
     public static final Map<MultiInput, ItemStack> RECIPES = new HashMap<>();
 
-    public InfusionAltar(Category c) {
+    public AltarOfInfusion(Category c) {
 
-        super(c, Items.DIVINE_ALTAR, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
+        super(c, Items.ALTAR_OF_INFUSION, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
                 Items.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, Items.EXP_CRYSTAL,
                 SlimefunItems.REINFORCED_PLATE, new ItemStack(Material.BEACON), SlimefunItems.REINFORCED_PLATE,
                 SlimefunItems.BLISTERING_INGOT_3, Items.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
@@ -102,7 +102,7 @@ public class InfusionAltar extends AbstractContainer {
         menu.addMenuCloseHandler(player -> menu.dropItems(player.getLocation(), IN_SLOTS));
     }
 
-    public void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
+    private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
         // Get expected output
         ItemStack output = RECIPES.get(new MultiInput(inv, IN_SLOTS));
 
@@ -160,5 +160,38 @@ public class InfusionAltar extends AbstractContainer {
                 }, 30);
             }, 30);
         }, 30);
+    }
+
+    private void infuse(@NotNull BlockMenu inv, @NotNull ItemStack tool) {
+        String infuseType = "";
+
+        if (tool.getType().isItem()) {
+            if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
+                    tool.getType().equals(Material.IRON_PICKAXE) ||
+                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
+                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
+                infuseType = "pickaxe";
+            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
+                    tool.getType().equals(Material.IRON_PICKAXE) ||
+                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
+                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
+                infuseType = "sword";
+            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
+                    tool.getType().equals(Material.IRON_PICKAXE) ||
+                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
+                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
+                infuseType = "axe";
+            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
+                    tool.getType().equals(Material.IRON_PICKAXE) ||
+                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
+                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
+                infuseType = "chestplate";
+            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
+                    tool.getType().equals(Material.IRON_PICKAXE) ||
+                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
+                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
+                infuseType = "pickaxe";
+            }
+        }
     }
 }

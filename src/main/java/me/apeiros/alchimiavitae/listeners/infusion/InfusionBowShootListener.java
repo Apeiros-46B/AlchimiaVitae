@@ -1,6 +1,9 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
+import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectionManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.AbstractArrow;
@@ -161,8 +164,16 @@ public class InfusionBowShootListener implements Listener {
             if (((Fireball) e.getEntity()).getShooter() instanceof Player &&
                     e.getEntity().getPersistentDataContainer().has
                     (infusionVolatile, PersistentDataType.BYTE)) {
-                // Remove explosion damage
-                e.blockList().clear();
+                Player shooter = (Player) ((Fireball) e.getEntity()).getShooter();
+                ProtectionManager pm = SlimefunPlugin.getProtectionManager();
+
+                if (pm.hasPermission(shooter, e.getLocation(), ProtectableAction.ATTACK_ENTITY) ||
+                        pm.hasPermission(shooter, e.getLocation(), ProtectableAction.ATTACK_PLAYER)) {
+                    // Remove explosion damage
+                    e.blockList().clear();
+                } else {
+                    e.setCancelled(true);
+                }
             }
         }
     }

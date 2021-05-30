@@ -158,4 +158,11 @@ public class Items {
     public static final SlimefunItemStack BENEVOLENT_BREW = PotionUtils.makePotion(MM.parse(
             "<gradient:#2ddae0:#31f876>Benevolent Brew</gradient>"), Color.LIME, potEffectsMap);
 
+    public static final SlimefunItemStack ALTAR_OF_INFUSION = new SlimefunItemStack("AV_ALTAR_OF_INFUSION",
+            Material.LODESTONE, BukkitComponentSerializer.legacy().serialize
+            (MM.parse("<gradient:#f78770:#ff607B>Altar of Infusion</gradient>")),
+            "&5An altar that combines technology", "&5and witchcraft to infuse items with", "&5powerful properties", "&6Due to magic we do not yet",
+            "&6understand, infusions can only", "&6be applied to tools made of gold,",
+            "&6iron, diamond, or netherite", "&6Bows can be primed with a mysterious energy", "&6to make them compatible with this system");
+
 }

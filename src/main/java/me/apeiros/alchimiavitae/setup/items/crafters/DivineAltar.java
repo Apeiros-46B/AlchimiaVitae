@@ -101,7 +101,7 @@ public class DivineAltar extends AbstractContainer {
         menu.addMenuCloseHandler(player -> menu.dropItems(player.getLocation(), IN_SLOTS));
     }
 
-    public void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
+    private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
         // Get expected output
         ItemStack output = RECIPES.get(new MultiInput(inv, IN_SLOTS));
 

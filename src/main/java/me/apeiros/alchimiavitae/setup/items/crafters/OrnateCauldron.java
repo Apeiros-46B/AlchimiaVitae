@@ -90,7 +90,7 @@ public class OrnateCauldron extends AbstractContainer {
         for (int slot : CRAFT_BUTTON) {
             menu.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> {
                 // Craft item
-                craft(b, menu, player);
+                brew(b, menu, player);
                 return false;
             });
         }
@@ -99,7 +99,7 @@ public class OrnateCauldron extends AbstractContainer {
         menu.addMenuCloseHandler(player -> menu.dropItems(player.getLocation(), IN_SLOTS));
     }
 
-    public void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
+    private void brew(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
         // Get expected output
         ItemStack output = RECIPES.get(new MultiInput(inv, IN_SLOTS));
 
