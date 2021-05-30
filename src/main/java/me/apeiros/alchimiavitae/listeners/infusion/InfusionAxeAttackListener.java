@@ -3,6 +3,7 @@ package me.apeiros.alchimiavitae.listeners.infusion;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,14 +35,15 @@ public class InfusionAxeAttackListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAxeHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
+            // Store the attacker, the weapon's PDC, and a ThreadLocalRandom in 3 variables
             Player p = (Player) e.getDamager();
             PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+            ThreadLocalRandom r = ThreadLocalRandom.current();
 
             // Check what infusion the axe has
             if (container.has(infusionDestructiveCrits, PersistentDataType.BYTE) && e.getEntity() instanceof Player) {
-                // Player and ThreadLocalRandom variables
+                // Store the victim of the attack in a variable
                 Player victim = (Player) e.getEntity();
-                ThreadLocalRandom r = ThreadLocalRandom.current();
 
                 // Damage armor
                 for (ItemStack d : victim.getInventory().getArmorContents()) {
@@ -69,10 +71,15 @@ public class InfusionAxeAttackListener implements Listener {
                 if (r.nextInt(19) == 0) {
                     victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
                 }
-            } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE)) {
+            } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity) {
+                // Store victim in a variable
+                LivingEntity victim = (LivingEntity) e.getEntity();
 
+                // Set health
+                if (r.nextInt(4) == 0) {
+                    victim.setHealth(victim.getHealth() - Math.pow(e.getFinalDamage(), 1.15) * 5 / 8);
+                }
             }
         }
     }
-
 }
