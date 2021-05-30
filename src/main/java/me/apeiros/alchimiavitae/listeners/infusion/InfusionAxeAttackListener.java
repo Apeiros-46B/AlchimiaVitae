@@ -19,9 +19,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class InfusionAxeAttackListener implements Listener {
 
-    // TODO: Destructive Criticals Infusion (Extra armor and shield damage on crits)
-    // TODO: Phantom Criticals Infusion (Chance to partially bypass shield or armor on a crit)
-
     // Keys
     private final NamespacedKey infusionDestructiveCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_destructivecrits");
     private final NamespacedKey infusionPhantomCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_phantomcrits");
