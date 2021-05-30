@@ -1,4 +1,6 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
-public class InfusionSwordAttackListener {
+import org.bukkit.event.Listener;
+
+public class InfusionSwordAttackListener implements Listener {
 }
