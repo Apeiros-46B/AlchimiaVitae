@@ -36,7 +36,7 @@ My entry to the **2021 Slimefun Addon Jam**
 - Phantom Criticals
   - Applicable items: Axe
   - Effects:
-    - 1/4 chance to partially bypass armor and do the attack's damage raised to the power of 1.15 multiplied by 5/8
+    - 1/4 chance to partially bypass armor and do the attack's damage raised to the power of 1.15 multiplied by 5/8 on a crit
 - True Aim
   - Applicable items: Bow, Crossbow
   - Effects:
@@ -52,7 +52,7 @@ My entry to the **2021 Slimefun Addon Jam**
 - Volatile
   - Applicable items: Bow, Crossbow
   - Effects:
-    - 1/7 chance to shoot a large fireball that does no block damage and does not create fire
+    - 1/7 chance to shoot a large fireball that does no block damage and does not create fire instead of an arrow
     - If a large fireball is not fired, a small fireball will be fired instead that does no block damage and does not create fire
 - Automatic Replant
   - Applicable items: Hoe
@@ -62,4 +62,4 @@ My entry to the **2021 Slimefun Addon Jam**
   - Applicable items: Chestplate
   - Effects:
     - Allows you to store up to 8 Totems of Undying inside a pocket dimension, resurrecting you upon death, but then being consumed.
-    - Totems are added to this battery by shift-rightclicking with them while a chestplate infused with this Infusion is worn
+    - Totems are added to this battery by shift-rightclicking with one while a chestplate infused with this Infusion is worn
