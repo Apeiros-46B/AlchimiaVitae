@@ -15,8 +15,6 @@ My entry to the **2021 Slimefun Addon Jam**
 - Ornate Cauldron
   - Used to create powerful potions
     - Benevolent Brew and Malevolent Concoction
-    - Ancient Potion of Harmony
-    - Ancient Potion of Destruction
 - Altar of Infusion
   - Allows you to infuse tools and weapons with powerful effects called Infusions
   - Infusions are not compatible with each other, you must choose wisely
