@@ -26,7 +26,7 @@ public class InfusionTotemStorageDeathListener implements Listener {
     // Event
     @EventHandler(ignoreCancelled = true)
     public void onDamage(EntityDamageEvent e) {
-        if (e.getCause() != EntityDamageEvent.DamageCause.VOID && e.getEntity() instanceof Player) {
+        if (!e.getCause().equals(EntityDamageEvent.DamageCause.VOID) && e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
 
             if (p.getInventory().getChestplate() != null) {
@@ -48,7 +48,7 @@ public class InfusionTotemStorageDeathListener implements Listener {
                             p.getInventory().getChestplate().setItemMeta(meta);
 
                             // Add potion effects and heal by half a heart
-                            p.setHealth(p.getHealth() + 1);
+                            p.setHealth(1);
                             p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5, 2));
                             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45, 2));
                             p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40, 1));
