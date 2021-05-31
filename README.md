@@ -62,4 +62,4 @@ My entry to the **2021 Slimefun Addon Jam**
   - Applicable items: Chestplate
   - Effects:
     - Allows you to store up to 8 Totems of Undying inside a pocket dimension, resurrecting you upon death, but then being consumed.
-    - Totems are added to this battery by shift-rightclicking while a chestplate infused with this Infusion is worn
+    - Totems are added to this battery by shift-rightclicking with them while a chestplate infused with this Infusion is worn
