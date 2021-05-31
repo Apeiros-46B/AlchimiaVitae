@@ -47,7 +47,7 @@ public class InfusionTotemRightClickEvent implements Listener {
                 }
 
                 // Remove the totem in the hand
-                e.getPlayer().getInventory().remove(e.getItem());
+                e.getPlayer().getInventory().remove(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
 
                 // Increment the totemsStored variable, set it to the container, and set the meta to the item
                 totemsStored++;
