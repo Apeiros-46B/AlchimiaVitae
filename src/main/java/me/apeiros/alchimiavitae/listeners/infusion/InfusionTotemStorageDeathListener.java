@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -29,7 +30,8 @@ public class InfusionTotemStorageDeathListener implements Listener {
             Player p = (Player) e.getEntity();
 
             if (p.getInventory().getChestplate() != null) {
-                PersistentDataContainer container = p.getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
+                ItemMeta meta = p.getInventory().getChestplate().getItemMeta();
+                PersistentDataContainer container = meta.getPersistentDataContainer();
 
                 if (container.has(infusionTotemStorage, PersistentDataType.INTEGER)) {
                     if (container.get(infusionTotemStorage, PersistentDataType.INTEGER) > 0) {
@@ -43,6 +45,7 @@ public class InfusionTotemStorageDeathListener implements Listener {
                             // Decrement the totemsStored variable and set it to the container
                             totemsStored--;
                             container.set(infusionTotemStorage, PersistentDataType.INTEGER, totemsStored);
+                            p.getInventory().getChestplate().setItemMeta(meta);
 
                             // Add potion effects and heal by half a heart
                             p.setHealth(p.getHealth() + 1);

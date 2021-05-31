@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -32,7 +33,8 @@ public class InfusionTotemRightClickEvent implements Listener {
         if (e.getPlayer().isSneaking() && e.getPlayer().getInventory().getChestplate() != null && e.getItem() != null &&
                 (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             // Get the container
-            PersistentDataContainer container = e.getPlayer().getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
+            ItemMeta meta = e.getPlayer().getInventory().getChestplate().getItemMeta();
+            PersistentDataContainer container = meta.getPersistentDataContainer();
 
             if (e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING)) &&
                     container.has(infusionTotemStorage, PersistentDataType.INTEGER)) {
@@ -47,9 +49,10 @@ public class InfusionTotemRightClickEvent implements Listener {
                 // Remove the totem in the hand
                 e.getPlayer().getInventory().remove(e.getItem());
 
-                // Increment the totemsStored variable and set it to the container
+                // Increment the totemsStored variable, set it to the container, and set the meta to the item
                 totemsStored++;
                 container.set(infusionTotemStorage, PersistentDataType.INTEGER, totemsStored);
+                e.getPlayer().getInventory().getChestplate().setItemMeta(meta);
 
                 // Send a message to the player
                 e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<green>Your Totem has been added to the Battery of Totems.")));

@@ -22,12 +22,12 @@ public class Categories {
 
     public static final Category ALTAR_RECIPES = new SubCategory(
             new NamespacedKey(AlchimiaVitae.i(), "av_altar_recipes"),
-            new CustomItem(Material.ENCHANTING_TABLE, "&6Alchimia Vitae &7- &5Altar Recipes")
+            new CustomItem(Material.ENCHANTING_TABLE, "&6Alchimia Vitae &7- &5Altar Transformation Recipes")
     );
 
     public static final Category INFUSIONS = new SubCategory(
             new NamespacedKey(AlchimiaVitae.i(), "av_infusions"),
-            new CustomItem(Material.LODESTONE, "&6Alchimia Vitae &7- &dInfusions")
+            new CustomItem(Material.LODESTONE, "&6Alchimia Vitae &7- &dInfusion")
     );
 
     public static final Category MAIN = new MultiCategory(

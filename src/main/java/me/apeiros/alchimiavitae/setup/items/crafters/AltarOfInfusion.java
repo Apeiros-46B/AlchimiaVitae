@@ -1,5 +1,6 @@
 package me.apeiros.alchimiavitae.setup.items.crafters;
 
+import io.github.mooy1.infinitylib.recipes.inputs.MultiInput;
 import io.github.mooy1.infinitylib.slimefun.AbstractContainer;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -39,6 +40,7 @@ public class AltarOfInfusion extends AbstractContainer {
     private final NamespacedKey axeInfusionPhantomCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_phantomcrits");
 
     private static final int[] IN_SLOTS = {10, 11, 12, 19, 20, 21, 28, 29, 30};
+    private static final int[] IN_SLOTS_EXCLUDING_MID = {10, 11, 12, 19, 21, 28, 29, 30};
 
     private static final int[] IN_BG = {0, 1, 2, 3, 4, 9, 13, 18, 22, 27, 31, 36, 37, 38, 39, 40};
     private static final int[] CRAFT_BG = {5, 6, 7, 8, 14, 17, 23, 26, 32, 35, 41, 42, 43, 44};
@@ -47,7 +49,7 @@ public class AltarOfInfusion extends AbstractContainer {
 
     private static final int TOOL_SLOT = 20;
 
-    public static final Map<ItemStack[], NamespacedKey> RECIPES = new HashMap<>();
+    public static final Map<MultiInput, NamespacedKey> RECIPES = new HashMap<>();
 
     public AltarOfInfusion(Category c) {
 
@@ -113,30 +115,8 @@ public class AltarOfInfusion extends AbstractContainer {
     }
 
     private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
-        // Get the items in the slots
-        ItemStack[] infuseItems = new ItemStack[8];
-
-        // Index
-        int index = 0;
-        for (int slot : IN_SLOTS) {
-            // Make sure that the slot is not the middle (item to be infused) slot
-            if (slot != TOOL_SLOT) {
-                // Add the item in the inventory to the array
-                infuseItems[index] = inv.getItemInSlot(slot);
-                // Increment index
-                index++;
-            }
-        }
-
         // Get expected Infusion
-        NamespacedKey infusion = RECIPES.get(infuseItems);
-
-        // Invalid Infusion
-        if (infusion == null) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That Infusion is invalid!")));
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
-            return;
-        }
+        NamespacedKey infusion = RECIPES.get(new MultiInput(inv, IN_SLOTS_EXCLUDING_MID));
 
         // Check if item is valid
         if (inv.getItemInSlot(TOOL_SLOT).getType().isItem()) {
@@ -160,14 +140,38 @@ public class AltarOfInfusion extends AbstractContainer {
                 // Valid item
             } else {
                 // Invalid item
-                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That Infusion is invalid!")));
-                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
+                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot infuse that tool!")));
                 return;
             }
         }
 
         // Get the tool
         ItemStack tool = inv.getItemInSlot(TOOL_SLOT);
+        ItemMeta meta = tool.getItemMeta();
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+
+        // Check if tool is already infused
+        if (container.has(chestplateInfusionTotemStorage, PersistentDataType.BYTE) ||
+                container.has(axeInfusionDestructiveCrits, PersistentDataType.BYTE) ||
+                container.has(axeInfusionPhantomCrits, PersistentDataType.BYTE) ||
+                container.has(hoeInfusionAutoReplant, PersistentDataType.BYTE) ||
+                container.has(bowInfusionTrueAim, PersistentDataType.BYTE) ||
+                container.has(bowInfusionForceful, PersistentDataType.BYTE) ||
+                container.has(bowInfusionVolatile, PersistentDataType.BYTE) ||
+                container.has(bowInfusionHealing, PersistentDataType.BYTE)) {
+            // Tool is already infused
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You have already applied an Infusion to this item!")));
+            return;
+        }
+
+        // Check if the tool can be infused
+        if (canBeInfused(tool, infusion)) {
+            container.set(infusion, PersistentDataType.BYTE, (byte) 1);
+            tool.setItemMeta(meta);
+        } else {
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot apply this infusion to this item!")));
+            return;
+        }
 
         // Pre-craft effects
         b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1, 1);
@@ -193,6 +197,7 @@ public class AltarOfInfusion extends AbstractContainer {
 
                 Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
                     // Post-craft effects
+                    b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
                     b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 0.5F, 1);
                     b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
                     b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
@@ -201,7 +206,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     b.getWorld().spawnParticle(Particle.PORTAL, b.getLocation(), 300, 2, 2, 2);
 
                     // Drop item
-                    b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), /*dummy item, i fix later*/new ItemStack(Material.FIRE));
+                    b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), tool.clone());
 
                     // Send message
                     p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
@@ -211,51 +216,40 @@ public class AltarOfInfusion extends AbstractContainer {
         }, 30);
     }
 
-    private ItemStack infuse(@NotNull Player p, @NotNull ItemStack tool, @NotNull ItemStack[] infuseItems) {
-        // Item meta and PDC
-        ItemMeta meta = tool.getItemMeta();
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-
-        if (container.has(chestplateInfusionTotemStorage, PersistentDataType.BYTE) ||
-                container.has(axeInfusionDestructiveCrits, PersistentDataType.BYTE) ||
-                container.has(axeInfusionPhantomCrits, PersistentDataType.BYTE) ||
-                container.has(hoeInfusionAutoReplant, PersistentDataType.BYTE) ||
-                container.has(bowInfusionTrueAim, PersistentDataType.BYTE) ||
-                container.has(bowInfusionForceful, PersistentDataType.BYTE) ||
-                container.has(bowInfusionVolatile, PersistentDataType.BYTE) ||
-                container.has(bowInfusionHealing, PersistentDataType.BYTE)) {
-            // Tool is already infused
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You have already applied an Infusion to this item!")));
-            return tool;
-        }
-
-        // Declare infuseType
-        String infuseType;
-
-        // Set the infuseType
+    private boolean canBeInfused(@NotNull ItemStack tool, @NotNull NamespacedKey infusion) {
+        // Check if the infusion can be applied to the tool
         if (tool.getType().isItem()) {
             if (tool.getType().equals(Material.GOLDEN_HOE) ||
                     tool.getType().equals(Material.IRON_HOE) ||
                     tool.getType().equals(Material.DIAMOND_HOE) ||
-                    tool.getType().equals(Material.NETHERITE_HOE)) {
-                infuseType = "hoe";
+                    tool.getType().equals(Material.NETHERITE_HOE) &&
+                    infusion == hoeInfusionAutoReplant) {
+                return true;
             } else if (tool.getType().equals(Material.GOLDEN_AXE) ||
                     tool.getType().equals(Material.IRON_AXE) ||
                     tool.getType().equals(Material.DIAMOND_AXE) ||
-                    tool.getType().equals(Material.NETHERITE_AXE)) {
-                infuseType = "axe";
+                    tool.getType().equals(Material.NETHERITE_AXE) &&
+                    (infusion == axeInfusionDestructiveCrits ||
+                    infusion == axeInfusionPhantomCrits)) {
+                return true;
             } else if (tool.getType().equals(Material.GOLDEN_CHESTPLATE) ||
                     tool.getType().equals(Material.IRON_CHESTPLATE) ||
                     tool.getType().equals(Material.DIAMOND_CHESTPLATE) ||
-                    tool.getType().equals(Material.NETHERITE_CHESTPLATE)) {
-                infuseType = "chestplate";
-            } else if (tool.getType().equals(Material.BOW) ||
-                    tool.getType().equals(Material.CROSSBOW)) {
-                infuseType = "bow";
+                    tool.getType().equals(Material.NETHERITE_CHESTPLATE) &&
+                    infusion == chestplateInfusionTotemStorage) {
+                return true;
+            } else if ((tool.getType().equals(Material.BOW) ||
+                    tool.getType().equals(Material.CROSSBOW)) &&
+                    (infusion == bowInfusionTrueAim ||
+                    infusion == bowInfusionForceful ||
+                    infusion == bowInfusionVolatile ||
+                    infusion == bowInfusionHealing)) {
+                return true;
+            } else {
+                return false;
             }
         }
 
-        // Dummy item, i fix later
-        return new ItemStack(Material.FIRE);
+        return false;
     }
 }
