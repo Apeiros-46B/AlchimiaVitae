@@ -1,8 +1,11 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
+import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -10,6 +13,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class InfusionTotemRightClickEvent implements Listener {
 
@@ -24,23 +29,39 @@ public class InfusionTotemRightClickEvent implements Listener {
     // Event
     @EventHandler(ignoreCancelled = true)
     public void onShiftRightClick(PlayerInteractEvent e) {
-        if (e.getPlayer().isSneaking() && e.getPlayer().getInventory().getChestplate() != null && e.getItem() != null) {
+        if (e.getPlayer().isSneaking() && e.getPlayer().getInventory().getChestplate() != null && e.getItem() != null &&
+                (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             // Get the container
             PersistentDataContainer container = e.getPlayer().getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
 
             if (e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING)) &&
                     container.has(infusionTotemStorage, PersistentDataType.INTEGER)) {
-                if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    // Amount of totems stored in the chestplate
-                    int totemsStored = container.get(infusionTotemStorage, PersistentDataType.INTEGER);
+                // Amount of totems stored in the chestplate
+                int totemsStored = container.get(infusionTotemStorage, PersistentDataType.INTEGER);
 
-                    // Remove the totem in the hand
-                    e.getPlayer().getInventory().remove(e.getItem());
-
-                    // Increment the totemsStored variable and set it to the container
-                    totemsStored++;
-                    container.set(infusionTotemStorage, PersistentDataType.INTEGER, totemsStored);
+                // Check if there are already 8 totems
+                if (totemsStored >= 8) {
+                    e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is no more space for this Totem!")));
                 }
+
+                // Remove the totem in the hand
+                e.getPlayer().getInventory().remove(e.getItem());
+
+                // Increment the totemsStored variable and set it to the container
+                totemsStored++;
+                container.set(infusionTotemStorage, PersistentDataType.INTEGER, totemsStored);
+
+                // Send a message to the player
+                e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<green>Your Totem has been added to the Battery of Totems.")));
+                e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<green>There are now " + totemsStored + " Totems stored.")));
+
+                // Play effects
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 1);
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 1);
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0.8F, 1);
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_EVOKER_PREPARE_ATTACK, 1, 1);
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_TOTEM_USE, 0.2F, 1);
+                e.getPlayer().getWorld().spawnParticle(Particle.END_ROD, e.getPlayer().getLocation(), 200, 1, 2, 1);
             }
         }
     }

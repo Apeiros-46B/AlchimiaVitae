@@ -71,7 +71,7 @@ public class InfusionBowShootListener implements Listener {
 
             // Volatility infusion
             if (pdc.has(infusionVolatile, PersistentDataType.BYTE)) {
-                // Init fireball
+                // Declare fb
                 Fireball fb;
 
                 // Random
