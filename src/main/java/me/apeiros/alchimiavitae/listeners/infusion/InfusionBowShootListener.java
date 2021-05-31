@@ -73,6 +73,7 @@ public class InfusionBowShootListener implements Listener {
             if (pdc.has(infusionVolatile, PersistentDataType.BYTE)) {
                 // Init fireball
                 Fireball fb;
+
                 // Random
                 ThreadLocalRandom r = ThreadLocalRandom.current();
                 int rNum = r.nextInt(6);

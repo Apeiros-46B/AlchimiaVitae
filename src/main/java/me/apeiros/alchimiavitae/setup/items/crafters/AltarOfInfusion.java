@@ -14,10 +14,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +26,15 @@ import java.util.Map;
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class AltarOfInfusion extends AbstractContainer {
+
+    private final NamespacedKey chestplateInfusionTotemStorage = new NamespacedKey(AlchimiaVitae.i(), "infusion_totemstorage");
+    private final NamespacedKey hoeInfusionAutoReplant = new NamespacedKey(AlchimiaVitae.i(), "infusion_autoreplant");
+    private final NamespacedKey bowInfusionTrueAim = new NamespacedKey(AlchimiaVitae.i(), "infusion_trueaim");
+    private final NamespacedKey bowInfusionVolatile = new NamespacedKey(AlchimiaVitae.i(), "infusion_volatile");
+    private final NamespacedKey bowInfusionForceful = new NamespacedKey(AlchimiaVitae.i(), "infusion_forceful");
+    private final NamespacedKey bowInfusionHealing = new NamespacedKey(AlchimiaVitae.i(), "infusion_healing");
+    private final NamespacedKey axeInfusionDestructiveCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_destructivecrits");
+    private final NamespacedKey axeInfusionPhantomCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_phantomcrits");
 
     private static final int[] IN_SLOTS = {10, 11, 12, 19, 20, 21, 28, 29, 30};
 
@@ -156,7 +162,7 @@ public class AltarOfInfusion extends AbstractContainer {
 
                     // Send message
                     p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
-                            "<gradient:#50fa75:#3dd2ff>Your tool has been infused!</gradient>")));
+                            "<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>")));
                 }, 30);
             }, 30);
         }, 30);
@@ -164,34 +170,44 @@ public class AltarOfInfusion extends AbstractContainer {
 
     private void infuse(@NotNull BlockMenu inv, @NotNull ItemStack tool) {
         String infuseType = "";
+        ItemStack[] infuseItems = new ItemStack[8];
 
-        if (tool.getType().isItem()) {
-            if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
-                    tool.getType().equals(Material.IRON_PICKAXE) ||
-                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
-                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
-                infuseType = "pickaxe";
-            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
-                    tool.getType().equals(Material.IRON_PICKAXE) ||
-                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
-                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
-                infuseType = "sword";
-            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
-                    tool.getType().equals(Material.IRON_PICKAXE) ||
-                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
-                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
-                infuseType = "axe";
-            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
-                    tool.getType().equals(Material.IRON_PICKAXE) ||
-                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
-                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
-                infuseType = "chestplate";
-            } else if (tool.getType().equals(Material.GOLDEN_PICKAXE) ||
-                    tool.getType().equals(Material.IRON_PICKAXE) ||
-                    tool.getType().equals(Material.DIAMOND_PICKAXE) ||
-                    tool.getType().equals(Material.NETHERITE_PICKAXE)) {
-                infuseType = "pickaxe";
+        // Index
+        int index = 0;
+        for (int slot : IN_SLOTS) {
+            // Make sure that the slot is not the middle (item to be infused) slot
+            if (slot != 20) {
+                // Add the item in the inventory to the array
+                infuseItems[index] = inv.getItemInSlot(slot);
+                // Increment index
+                index++;
             }
         }
+
+        // Set the infuseType
+        if (tool.getType().isItem()) {
+            if (tool.getType().equals(Material.GOLDEN_HOE) ||
+                    tool.getType().equals(Material.IRON_HOE) ||
+                    tool.getType().equals(Material.DIAMOND_HOE) ||
+                    tool.getType().equals(Material.NETHERITE_HOE)) {
+                infuseType = "hoe";
+            } else if (tool.getType().equals(Material.GOLDEN_AXE) ||
+                    tool.getType().equals(Material.IRON_AXE) ||
+                    tool.getType().equals(Material.DIAMOND_AXE) ||
+                    tool.getType().equals(Material.NETHERITE_AXE)) {
+                infuseType = "axe";
+            } else if (tool.getType().equals(Material.GOLDEN_CHESTPLATE) ||
+                    tool.getType().equals(Material.IRON_CHESTPLATE) ||
+                    tool.getType().equals(Material.DIAMOND_CHESTPLATE) ||
+                    tool.getType().equals(Material.NETHERITE_CHESTPLATE)) {
+                infuseType = "chestplate";
+            } else if (tool.getType().equals(Material.BOW) ||
+                    tool.getType().equals(Material.CROSSBOW)) {
+                infuseType = "bow";
+            }
+        }
+
+
+
     }
 }

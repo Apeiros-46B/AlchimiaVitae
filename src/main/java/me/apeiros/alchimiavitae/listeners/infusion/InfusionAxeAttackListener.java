@@ -1,7 +1,6 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -47,11 +46,6 @@ public class InfusionAxeAttackListener implements Listener {
                     if (d.getItemMeta() instanceof Damageable) {
                         ((Damageable) d.getItemMeta()).setDamage(r.nextInt(5));
                     }
-                }
-
-                // Damage shield
-                if (victim.getInventory().getItemInOffHand().getType() == Material.SHIELD) {
-                    ((Damageable) victim.getInventory().getItemInOffHand()).setDamage(r.nextInt(5));
                 }
 
                 // 1/5 chance to add slowness

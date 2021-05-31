@@ -112,6 +112,11 @@ public class Setup {
                 "A weak blessing from Gaia herself", 35)
                 .addItems(Items.BENEVOLENT_BREW)
                 .register();
+
+        new Research(new NamespacedKey(p, "benevolent_brew"), 131081,
+                "A substance with a slightly corrupted tinge", 35)
+                .addItems(Items.MALEVOLENT_CONCOCTION)
+                .register();
     }
 
     private static void setupDivineAltar(AlchimiaVitae p) {
