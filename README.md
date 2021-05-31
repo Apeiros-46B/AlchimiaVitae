@@ -19,6 +19,7 @@ My entry to the **2021 Slimefun Addon Jam**
     - Ancient Potion of Destruction
 - Altar of Infusion
   - Allows you to infuse tools and weapons with powerful effects called Infusions
+  - Infusions are not compatible with each other, you must choose wisely
 - Potion of Osmosis
   - Absorbs your effects when you drink it
   - Brewed using the Ornate Cauldron
