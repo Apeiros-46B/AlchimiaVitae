@@ -142,7 +142,7 @@ public class Items {
     public static final SlimefunItemStack ORNATE_CAULDRON = new SlimefunItemStack("AV_ORNATE_CAULDRON",
             Material.CAULDRON, BukkitComponentSerializer.legacy().serialize
             (MM.parse("<gradient:#57ebbe:#f6fa2a>Ornate Cauldron</gradient>")),
-            "&2The first step to brewing", "&2the Ancient Potions of", "&aHarmony &2and &cDestruction");
+            "&2An advanced cauldron for the brewing of potions");
 
     // Make sure to make the int pair at the end {time in seconds * 20, level}
     private static Map<PotionEffectType, int[]> potEffectsMap = new HashMap<>();

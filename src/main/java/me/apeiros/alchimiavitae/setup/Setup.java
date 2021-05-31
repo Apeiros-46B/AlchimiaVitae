@@ -132,7 +132,7 @@ public class Setup {
                 .register();
 
         new Research(new NamespacedKey(p, "benevolent_brew"), 131080,
-                "A weak blessing from Gaia herself", 35)
+                "A blessing from Gaia herself", 35)
                 .addItems(Items.BENEVOLENT_BREW)
                 .register();
 
