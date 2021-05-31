@@ -118,6 +118,11 @@ public class AltarOfInfusion extends AbstractContainer {
         // Get expected Infusion
         NamespacedKey infusion = RECIPES.get(new MultiInput(inv, IN_SLOTS_EXCLUDING_MID));
 
+        if (infusion == null) {
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That is not a valid Infusion!")));
+            return;
+        }
+
         // Check if item is valid
         if (inv.getItemInSlot(TOOL_SLOT).getType().isItem()) {
             if (inv.getItemInSlot(TOOL_SLOT).getType().equals(Material.GOLDEN_HOE) ||
@@ -147,6 +152,9 @@ public class AltarOfInfusion extends AbstractContainer {
 
         // Get the tool
         ItemStack tool = inv.getItemInSlot(TOOL_SLOT);
+        if (tool == null || tool.getType().equals(Material.AIR)) {
+            return;
+        }
         ItemMeta meta = tool.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
@@ -165,12 +173,21 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         // Check if the tool can be infused
-        if (canBeInfused(tool, infusion)) {
+        if (canBeInfused(tool, infusion) && !infusion.equals(chestplateInfusionTotemStorage)) {
             container.set(infusion, PersistentDataType.BYTE, (byte) 1);
             tool.setItemMeta(meta);
+        } else if (canBeInfused(tool, infusion) && infusion.equals(chestplateInfusionTotemStorage)) {
+            container.set(infusion, PersistentDataType.INTEGER, 0);
+            tool.setItemMeta(meta);
         } else {
+            p.sendMessage(String.valueOf(infusion));
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot apply this infusion to this item!")));
             return;
+        }
+
+        // Consume items
+        for (int slot : IN_SLOTS_EXCLUDING_MID) {
+            inv.consumeItem(slot, 1);
         }
 
         // Pre-craft effects
@@ -205,9 +222,6 @@ public class AltarOfInfusion extends AbstractContainer {
                     b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation(), 5, 0, 8, 0);
                     b.getWorld().spawnParticle(Particle.PORTAL, b.getLocation(), 300, 2, 2, 2);
 
-                    // Drop item
-                    b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), tool.clone());
-
                     // Send message
                     p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
                             "<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>")));
@@ -223,33 +237,28 @@ public class AltarOfInfusion extends AbstractContainer {
                     tool.getType().equals(Material.IRON_HOE) ||
                     tool.getType().equals(Material.DIAMOND_HOE) ||
                     tool.getType().equals(Material.NETHERITE_HOE) &&
-                    infusion == hoeInfusionAutoReplant) {
+                    infusion.equals(hoeInfusionAutoReplant)) {
                 return true;
             } else if (tool.getType().equals(Material.GOLDEN_AXE) ||
                     tool.getType().equals(Material.IRON_AXE) ||
                     tool.getType().equals(Material.DIAMOND_AXE) ||
                     tool.getType().equals(Material.NETHERITE_AXE) &&
-                    (infusion == axeInfusionDestructiveCrits ||
-                    infusion == axeInfusionPhantomCrits)) {
+                    (infusion.equals(axeInfusionDestructiveCrits) ||
+                    infusion.equals(axeInfusionPhantomCrits))) {
                 return true;
             } else if (tool.getType().equals(Material.GOLDEN_CHESTPLATE) ||
                     tool.getType().equals(Material.IRON_CHESTPLATE) ||
                     tool.getType().equals(Material.DIAMOND_CHESTPLATE) ||
                     tool.getType().equals(Material.NETHERITE_CHESTPLATE) &&
-                    infusion == chestplateInfusionTotemStorage) {
+                    infusion.equals(chestplateInfusionTotemStorage)) {
                 return true;
-            } else if ((tool.getType().equals(Material.BOW) ||
+            } else return (tool.getType().equals(Material.BOW) ||
                     tool.getType().equals(Material.CROSSBOW)) &&
-                    (infusion == bowInfusionTrueAim ||
-                    infusion == bowInfusionForceful ||
-                    infusion == bowInfusionVolatile ||
-                    infusion == bowInfusionHealing)) {
-                return true;
-            } else {
-                return false;
-            }
+                    (infusion.equals(bowInfusionTrueAim) ||
+                            infusion.equals(bowInfusionForceful) ||
+                            infusion.equals(bowInfusionVolatile) ||
+                            infusion.equals(bowInfusionHealing));
         }
-
         return false;
     }
 }

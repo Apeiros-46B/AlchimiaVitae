@@ -171,7 +171,7 @@ public class Items {
         potEffectsMap.put(PotionEffectType.HUNGER, new int[]{600, 2});
     }
 
-    public static final SlimefunItemStack MALEVOLENT_CONCOCTION = PotionUtils.makePotion(MM.parse(
+    public static final SlimefunItemStack MALEVOLENT_CONCOCTION = PotionUtils.makeSplashPotion(MM.parse(
             "<gradient:#ff5555:#ffa012>Malevolent Concoction</gradient>"), Color.MAROON, potEffectsMap);
 
     public static final SlimefunItemStack ALTAR_OF_INFUSION = new SlimefunItemStack("AV_ALTAR_OF_INFUSION",

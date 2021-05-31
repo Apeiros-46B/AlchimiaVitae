@@ -18,6 +18,7 @@ import me.apeiros.alchimiavitae.setup.items.plants.EvilMagicPlant;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodEssence;
 import me.apeiros.alchimiavitae.setup.items.plants.GoodMagicPlant;
 import me.apeiros.alchimiavitae.setup.items.potions.BenevolentBrew;
+import me.apeiros.alchimiavitae.setup.items.potions.MalevolentConcoction;
 import me.apeiros.alchimiavitae.setup.items.potions.PotionOfOsmosis;
 import me.apeiros.alchimiavitae.utils.Categories;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
@@ -71,6 +72,7 @@ public class Setup {
         // Items cont.d
         new PotionOfOsmosis(Categories.GENERAL).register(p);
         new BenevolentBrew(Categories.GENERAL, p).register(p);
+        new MalevolentConcoction(Categories.GENERAL, p).register(p);
 
         // Altar of Infusion
         new AltarOfInfusion(Categories.INFUSIONS).register(p);
