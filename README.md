@@ -57,3 +57,8 @@ My entry to the **2021 Slimefun Addon Jam**
   - Applicable items: Hoe
   - Effects:
     - If the harvested crop is fully grown, it will be automatically replanted without using an extra seed
+- Battery of Totems
+  - Applicable items: Chestplate
+  - Effects:
+    - Allows you to store up to 8 Totems of Undying inside a pocket dimension, resurrecting you upon death, but then being consumed.
+    - Totems are added to this battery by shift-rightclicking while a chestplate infused with this Infusion is worn
