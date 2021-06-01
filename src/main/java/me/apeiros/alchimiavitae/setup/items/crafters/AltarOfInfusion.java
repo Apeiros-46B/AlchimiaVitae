@@ -118,6 +118,7 @@ public class AltarOfInfusion extends AbstractContainer {
         // Get expected Infusion
         NamespacedKey infusion = RECIPES.get(new MultiInput(inv, IN_SLOTS_EXCLUDING_MID));
 
+        // Invalid Infusion
         if (infusion == null) {
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That is not a valid Infusion!")));
             return;
@@ -174,13 +175,15 @@ public class AltarOfInfusion extends AbstractContainer {
 
         // Check if the tool can be infused
         if (canBeInfused(tool, infusion) && !infusion.equals(chestplateInfusionTotemStorage)) {
+            // Tool can be infused and the Infusion is not the totem battery
             container.set(infusion, PersistentDataType.BYTE, (byte) 1);
             tool.setItemMeta(meta);
         } else if (canBeInfused(tool, infusion) && infusion.equals(chestplateInfusionTotemStorage)) {
+            // Tool can be infused and the Infusion is the totem battery
             container.set(infusion, PersistentDataType.INTEGER, 0);
             tool.setItemMeta(meta);
         } else {
-            p.sendMessage(String.valueOf(infusion));
+            // Tool cannot be infused
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot apply this infusion to this item!")));
             return;
         }
@@ -231,7 +234,7 @@ public class AltarOfInfusion extends AbstractContainer {
     }
 
     private boolean canBeInfused(@NotNull ItemStack tool, @NotNull NamespacedKey infusion) {
-        // Check if the infusion can be applied to the tool
+        // Check if the Infusion can be applied to the tool
         if (tool.getType().isItem()) {
             if (tool.getType().equals(Material.GOLDEN_HOE) ||
                     tool.getType().equals(Material.IRON_HOE) ||
@@ -252,13 +255,16 @@ public class AltarOfInfusion extends AbstractContainer {
                     tool.getType().equals(Material.NETHERITE_CHESTPLATE) &&
                     infusion.equals(chestplateInfusionTotemStorage)) {
                 return true;
-            } else return (tool.getType().equals(Material.BOW) ||
+            } else {
+                return (tool.getType().equals(Material.BOW) ||
                     tool.getType().equals(Material.CROSSBOW)) &&
                     (infusion.equals(bowInfusionTrueAim) ||
-                            infusion.equals(bowInfusionForceful) ||
-                            infusion.equals(bowInfusionVolatile) ||
-                            infusion.equals(bowInfusionHealing));
+                    infusion.equals(bowInfusionForceful) ||
+                    infusion.equals(bowInfusionVolatile) ||
+                    infusion.equals(bowInfusionHealing));
+            }
         }
+
         return false;
     }
 }
