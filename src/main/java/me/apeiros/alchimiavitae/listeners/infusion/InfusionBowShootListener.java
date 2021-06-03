@@ -53,7 +53,7 @@ public class InfusionBowShootListener implements Listener {
                 e.getProjectile().setGravity(false);
 
                 // Shulker particle trail
-                new BukkitRunnable() {
+                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
                     @Override
                     public void run() {
                         // Cancel if timer variable is 50
@@ -66,7 +66,7 @@ public class InfusionBowShootListener implements Listener {
                         // Increment timer variable
                         trueAimTimer++;
                     }
-                }.run();
+                });
             }
 
             // Volatility infusion
@@ -97,7 +97,7 @@ public class InfusionBowShootListener implements Listener {
                 fb.getPersistentDataContainer().set(infusionVolatile, PersistentDataType.BYTE, (byte) 1);
 
                 // Flame particle trail
-                new BukkitRunnable() {
+                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
                     @Override
                     public void run() {
                         // Cancel if timer variable is 50
@@ -110,15 +110,15 @@ public class InfusionBowShootListener implements Listener {
                         // Increment timer variable
                         volatileTimer++;
                     }
-                }.run();
+                });
             }
 
             // Forceful infusion
             if (pdc.has(infusionForceful, PersistentDataType.BYTE)) {
-                e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2.2));
+                e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
 
-                // Critical particle trail
-                new BukkitRunnable() {
+                // Crit magic particle trail
+                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
                     @Override
                     public void run() {
                         // Cancel if timer variable is 50
@@ -127,11 +127,11 @@ public class InfusionBowShootListener implements Listener {
                         }
 
                         // Spawn particle
-                        e.getProjectile().getWorld().spawnParticle(Particle.CRIT, e.getProjectile().getLocation(), 1, 0, 0, 0);
+                        e.getProjectile().getWorld().spawnParticle(Particle.CRIT_MAGIC, e.getProjectile().getLocation(), 1, 0, 0, 0);
                         // Increment timer variable
                         forcefulTimer++;
                     }
-                }.run();
+                });
             }
 
             // Healing infusion
@@ -140,7 +140,7 @@ public class InfusionBowShootListener implements Listener {
                 e.getProjectile().getPersistentDataContainer().set(infusionHealing, PersistentDataType.BYTE, (byte) 1);
 
                 // Totem particle trail
-                new BukkitRunnable() {
+                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
                     @Override
                     public void run() {
                         // Cancel if timer variable is 50
@@ -153,7 +153,7 @@ public class InfusionBowShootListener implements Listener {
                         // Increment timer variable
                         healingTimer++;
                     }
-                }.run();
+                });
             }
         }
     }
@@ -187,6 +187,10 @@ public class InfusionBowShootListener implements Listener {
                 infusionHealing, PersistentDataType.BYTE)) {
             // Make the damage of the arrow negative (heals hit entity)
             ((AbstractArrow) e.getEntity()).setDamage(-((AbstractArrow) e.getEntity()).getDamage());
+
+            // Spawn particles
+            e.getHitEntity().getWorld().spawnParticle(Particle.TOTEM,
+                    e.getHitEntity().getLocation(), 10, 1, 1, 1);
         }
     }
 }

@@ -36,7 +36,8 @@ public class InfusionHoeReapListener implements Listener {
                 // Check if the crop is at maximum age
                 if (a.getAge() == a.getMaximumAge()) {
                     // Spawn block
-                    e.getBlock().getWorld().spawnFallingBlock(e.getBlock().getLocation(), e.getBlock().getType().createBlockData());
+                    e.getBlock().setType(e.getBlock().getType());
+                    e.getBlock().setBlockData(e.getBlock().getType().createBlockData());
 
                     // Spawn particles
                     e.getBlock().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, e.getBlock().getLocation(), 50, 1, 1, 1);

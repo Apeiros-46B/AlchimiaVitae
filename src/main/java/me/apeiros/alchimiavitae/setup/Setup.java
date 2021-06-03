@@ -126,23 +126,28 @@ public class Setup {
                 .addItems(Items.MOLTEN_MYSTERY_METAL, Items.MYSTERY_METAL)
                 .register();
 
-        new Research(new NamespacedKey(p, "potion_of_osmosis"), 131079,
+        new Research(new NamespacedKey(p, "ornate_cauldron"), 131079,
+                "A contraption to brew advanced potions", 35)
+                .addItems(Items.ORNATE_CAULDRON)
+                .register();
+
+        new Research(new NamespacedKey(p, "potion_of_osmosis"), 131080,
                 "Osmosis and absorption", 30)
                 .addItems(Items.POTION_OF_OSMOSIS)
                 .register();
 
-        new Research(new NamespacedKey(p, "benevolent_brew"), 131080,
+        new Research(new NamespacedKey(p, "benevolent_brew"), 131081,
                 "A blessing from Gaia herself", 35)
                 .addItems(Items.BENEVOLENT_BREW)
                 .register();
 
-        new Research(new NamespacedKey(p, "benevolent_brew"), 131081,
+        new Research(new NamespacedKey(p, "malevolent_concoction"), 131082,
                 "A substance with a slightly corrupted tinge", 35)
                 .addItems(Items.MALEVOLENT_CONCOCTION)
                 .register();
 
-        new Research(new NamespacedKey(p, "altar_of_infusion"), 131082,
-                "The ultimate altar to energize your items", 60)
+        new Research(new NamespacedKey(p, "altar_of_infusion"), 131083,
+                "The ultimate altar to energize your items", 30)
                 .addItems(Items.ALTAR_OF_INFUSION)
                 .register();
     }
@@ -324,8 +329,8 @@ public class Setup {
         }, item).register(p);
 
         item = new SlimefunItemStack("AV_PHANTOM_CRITS_INFUSION", Material.PHANTOM_MEMBRANE, "&bPhantom Criticals",
-                "&a1/4 chance to deal (&lyour attack damage &ato the power of &l1.15",
-                "&amultiplied by &l5/8 &a) extra damage on a crit, bypassing armor");
+                "&a1/4 chance to deal (your attack damage to the power of 1.15",
+                "&amultiplied by 5/8) extra damage on a crit, bypassing armor");
 
         new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                 new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
@@ -356,7 +361,7 @@ public class Setup {
 
         item = new SlimefunItemStack("AV_FORCEFUL_INFUSION", Material.PISTON, "&2Forceful",
                 "&aThis infusion uses mechanical", "&adevices and electromagnets to accelerate",
-                "&aprojectiles to blistering speeds", "&aArrows will travel 2.2x farther and faster");
+                "&aprojectiles to blistering speeds", "&aArrows will travel 2x farther and faster");
 
         new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                 SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
@@ -366,7 +371,8 @@ public class Setup {
 
         item = new SlimefunItemStack("AV_VOLATILE_INFUSION", Material.FIRE_CHARGE, "&4&lVolatility",
                 "&cThis extremely dangerous infusion creates", "&cspheres made of pure superheated lava,",
-                "&cdelivering a mini-inferno to the target", "&41/7 chance to fire a large fireball", "&46/7 chance to fire a small fireball");
+                "&cdelivering a mini-inferno to the target", "&41/7 chance to fire a large fireball",
+                "&46/7 chance to fire a small fireball");
 
         new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                 new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
@@ -374,7 +380,9 @@ public class Setup {
                 new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
         }, item).register(p);
 
-        item = new SlimefunItemStack("AV_HEALING_INFUSION", Material.REDSTONE, "&cHealing");
+        item = new SlimefunItemStack("AV_HEALING_INFUSION", Material.REDSTONE, "&cHealing",
+                "&cThis infusion will heal hit entities", " &cand recover their &4health", "" +
+                "&aHeals for the same amount that a bow shot would damage");
 
         new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                 Items.BENEVOLENT_BREW, SlimefunItems.MEDICINE, SlimefunItems.VITAMINS,
@@ -382,7 +390,9 @@ public class Setup {
                 new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), SlimefunItems.MEDICINE, SlimefunItems.MAGIC_SUGAR
         }, item).register(p);
 
-        item = new SlimefunItemStack("AV_AUTO_REPLANT_INFUSION", Material.WHEAT, "&aAutomatic Re-plant");
+        item = new SlimefunItemStack("AV_AUTO_REPLANT_INFUSION", Material.WHEAT, "&aAutomatic Re-plant",
+                "&2Any fully-grown crops broken",
+                "&2with a hoe infused with this", "&2will &aautomatically &2be replanted");
 
         new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                 new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),

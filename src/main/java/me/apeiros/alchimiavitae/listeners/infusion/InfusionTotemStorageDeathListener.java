@@ -49,7 +49,7 @@ public class InfusionTotemStorageDeathListener implements Listener {
 
                             // Add potion effects and heal by half a heart
                             p.setHealth(1);
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5, 2));
+                            p.setAbsorptionAmount(4);
                             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45, 2));
                             p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40, 1));
 
