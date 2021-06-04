@@ -31,44 +31,48 @@ public class InfusionAxeAttackListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAxeHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            // Store the attacker, the weapon's PDC, and a ThreadLocalRandom in 3 variables
+            // Store the attacker and a ThreadLocalRandom in 3 variables
             Player p = (Player) e.getDamager();
-            PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
             ThreadLocalRandom r = ThreadLocalRandom.current();
 
-            // Check what infusion the axe has
-            if (container.has(infusionDestructiveCrits, PersistentDataType.BYTE) && e.getEntity() instanceof Player) {
-                // Store the victim of the attack in a variable
-                Player victim = (Player) e.getEntity();
+            // Assign value
+            if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
+                PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
 
-                // Damage armor
-                for (ItemStack d : victim.getInventory().getArmorContents()) {
-                    if (d.getItemMeta() instanceof Damageable) {
-                        ((Damageable) d.getItemMeta()).setDamage(r.nextInt(5));
+                // Check what infusion the axe has
+                if (container.has(infusionDestructiveCrits, PersistentDataType.BYTE) && e.getEntity() instanceof Player) {
+                    // Store the victim of the attack in a variable
+                    Player victim = (Player) e.getEntity();
+
+                    // Damage armor
+                    for (ItemStack d : victim.getInventory().getArmorContents()) {
+                        if (d.getItemMeta() instanceof Damageable) {
+                            ((Damageable) d.getItemMeta()).setDamage(r.nextInt(5));
+                        }
                     }
-                }
 
-                // 1/5 chance to add slowness
-                if (r.nextInt(4) == 0) {
-                    victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 15, 1));
-                }
+                    // 1/5 chance to add slowness
+                    if (r.nextInt(4) == 0) {
+                        victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 15, 1));
+                    }
 
-                // 1/5 chance to add weakness
-                if (r.nextInt(4) == 0) {
-                    victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 15, 1));
-                }
+                    // 1/5 chance to add weakness
+                    if (r.nextInt(4) == 0) {
+                        victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 15, 1));
+                    }
 
-                // 1/20 Chance to add brief mining fatigue
-                if (r.nextInt(19) == 0) {
-                    victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
-                }
-            } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity) {
-                // Store victim in a variable
-                LivingEntity victim = (LivingEntity) e.getEntity();
+                    // 1/20 Chance to add brief mining fatigue
+                    if (r.nextInt(19) == 0) {
+                        victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
+                    }
+                } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity) {
+                    // Store victim in a variable
+                    LivingEntity victim = (LivingEntity) e.getEntity();
 
-                // Set health
-                if (r.nextInt(4) == 0) {
-                    victim.setHealth(victim.getHealth() - Math.pow(e.getFinalDamage(), 1.15) * 5 / 8);
+                    // Set health
+                    if (r.nextInt(4) == 0) {
+                        victim.setHealth(victim.getHealth() - Math.pow(e.getFinalDamage(), 1.15) * 5 / 8);
+                    }
                 }
             }
         }
