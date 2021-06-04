@@ -31,30 +31,36 @@ public class InfusionTotemStorageDeathListener implements Listener {
 
             if (p.getInventory().getChestplate() != null) {
                 ItemMeta meta = p.getInventory().getChestplate().getItemMeta();
-                PersistentDataContainer container = meta.getPersistentDataContainer();
 
-                if (container.has(infusionTotemStorage, PersistentDataType.INTEGER)) {
-                    if (container.get(infusionTotemStorage, PersistentDataType.INTEGER) > 0) {
-                        if (p.getHealth() - e.getFinalDamage() <= 0) {
-                            // The amount of totems stored in the chestplate
-                            int totemsStored = container.get(infusionTotemStorage, PersistentDataType.INTEGER);
+                // Null check
+                if (meta != null) {
+                    // Get container
+                    PersistentDataContainer container = meta.getPersistentDataContainer();
 
-                            // Cancel the damage event
-                            e.setCancelled(true);
+                    // Check if the chestplate has the infusion
+                    if (container.has(infusionTotemStorage, PersistentDataType.INTEGER)) {
+                        if (container.get(infusionTotemStorage, PersistentDataType.INTEGER) > 0) {
+                            if (p.getHealth() - e.getFinalDamage() <= 0) {
+                                // The amount of totems stored in the chestplate
+                                int totemsStored = container.get(infusionTotemStorage, PersistentDataType.INTEGER);
 
-                            // Decrement the totemsStored variable and set it to the container
-                            totemsStored--;
-                            container.set(infusionTotemStorage, PersistentDataType.INTEGER, totemsStored);
-                            p.getInventory().getChestplate().setItemMeta(meta);
+                                // Cancel the damage event
+                                e.setCancelled(true);
 
-                            // Add potion effects and heal by half a heart
-                            p.setHealth(1);
-                            p.setAbsorptionAmount(4);
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45, 2));
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40, 1));
+                                // Decrement the totemsStored variable and set it to the container
+                                totemsStored--;
+                                container.set(infusionTotemStorage, PersistentDataType.INTEGER, totemsStored);
+                                p.getInventory().getChestplate().setItemMeta(meta);
 
-                            // Totem visual effects
-                            p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                                // Add potion effects and heal by half a heart
+                                p.setHealth(1);
+                                p.setAbsorptionAmount(4);
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45, 2));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40, 1));
+
+                                // Totem visual effects
+                                p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                            }
                         }
                     }
                 }

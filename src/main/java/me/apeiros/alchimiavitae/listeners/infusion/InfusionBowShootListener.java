@@ -45,115 +45,123 @@ public class InfusionBowShootListener implements Listener {
     public void onBowShoot(EntityShootBowEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-            PersistentDataContainer pdc = e.getBow().getItemMeta().getPersistentDataContainer();
 
-            // True aim infusion
-            if (pdc.has(infusionTrueAim, PersistentDataType.BYTE)) {
-                // Set gravity to false
-                e.getProjectile().setGravity(false);
+            // Null check
+            if (e.getBow() != null) {
+                // Null check
+                if (e.getBow().getItemMeta() != null) {
+                    // Set container
+                    PersistentDataContainer container = e.getBow().getItemMeta().getPersistentDataContainer();
 
-                // Shulker particle trail
-                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        // Cancel if timer variable is 50
-                        if (trueAimTimer == 50) {
-                            this.cancel();
+                    // True aim infusion
+                    if (container.has(infusionTrueAim, PersistentDataType.BYTE)) {
+                        // Set gravity to false
+                        e.getProjectile().setGravity(false);
+
+                        // Shulker particle trail
+                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                // Cancel if timer variable is 50
+                                if (trueAimTimer == 50) {
+                                    this.cancel();
+                                }
+
+                                // Spawn particle
+                                e.getProjectile().getWorld().spawnParticle(Particle.END_ROD, e.getProjectile().getLocation(), 1, 0, 0, 0);
+                                // Increment timer variable
+                                trueAimTimer++;
+                            }
+                        });
+                    }
+
+                    // Volatility infusion
+                    if (container.has(infusionVolatile, PersistentDataType.BYTE)) {
+                        // Declare fb
+                        Fireball fb;
+
+                        // Random
+                        ThreadLocalRandom r = ThreadLocalRandom.current();
+                        int rNum = r.nextInt(6);
+
+                        // Randomize fireball type and yield
+                        if (rNum == 0) {
+                            fb = p.launchProjectile(LargeFireball.class, e.getProjectile().getVelocity());
+                            fb.setYield(4F);
+                        } else {
+                            fb = p.launchProjectile(Fireball.class, e.getProjectile().getVelocity());
+                            fb.setYield(1F);
                         }
 
-                        // Spawn particle
-                        e.getProjectile().getWorld().spawnParticle(Particle.END_ROD, e.getProjectile().getLocation(), 1, 0, 0, 0);
-                        // Increment timer variable
-                        trueAimTimer++;
+                        // Set other things such as velocity and shooter
+                        fb.setVelocity(e.getProjectile().getVelocity().multiply(5).normalize());
+                        fb.setFireTicks(0);
+                        fb.setIsIncendiary(false);
+                        fb.setShooter(p);
+
+                        // Add data
+                        fb.getPersistentDataContainer().set(infusionVolatile, PersistentDataType.BYTE, (byte) 1);
+
+                        // Flame particle trail
+                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                // Cancel if timer variable is 50
+                                if (volatileTimer == 50) {
+                                    this.cancel();
+                                }
+
+                                // Spawn particle
+                                e.getProjectile().getWorld().spawnParticle(Particle.FLAME, e.getProjectile().getLocation(), 1, 0, 0, 0);
+                                // Increment timer variable
+                                volatileTimer++;
+                            }
+                        });
                     }
-                });
-            }
 
-            // Volatility infusion
-            if (pdc.has(infusionVolatile, PersistentDataType.BYTE)) {
-                // Declare fb
-                Fireball fb;
+                    // Forceful infusion
+                    if (container.has(infusionForceful, PersistentDataType.BYTE)) {
+                        e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
 
-                // Random
-                ThreadLocalRandom r = ThreadLocalRandom.current();
-                int rNum = r.nextInt(6);
+                        // Crit magic particle trail
+                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                // Cancel if timer variable is 50
+                                if (forcefulTimer == 50) {
+                                    this.cancel();
+                                }
 
-                // Randomize fireball type and yield
-                if (rNum == 0) {
-                    fb = p.launchProjectile(LargeFireball.class, e.getProjectile().getVelocity());
-                    fb.setYield(4F);
-                } else {
-                    fb = p.launchProjectile(Fireball.class, e.getProjectile().getVelocity());
-                    fb.setYield(1F);
+                                // Spawn particle
+                                e.getProjectile().getWorld().spawnParticle(Particle.CRIT_MAGIC, e.getProjectile().getLocation(), 1, 0, 0, 0);
+                                // Increment timer variable
+                                forcefulTimer++;
+                            }
+                        });
+                    }
+
+                    // Healing infusion
+                    if (container.has(infusionHealing, PersistentDataType.BYTE)) {
+                        // Add data
+                        e.getProjectile().getPersistentDataContainer().set(infusionHealing, PersistentDataType.BYTE, (byte) 1);
+
+                        // Totem particle trail
+                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                // Cancel if timer variable is 50
+                                if (healingTimer == 50) {
+                                    this.cancel();
+                                }
+
+                                // Spawn particle
+                                e.getProjectile().getWorld().spawnParticle(Particle.TOTEM, e.getProjectile().getLocation(), 1, 0, 0, 0);
+                                // Increment timer variable
+                                healingTimer++;
+                            }
+                        });
+                    }
                 }
-
-                // Set other things such as velocity and shooter
-                fb.setVelocity(e.getProjectile().getVelocity().multiply(5).normalize());
-                fb.setFireTicks(0);
-                fb.setIsIncendiary(false);
-                fb.setShooter(p);
-
-                // Add data
-                fb.getPersistentDataContainer().set(infusionVolatile, PersistentDataType.BYTE, (byte) 1);
-
-                // Flame particle trail
-                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        // Cancel if timer variable is 50
-                        if (volatileTimer == 50) {
-                            this.cancel();
-                        }
-
-                        // Spawn particle
-                        e.getProjectile().getWorld().spawnParticle(Particle.FLAME, e.getProjectile().getLocation(), 1, 0, 0, 0);
-                        // Increment timer variable
-                        volatileTimer++;
-                    }
-                });
-            }
-
-            // Forceful infusion
-            if (pdc.has(infusionForceful, PersistentDataType.BYTE)) {
-                e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
-
-                // Crit magic particle trail
-                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        // Cancel if timer variable is 50
-                        if (forcefulTimer == 50) {
-                            this.cancel();
-                        }
-
-                        // Spawn particle
-                        e.getProjectile().getWorld().spawnParticle(Particle.CRIT_MAGIC, e.getProjectile().getLocation(), 1, 0, 0, 0);
-                        // Increment timer variable
-                        forcefulTimer++;
-                    }
-                });
-            }
-
-            // Healing infusion
-            if (pdc.has(infusionHealing, PersistentDataType.BYTE)) {
-                // Add data
-                e.getProjectile().getPersistentDataContainer().set(infusionHealing, PersistentDataType.BYTE, (byte) 1);
-
-                // Totem particle trail
-                AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        // Cancel if timer variable is 50
-                        if (healingTimer == 50) {
-                            this.cancel();
-                        }
-
-                        // Spawn particle
-                        e.getProjectile().getWorld().spawnParticle(Particle.TOTEM, e.getProjectile().getLocation(), 1, 0, 0, 0);
-                        // Increment timer variable
-                        healingTimer++;
-                    }
-                });
             }
         }
     }
@@ -162,7 +170,8 @@ public class InfusionBowShootListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onFireballExplode(EntityExplodeEvent e) {
         if (e.getEntity() instanceof Fireball || e.getEntity() instanceof LargeFireball) {
-            if (((Fireball) e.getEntity()).getShooter() instanceof Player &&
+            if (((Fireball) e.getEntity()).getShooter() instanceof Player
+                    && ((Fireball) e.getEntity()).getShooter() != null &&
                     e.getEntity().getPersistentDataContainer().has
                     (infusionVolatile, PersistentDataType.BYTE)) {
                 Player shooter = (Player) ((Fireball) e.getEntity()).getShooter();

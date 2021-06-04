@@ -29,18 +29,20 @@ public class InfusionHoeReapListener implements Listener {
             Player p = e.getPlayer();
             Ageable a = (Ageable) e.getBlock().getBlockData();
 
-            // Check if the tool has the Auto-Replant infusion
-            if (p.getInventory().getItemInMainHand().getItemMeta().
-                    getPersistentDataContainer().has(infusionAutoReplant, PersistentDataType.BYTE)) {
+            // Null check
+            if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
+                // Check if the tool has the Auto-Replant infusion
+                if (p.getInventory().getItemInMainHand().getItemMeta().
+                        getPersistentDataContainer().has(infusionAutoReplant, PersistentDataType.BYTE)) {
+                    // Check if the crop is at maximum age
+                    if (a.getAge() == a.getMaximumAge()) {
+                        // Spawn block
+                        e.getBlock().setType(e.getBlock().getType());
+                        e.getBlock().setBlockData(e.getBlock().getType().createBlockData());
 
-                // Check if the crop is at maximum age
-                if (a.getAge() == a.getMaximumAge()) {
-                    // Spawn block
-                    e.getBlock().setType(e.getBlock().getType());
-                    e.getBlock().setBlockData(e.getBlock().getType().createBlockData());
-
-                    // Spawn particles
-                    e.getBlock().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, e.getBlock().getLocation(), 50, 1, 1, 1);
+                        // Spawn particles
+                        e.getBlock().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, e.getBlock().getLocation(), 50, 1, 1, 1);
+                    }
                 }
             }
         }

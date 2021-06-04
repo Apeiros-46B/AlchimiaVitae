@@ -35,8 +35,9 @@ public class InfusionAxeAttackListener implements Listener {
             Player p = (Player) e.getDamager();
             ThreadLocalRandom r = ThreadLocalRandom.current();
 
-            // Assign value
+            // Null check
             if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
+                // Assign value
                 PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
 
                 // Check what infusion the axe has
