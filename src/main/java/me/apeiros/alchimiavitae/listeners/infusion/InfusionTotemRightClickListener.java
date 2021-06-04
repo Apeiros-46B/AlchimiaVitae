@@ -17,13 +17,13 @@ import org.bukkit.persistence.PersistentDataType;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
-public class InfusionTotemRightClickEvent implements Listener {
+public class InfusionTotemRightClickListener implements Listener {
 
     // Key
     private final NamespacedKey infusionTotemStorage = new NamespacedKey(AlchimiaVitae.i(), "infusion_totemstorage");
 
     // Constructor
-    public InfusionTotemRightClickEvent(AlchimiaVitae p) {
+    public InfusionTotemRightClickListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 

@@ -83,7 +83,7 @@ public class Setup {
         new InfusionAxeAttackListener(p);
         new InfusionBowShootListener(p);
         new InfusionHoeReapListener(p);
-        new InfusionTotemRightClickEvent(p);
+        new InfusionTotemRightClickListener(p);
         new InfusionTotemStorageDeathListener(p);
 
         // Researches
