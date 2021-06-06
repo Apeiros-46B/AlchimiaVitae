@@ -1,14 +1,17 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.Tag;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 public class InfusionHoeReapListener implements Listener {
@@ -25,9 +28,10 @@ public class InfusionHoeReapListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHarvestCrop(BlockBreakEvent e) {
         // Check if the block broken is a crop
-        if (Tag.CROPS.isTagged(e.getBlock().getType()) && e.getBlock().getBlockData() instanceof Ageable) {
+        if (e.getBlock().getBlockData() instanceof Ageable) {
             Player p = e.getPlayer();
             Ageable a = (Ageable) e.getBlock().getBlockData();
+            ItemStack item = p.getInventory().getItemInMainHand();
 
             // Null check
             if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
@@ -36,12 +40,27 @@ public class InfusionHoeReapListener implements Listener {
                         getPersistentDataContainer().has(infusionAutoReplant, PersistentDataType.BYTE)) {
                     // Check if the crop is at maximum age
                     if (a.getAge() == a.getMaximumAge()) {
-                        // Spawn block
-                        e.getBlock().setType(e.getBlock().getType());
+                        // Cancel event
+                        e.setCancelled(true);
                         e.getBlock().setBlockData(e.getBlock().getType().createBlockData());
 
                         // Spawn particles
-                        e.getBlock().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, e.getBlock().getLocation(), 50, 1, 1, 1);
+                        Particle particleToSpawn = e.getBlock().getType() == Material.NETHER_WART ? Particle.CRIMSON_SPORE : Particle.VILLAGER_HAPPY;
+                        e.getBlock().getWorld().spawnParticle(particleToSpawn, e.getBlock().getLocation(), 50, 1, 1, 1);
+
+                        // Drop drops
+                        if (item.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                            for (ItemStack i : e.getBlock().getDrops(item, p)) {
+                                ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
+                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(),
+                                        new CustomItem(itemToDrop, item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
+                            }
+                        } else {
+                            for (ItemStack i : e.getBlock().getDrops(item, p)) {
+                                ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
+                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(), itemToDrop);
+                            }
+                        }
                     }
                 }
             }

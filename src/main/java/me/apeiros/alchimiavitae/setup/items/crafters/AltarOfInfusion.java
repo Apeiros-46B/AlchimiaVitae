@@ -23,7 +23,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
@@ -156,7 +158,11 @@ public class AltarOfInfusion extends AbstractContainer {
         if (tool == null || tool.getType().equals(Material.AIR)) {
             return;
         }
+
+        // ItemMeta
         ItemMeta meta = tool.getItemMeta();
+
+        // Container
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
         // Check if tool is already infused
@@ -177,10 +183,56 @@ public class AltarOfInfusion extends AbstractContainer {
         if (canBeInfused(tool, infusion) && !infusion.equals(chestplateInfusionTotemStorage)) {
             // Tool can be infused and the Infusion is not the totem battery
             container.set(infusion, PersistentDataType.BYTE, (byte) 1);
+
+            // Lore
+            List<String> lore;
+
+            // Assign lore
+            lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+
+            // Add lines to lore
+            lore.add("");
+            lore.add("&7Infusion:");
+
+            // Add infusion name to lore
+            if (axeInfusionDestructiveCrits.equals(infusion)) {
+                lore.add("&8› &c&lDestructive Criticals");
+            } else if (axeInfusionPhantomCrits.equals(infusion)) {
+                lore.add("&8› &bPhantom Criticals");
+            } else if (bowInfusionTrueAim.equals(infusion)) {
+                lore.add("&8› &dTrue Aim");
+            } else if (bowInfusionForceful.equals(infusion)) {
+                lore.add("&8› &2Forceful");
+            } else if (bowInfusionVolatile.equals(infusion)) {
+                lore.add("&8› &4&lVolatility");
+            } else if (bowInfusionHealing.equals(infusion)) {
+                lore.add("&8› &cHealing");
+            } else if (hoeInfusionAutoReplant.equals(infusion)) {
+                lore.add("&8› &aAutomatic Re-plant");
+            }
+
+            // Set lore and meta
+            meta.setLore(lore);
             tool.setItemMeta(meta);
         } else if (canBeInfused(tool, infusion) && infusion.equals(chestplateInfusionTotemStorage)) {
             // Tool can be infused and the Infusion is the totem battery
             container.set(infusion, PersistentDataType.INTEGER, 0);
+
+            // Lore
+            List<String> lore;
+
+            // Assign lore
+            lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+
+            // Add lines to lore
+            lore.add("");
+            lore.add("&7Infusion:");
+
+            // Add infusion name to lore
+            lore.add("&8› &6&lBattery of Totems");
+
+            // Set lore and meta
+            meta.setLore(lore);
             tool.setItemMeta(meta);
         } else {
             // Tool cannot be infused
