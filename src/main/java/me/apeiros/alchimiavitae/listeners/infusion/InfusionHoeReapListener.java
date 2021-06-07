@@ -53,13 +53,18 @@ public class InfusionHoeReapListener implements Listener {
                             for (ItemStack i : e.getBlock().getDrops(item, p)) {
                                 ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
                                 p.getWorld().dropItemNaturally(e.getBlock().getLocation(),
-                                        new CustomItem(itemToDrop, item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
+                                        new CustomItem(itemToDrop, item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 2));
                             }
                         } else {
                             for (ItemStack i : e.getBlock().getDrops(item, p)) {
                                 ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
-                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(), itemToDrop);
+                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItem(itemToDrop, 2));
                             }
+                        }
+
+                        // Drop seeds if the crop is wheat
+                        if (e.getBlock().getType() == Material.WHEAT) {
+                            p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItem(new ItemStack(Material.WHEAT_SEEDS), 2));
                         }
                     }
                 }

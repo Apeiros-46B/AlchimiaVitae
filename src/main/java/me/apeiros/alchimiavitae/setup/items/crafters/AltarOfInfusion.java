@@ -192,23 +192,31 @@ public class AltarOfInfusion extends AbstractContainer {
 
             // Add lines to lore
             lore.add("");
-            lore.add("&7Infusion:");
+            lore.add(BukkitComponentSerializer.legacy().serialize(
+                    MM.parse("<gray>Infusion:")));
 
             // Add infusion name to lore
             if (axeInfusionDestructiveCrits.equals(infusion)) {
-                lore.add("&8› &c&lDestructive Criticals");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <red><bold>Destructive Criticals")));
             } else if (axeInfusionPhantomCrits.equals(infusion)) {
-                lore.add("&8› &bPhantom Criticals");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <aqua>Phantom Criticals")));
             } else if (bowInfusionTrueAim.equals(infusion)) {
-                lore.add("&8› &dTrue Aim");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <light_purple>True Aim")));
             } else if (bowInfusionForceful.equals(infusion)) {
-                lore.add("&8› &2Forceful");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <dark_green>Forceful")));
             } else if (bowInfusionVolatile.equals(infusion)) {
-                lore.add("&8› &4&lVolatility");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <dark_red><bold>Volatility")));
             } else if (bowInfusionHealing.equals(infusion)) {
-                lore.add("&8› &cHealing");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <red>Healing")));
             } else if (hoeInfusionAutoReplant.equals(infusion)) {
-                lore.add("&8› &aAutomatic Re-plant");
+                lore.add(BukkitComponentSerializer.legacy().serialize(
+                        MM.parse("<dark_gray>› <green>Automatic Re-plant")));
             }
 
             // Set lore and meta
@@ -226,10 +234,12 @@ public class AltarOfInfusion extends AbstractContainer {
 
             // Add lines to lore
             lore.add("");
-            lore.add("&7Infusion:");
+            lore.add(BukkitComponentSerializer.legacy().serialize(
+                    MM.parse("<gray>Infusion:")));
 
             // Add infusion name to lore
-            lore.add("&8› &6&lBattery of Totems");
+            lore.add(BukkitComponentSerializer.legacy().serialize(
+                    MM.parse("<dark_gray>› <gold><bold>Battery of Totems")));
 
             // Set lore and meta
             meta.setLore(lore);

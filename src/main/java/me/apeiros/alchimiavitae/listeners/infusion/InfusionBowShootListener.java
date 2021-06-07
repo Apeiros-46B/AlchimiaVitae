@@ -6,10 +6,7 @@ import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectionManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.entity.AbstractArrow;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.LargeFireball;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -17,6 +14,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -59,7 +58,7 @@ public class InfusionBowShootListener implements Listener {
                         e.getProjectile().setGravity(false);
 
                         // Shulker particle trail
-                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                        new BukkitRunnable() {
                             @Override
                             public void run() {
                                 // Cancel if timer variable is 50
@@ -72,7 +71,7 @@ public class InfusionBowShootListener implements Listener {
                                 // Increment timer variable
                                 trueAimTimer++;
                             }
-                        });
+                        }.run();
                     }
 
                     // Volatility infusion
@@ -103,7 +102,7 @@ public class InfusionBowShootListener implements Listener {
                         fb.getPersistentDataContainer().set(infusionVolatile, PersistentDataType.BYTE, (byte) 1);
 
                         // Flame particle trail
-                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                        new BukkitRunnable() {
                             @Override
                             public void run() {
                                 // Cancel if timer variable is 50
@@ -116,7 +115,7 @@ public class InfusionBowShootListener implements Listener {
                                 // Increment timer variable
                                 volatileTimer++;
                             }
-                        });
+                        }.run();
                     }
 
                     // Forceful infusion
@@ -124,7 +123,7 @@ public class InfusionBowShootListener implements Listener {
                         e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
 
                         // Crit magic particle trail
-                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                        new BukkitRunnable() {
                             @Override
                             public void run() {
                                 // Cancel if timer variable is 50
@@ -137,7 +136,7 @@ public class InfusionBowShootListener implements Listener {
                                 // Increment timer variable
                                 forcefulTimer++;
                             }
-                        });
+                        }.run();
                     }
 
                     // Healing infusion
@@ -146,7 +145,7 @@ public class InfusionBowShootListener implements Listener {
                         e.getProjectile().getPersistentDataContainer().set(infusionHealing, PersistentDataType.BYTE, (byte) 1);
 
                         // Totem particle trail
-                        AlchimiaVitae.i().getServer().getScheduler().runTask(AlchimiaVitae.i(), (Runnable) new BukkitRunnable() {
+                        new BukkitRunnable() {
                             @Override
                             public void run() {
                                 // Cancel if timer variable is 50
@@ -159,7 +158,7 @@ public class InfusionBowShootListener implements Listener {
                                 // Increment timer variable
                                 healingTimer++;
                             }
-                        });
+                        }.run();
                     }
                 }
             }
@@ -191,15 +190,22 @@ public class InfusionBowShootListener implements Listener {
     // Event for healing infusion
     @EventHandler(ignoreCancelled = true)
     public void onArrowHit(ProjectileHitEvent e) {
-        if (e.getHitEntity() != null && e.getEntity() instanceof AbstractArrow &&
+        if (e.getHitEntity() != null &&
+                e.getHitEntity() instanceof LivingEntity &&
+                e.getEntity() instanceof AbstractArrow &&
                 e.getEntity().getPersistentDataContainer().has(
-                infusionHealing, PersistentDataType.BYTE)) {
-            // Make the damage of the arrow negative (heals hit entity)
-            ((AbstractArrow) e.getEntity()).setDamage(-((AbstractArrow) e.getEntity()).getDamage());
+                        infusionHealing, PersistentDataType.BYTE)) {
+            // Variables
+            AbstractArrow arrow = (AbstractArrow) e.getEntity();
+            LivingEntity entity = (LivingEntity) e.getHitEntity();
 
-            // Spawn particles
-            e.getHitEntity().getWorld().spawnParticle(Particle.TOTEM,
-                    e.getHitEntity().getLocation(), 10, 1, 1, 1);
+            // Heal entity
+            e.setCancelled(true);
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, (int) Math.floor(arrow.getDamage() / 5)));
+            entity.getWorld().spawnParticle(Particle.TOTEM, entity.getLocation(), 20, 1, 1, 1);
+
+            // Remove arrow
+            arrow.remove();
         }
     }
 }
