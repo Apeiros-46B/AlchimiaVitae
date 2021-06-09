@@ -122,7 +122,7 @@ public class AltarOfInfusion extends AbstractContainer {
 
         // Invalid Infusion
         if (infusion == null) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That is not a valid Infusion!")));
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Invalid Infusion!")));
             return;
         }
 
@@ -156,6 +156,8 @@ public class AltarOfInfusion extends AbstractContainer {
         // Get the tool
         ItemStack tool = inv.getItemInSlot(TOOL_SLOT);
         if (tool == null || tool.getType().equals(Material.AIR)) {
+            // No tool
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot infuse air!")));
             return;
         }
 

@@ -1,2 +1,27 @@
 options:
+  # Whether or not to automatically update
   auto-update: true
+
+  # Options for Infusions
+  infusions:
+    # Enable or disable specific Infusions (true = enabled, false = disabled)
+    infusion-destructivecrits: true
+    infusion-phantomcrits: true
+    infusion-trueaim: true
+    infusion-forceful: true
+    infusion-volatile: true
+    infusion-healing: true
+    infusion-autoreplant: true
+    infusion-totemstorage: true
+
+  # Options for transmutations
+  transmutations:
+    # Enable or disable specific transmutations (true = enabled, false = disabled)
+    reinforced-transmutation: true
+    hardened-transmutation: true
+    steel-transmutation: true
+    damascus-transmutation: true
+    compressed-carbon-transmutation: true
+
+    # Whether or not to use the same custom model data as the resulting Slimefun items
+    use-same-custommodeldata: true
