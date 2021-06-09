@@ -42,7 +42,7 @@ My entry to the **2021 Slimefun Addon Jam**
 - Forceful
   - Applicable items: Bow, Crossbow
   - Effects:
-    - Arrows fly 2.2x farther and faster
+    - Arrows fly 2x farther and faster
 - Healing
   - Applicable items: Bow, Crossbow
   - Effects:
