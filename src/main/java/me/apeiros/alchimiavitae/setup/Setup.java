@@ -2,7 +2,6 @@ package me.apeiros.alchimiavitae.setup;
 
 import io.github.mooy1.infinitylib.recipes.inputs.MultiInput;
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
-import io.github.thebusybiscuit.slimefun4.core.services.CustomTextureService;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
@@ -30,8 +29,6 @@ import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.logging.Level;
 
 public class Setup {
 
@@ -165,9 +162,8 @@ public class Setup {
         boolean compressedCarbonTransmutationEnabled = p.getConfig().getBoolean("options.transmutations.compressed-carbon-transmutation");
         boolean useSlimefunItemCustomModelData = p.getConfig().getBoolean("options.transmutations.use-same-custommodeldata");
 
-        // ItemStack and texture service
+        // ItemStack
         SlimefunItemStack item;
-        CustomTextureService cts = SlimefunPlugin.getItemTextureService();
 
         // Add transmutations
         if (reinforcedTransmutationEnabled) {
@@ -180,8 +176,7 @@ public class Setup {
             item = new SlimefunItemStack("AV_REINFORCED_ALLOY_INGOT", Material.IRON_INGOT, "&b&lReinforced Alloy Ingot");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(cts.getModelData("REINFORCED_ALLOY_INGOT"));
-                cts.setTexture(item, "AV_REINFORCED_ALLOY_INGOT");
+                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("REINFORCED_ALLOY_INGOT"));
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -201,8 +196,7 @@ public class Setup {
             item = new SlimefunItemStack("AV_HARDENED_METAL_INGOT", Material.IRON_INGOT, "&b&lHardened Metal");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(cts.getModelData("HARDENED_METAL_INGOT"));
-                cts.setTexture(item, "AV_HARDENED_METAL_INGOT");
+                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("HARDENED_METAL_INGOT"));
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -222,8 +216,7 @@ public class Setup {
             item = new SlimefunItemStack("AV_STEEL_INGOT", Material.IRON_INGOT, "&bSteel Ingot");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(cts.getModelData("STEEL_INGOT"));
-                cts.setTexture(item, "AV_STEEL_INGOT");
+                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("STEEL_INGOT"));
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -243,8 +236,7 @@ public class Setup {
             item = new SlimefunItemStack("AV_DAMASCUS_STEEL_INGOT", Material.IRON_INGOT, "&bDamascus Steel Ingot");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(cts.getModelData("DAMASCUS_STEEL_INGOT"));
-                cts.setTexture(item, "AV_DAMASCUS_STEEL_INGOT");
+                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("DAMASCUS_STEEL_INGOT"));
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -264,8 +256,7 @@ public class Setup {
             item = new SlimefunItemStack("AV_COMPRESSED_CARBON", HeadTexture.COMPRESSED_CARBON, "&cCompressed Carbon");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(cts.getModelData("COMPRESSED_CARBON"));
-                cts.setTexture(item, "AV_COMPRESSED_CARBON");
+                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("COMPRESSED_CARBON"));
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -321,35 +312,6 @@ public class Setup {
         boolean autoReplantEnabled = p.getConfig().getBoolean("options.infusions.infusion-autoreplant");
         boolean totemStorageEnabled = p.getConfig().getBoolean("options.infusions.infusion-totemstorage");
 
-        // Get recipes from config
-        String[] strDestructiveCritsRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strPhantomCritsRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strTrueAimRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strForcefulRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strVolatileRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strHealingRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strAutoReplantRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-        String[] strTotemStorageRecipe = p.getConfig().getStringList("options.infusions.destructivecrits-recipe").toArray(new String[0]);
-
-        // Convert recipes into ItemStack arrays
-        ItemStack[] itemDestructiveCritsRecipe = new ItemStack[8];
-        ItemStack[] itemPhantomCritsRecipe = new ItemStack[8];
-        ItemStack[] itemTrueAimRecipe = new ItemStack[8];
-        ItemStack[] itemForcefulRecipe = new ItemStack[8];
-        ItemStack[] itemVolatileRecipe = new ItemStack[8];
-        ItemStack[] itemHealingRecipe = new ItemStack[8];
-        ItemStack[] itemAutoReplantRecipe = new ItemStack[8];
-        ItemStack[] itemTotemStorageRecipe = new ItemStack[8];
-
-        assignInfusionRecipes(strDestructiveCritsRecipe, itemDestructiveCritsRecipe, p);
-        assignInfusionRecipes(strPhantomCritsRecipe, itemPhantomCritsRecipe, p);
-        assignInfusionRecipes(strTrueAimRecipe, itemTrueAimRecipe, p);
-        assignInfusionRecipes(strForcefulRecipe, itemForcefulRecipe, p);
-        assignInfusionRecipes(strVolatileRecipe, itemVolatileRecipe, p);
-        assignInfusionRecipes(strHealingRecipe, itemHealingRecipe, p);
-        assignInfusionRecipes(strAutoReplantRecipe, itemAutoReplantRecipe, p);
-        assignInfusionRecipes(strTotemStorageRecipe, itemTotemStorageRecipe, p);
-
         // ItemStacks
         CustomItem validInfuseAxe = new CustomItem(Material.DIAMOND_AXE, "&b&lA valid axe to infuse", "&aa &6gold&a, &firon&a, &bdiamond&a,", "&aor &cnetherite &aaxe will do");
         CustomItem validInfuseChestplate = new CustomItem(Material.DIAMOND_CHESTPLATE, "&b&lA valid chestplate to infuse", "&aa &6gold&a, &firon&a, &bdiamond&a,", "&aor &cnetherite &achestplate will do");
@@ -359,7 +321,11 @@ public class Setup {
 
         // Register Infusions
         if (destructiveCritsEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemDestructiveCritsRecipe), axeInfusionDestructiveCrits);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    new ItemStack(Material.TNT), SlimefunItems.EXPLOSIVE_PICKAXE, new ItemStack(Material.STONECUTTER),
+                    Items.DARKSTEEL, SlimefunItems.WITHER_PROOF_OBSIDIAN,
+                    new ItemStack(Material.REDSTONE_BLOCK), SlimefunItems.WITHER_PROOF_OBSIDIAN, new ItemStack(Material.TNT)
+            }), axeInfusionDestructiveCrits);
 
             item = new SlimefunItemStack("AV_DESTRUCTIVE_CRITS_INFUSION", Material.TNT, "&c&lDestructive Criticals",
                     "&41/20 chance to give opponent Mining Fatigue III for 8 seconds on crit",
@@ -368,56 +334,72 @@ public class Setup {
                     "&4Deals 0-5 extra damage to opponent's armor on crit");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemDestructiveCritsRecipe[0], itemDestructiveCritsRecipe[1], itemDestructiveCritsRecipe[2],
-                    itemDestructiveCritsRecipe[3], validInfuseAxe, itemDestructiveCritsRecipe[4],
-                    itemDestructiveCritsRecipe[5], itemDestructiveCritsRecipe[6], itemDestructiveCritsRecipe[7]
+                    new ItemStack(Material.TNT), SlimefunItems.EXPLOSIVE_PICKAXE, new ItemStack(Material.STONECUTTER),
+                    Items.DARKSTEEL, validInfuseAxe, SlimefunItems.WITHER_PROOF_OBSIDIAN,
+                    new ItemStack(Material.REDSTONE_BLOCK), SlimefunItems.WITHER_PROOF_OBSIDIAN, new ItemStack(Material.TNT)
             }, item).register(p);
         }
 
         if (phantomCritsEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemPhantomCritsRecipe), axeInfusionPhantomCrits);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
+                    Items.DARKSTEEL, SlimefunItems.HARDENED_GLASS,
+                    new ItemStack(Material.PHANTOM_MEMBRANE), Items.CONDENSED_SOUL, new ItemStack(Material.PHANTOM_MEMBRANE)
+            }), axeInfusionPhantomCrits);
 
             item = new SlimefunItemStack("AV_PHANTOM_CRITS_INFUSION", Material.PHANTOM_MEMBRANE, "&bPhantom Criticals",
                     "&a1/4 chance to deal (your attack damage to the power of 1.15",
                     "&amultiplied by 5/8) extra damage on a crit, bypassing armor");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemPhantomCritsRecipe[0], itemPhantomCritsRecipe[1], itemPhantomCritsRecipe[2],
-                    itemPhantomCritsRecipe[3], validInfuseAxe, itemPhantomCritsRecipe[4],
-                    itemPhantomCritsRecipe[5], itemPhantomCritsRecipe[6], itemPhantomCritsRecipe[7]
+                    new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
+                    Items.DARKSTEEL, validInfuseAxe, SlimefunItems.HARDENED_GLASS,
+                    new ItemStack(Material.PHANTOM_MEMBRANE), Items.CONDENSED_SOUL, new ItemStack(Material.PHANTOM_MEMBRANE)
             }, item).register(p);
         }
 
         if (trueAimEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemTrueAimRecipe), bowInfusionTrueAim);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
+                    Items.DARKSTEEL, Items.EXP_CRYSTAL,
+                    new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.REINFORCED_ALLOY_JETPACK
+            }), bowInfusionTrueAim);
 
             item = new SlimefunItemStack("AV_TRUE_AIM_INFUSION", Material.SHULKER_SHELL, "&dTrue Aim",
                     "&5Partially using the levitation charm", "&5Shulkers use to terminate their victims,",
                     "&5a bow infused with this magic can fire", "&5arrows that are not affected by gravity");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemTrueAimRecipe[0], itemTrueAimRecipe[1], itemTrueAimRecipe[2],
-                    itemTrueAimRecipe[3], validInfuseBow, itemTrueAimRecipe[4],
-                    itemTrueAimRecipe[5], itemTrueAimRecipe[6], itemTrueAimRecipe[7]
+                    SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
+                    Items.DARKSTEEL, validInfuseBow, Items.EXP_CRYSTAL,
+                    new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.REINFORCED_ALLOY_JETPACK
             }, item).register(p);
         }
 
         if (forcefulEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemForcefulRecipe), bowInfusionForceful);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
+                    SlimefunItems.INFUSED_MAGNET, SlimefunItems.REINFORCED_ALLOY_JETBOOTS,
+                    SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
+            }), bowInfusionForceful);
 
             item = new SlimefunItemStack("AV_FORCEFUL_INFUSION", Material.PISTON, "&2Forceful",
                     "&aThis infusion uses mechanical", "&adevices and electromagnets to accelerate",
                     "&aprojectiles to blistering speeds", "&aArrows will travel 2x farther and faster");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemForcefulRecipe[0], itemForcefulRecipe[1], itemForcefulRecipe[2],
-                    itemForcefulRecipe[3], validInfuseBow, itemForcefulRecipe[4],
-                    itemForcefulRecipe[5], itemForcefulRecipe[6], itemForcefulRecipe[7]
+                    SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
+                    SlimefunItems.INFUSED_MAGNET, validInfuseBow, SlimefunItems.REINFORCED_ALLOY_JETBOOTS,
+                    SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
             }, item).register(p);
         }
 
         if (volatileEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemVolatileRecipe), bowInfusionVolatile);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
+                    Items.DARKSTEEL, SlimefunItems.LAVA_GENERATOR_2,
+                    new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
+            }), bowInfusionVolatile);
 
             item = new SlimefunItemStack("AV_VOLATILE_INFUSION", Material.FIRE_CHARGE, "&4&lVolatility",
                     "&cThis extremely dangerous infusion creates", "&cspheres made of pure superheated lava,",
@@ -425,42 +407,54 @@ public class Setup {
                     "&46/7 chance to fire a small fireball");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemVolatileRecipe[0], itemVolatileRecipe[1], itemVolatileRecipe[2],
-                    itemVolatileRecipe[3], validInfuseBow, itemVolatileRecipe[4],
-                    itemVolatileRecipe[5], itemVolatileRecipe[6], itemVolatileRecipe[7]
+                    new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
+                    Items.DARKSTEEL, validInfuseBow, SlimefunItems.LAVA_GENERATOR_2,
+                    new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
             }, item).register(p);
         }
 
         if (healingEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemHealingRecipe), bowInfusionHealing);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    Items.BENEVOLENT_BREW, SlimefunItems.MEDICINE, SlimefunItems.VITAMINS,
+                    Items.ILLUMIUM, new ItemStack(Material.TOTEM_OF_UNDYING),
+                    new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), SlimefunItems.MEDICINE, SlimefunItems.MAGIC_SUGAR
+            }), bowInfusionHealing);
 
             item = new SlimefunItemStack("AV_HEALING_INFUSION", Material.REDSTONE, "&cHealing",
                     "&cThis infusion will heal hit entities", " &cand recover their &4health", "" +
                     "&aHeals for the same amount that a bow shot would damage");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemHealingRecipe[0], itemHealingRecipe[1], itemHealingRecipe[2],
-                    itemHealingRecipe[3], validInfuseBow, itemHealingRecipe[4],
-                    itemHealingRecipe[5], itemHealingRecipe[6], itemHealingRecipe[7]
+                    Items.BENEVOLENT_BREW, SlimefunItems.MEDICINE, SlimefunItems.VITAMINS,
+                    Items.ILLUMIUM, validInfuseBow, new ItemStack(Material.TOTEM_OF_UNDYING),
+                    new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), SlimefunItems.MEDICINE, SlimefunItems.MAGIC_SUGAR
             }, item).register(p);
         }
 
         if (autoReplantEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemAutoReplantRecipe), hoeInfusionAutoReplant);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
+                    Items.ILLUMIUM, SlimefunItems.FLUID_PUMP,
+                    new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
+            }), hoeInfusionAutoReplant);
 
             item = new SlimefunItemStack("AV_AUTO_REPLANT_INFUSION", Material.WHEAT, "&aAutomatic Re-plant",
                     "&2Any fully-grown crops broken",
                     "&2with a hoe infused with this", "&2will &aautomatically &2be replanted");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemAutoReplantRecipe[0], itemAutoReplantRecipe[1], itemAutoReplantRecipe[2],
-                    itemAutoReplantRecipe[3], validInfuseHoe, itemAutoReplantRecipe[4],
-                    itemAutoReplantRecipe[5], itemAutoReplantRecipe[6], itemAutoReplantRecipe[7]
+                    new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
+                    Items.ILLUMIUM, validInfuseHoe, SlimefunItems.FLUID_PUMP,
+                    new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
             }, item).register(p);
         }
 
         if (totemStorageEnabled) {
-            AltarOfInfusion.RECIPES.put(new MultiInput(itemTotemStorageRecipe), chestplateInfusionTotemBattery);
+            AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
+                    SlimefunItems.NECROTIC_SKULL, Items.CONDENSED_SOUL, Items.BENEVOLENT_BREW,
+                    Items.ILLUMIUM, Items.EXP_CRYSTAL,
+                    new ItemStack(Material.TOTEM_OF_UNDYING), SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.ESSENCE_OF_AFTERLIFE
+            }), chestplateInfusionTotemBattery);
 
             item = new SlimefunItemStack("AV_TOTEM_BATTERY_INFUSION", Material.TOTEM_OF_UNDYING, "&6&lTotem Battery",
                     "&eA built-in pocket dimension that holds the energy", "&eof up to 8 Totems of Undying",
@@ -468,23 +462,10 @@ public class Setup {
                     "&6while the infused chestplate is worn");
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    itemTotemStorageRecipe[0], itemTotemStorageRecipe[1], itemTotemStorageRecipe[2],
-                    itemTotemStorageRecipe[3], validInfuseChestplate, itemTotemStorageRecipe[4],
-                    itemTotemStorageRecipe[5], itemTotemStorageRecipe[6], itemTotemStorageRecipe[7]
+                    SlimefunItems.NECROTIC_SKULL, Items.CONDENSED_SOUL, Items.BENEVOLENT_BREW,
+                    Items.ILLUMIUM, validInfuseChestplate, Items.EXP_CRYSTAL,
+                    SlimefunItems.ESSENCE_OF_AFTERLIFE, SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.ESSENCE_OF_AFTERLIFE
             }, item).register(p);
-        }
-    }
-
-    private static void assignInfusionRecipes(String[] ids, ItemStack[] recipe, AlchimiaVitae p) {
-        for (int i = 0; i < 8; i++) {
-            if (SlimefunItem.getByID(ids[i]) != null) {
-                recipe[i] = SlimefunItem.getByID(ids[i]).getItem();
-            } else if (Material.getMaterial(ids[i]) != null) {
-                recipe[i] = new ItemStack(Material.getMaterial(ids[i]));
-            } else {
-                p.getLogger().log(Level.WARNING, "Misconfigured item id: \"" + ids[i] + "\" (item " + i + ")");
-                recipe[i] = SlimefunItems.DEBUG_FISH;
-            }
         }
     }
 }
