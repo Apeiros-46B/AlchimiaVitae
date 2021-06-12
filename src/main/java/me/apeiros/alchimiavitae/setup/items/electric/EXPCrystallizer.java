@@ -17,7 +17,7 @@ public class EXPCrystallizer extends AContainer implements RecipeDisplayItem {
     public EXPCrystallizer(Category c) {
 
         super(c, Items.EXP_CRYSTALLIZER, RecipeType.ANCIENT_ALTAR, new ItemStack[]{
-                SlimefunItems.TALISMAN_WIZARD, SlimefunItems.MAGICAL_GLASS, SlimefunItems.TALISMAN_WIZARD,
+                SlimefunItems.TALISMAN_WISE, SlimefunItems.MAGICAL_GLASS, SlimefunItems.TALISMAN_WISE,
                 SlimefunItems.HARDENED_GLASS, SlimefunItems.EXP_COLLECTOR, SlimefunItems.HARDENED_GLASS,
                 SlimefunItems.HEATING_COIL, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.HEATING_COIL
         });

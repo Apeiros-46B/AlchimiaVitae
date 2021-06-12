@@ -362,7 +362,7 @@ public class Setup {
             AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
                     SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
                     Items.DARKSTEEL, Items.EXP_CRYSTAL,
-                    new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.REINFORCED_ALLOY_JETPACK
+                    new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.STEEL_THRUSTER
             }), bowInfusionTrueAim);
 
             item = new SlimefunItemStack("AV_TRUE_AIM_INFUSION", Material.SHULKER_SHELL, "&dTrue Aim",
@@ -372,14 +372,14 @@ public class Setup {
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
                     Items.DARKSTEEL, validInfuseBow, Items.EXP_CRYSTAL,
-                    new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.REINFORCED_ALLOY_JETPACK
+                    new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.STEEL_THRUSTER
             }, item).register(p);
         }
 
         if (forcefulEnabled) {
             AltarOfInfusion.RECIPES.put(new MultiInput(new ItemStack[] {
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
-                    SlimefunItems.INFUSED_MAGNET, SlimefunItems.REINFORCED_ALLOY_JETBOOTS,
+                    SlimefunItems.INFUSED_MAGNET, SlimefunItems.STEEL_THRUSTER,
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
             }), bowInfusionForceful);
 
@@ -389,7 +389,7 @@ public class Setup {
 
             new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
-                    SlimefunItems.INFUSED_MAGNET, validInfuseBow, SlimefunItems.REINFORCED_ALLOY_JETBOOTS,
+                    SlimefunItems.INFUSED_MAGNET, validInfuseBow, SlimefunItems.STEEL_THRUSTER,
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
             }, item).register(p);
         }
