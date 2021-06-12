@@ -14,6 +14,42 @@ options:
     infusion-autoreplant: true
     infusion-totemstorage: true
 
+    # Define custom recipes for Infusions (a list of IDs)
+    # Items from this addon and their IDs: https://github.com/Apeiros-46B/AlchimiaVitae/blob/master/src/main/java/me/apeiros/alchimiavitae/setup/Items.java
+    # Items from Slimefun and their IDs: https://github.com/Slimefun/Slimefun4/blob/master/src/main/java/io/github/thebusybiscuit/slimefun4/implementation/SlimefunItems.java
+    # All items in this addon are prefixed with "AV_"
+    destructivecrits-recipe: [ "TNT", "EXPLOSIVE_PICKAXE", "STONECUTTER",
+                               "AV_DARKSTEEL",          "WITHER_PROOF_OBSIDIAN",
+                               "REDSTONE_BLOCK", "WITHER_PROOF_OBSIDIAN", "TNT" ]
+
+    phantomcrits-recipe: [ "PHANTOM_MEMBRANE", "MAGICAL_GLASS", "PHANTOM_MEMBRANE",
+                           "AV_DARKSTEEL",                           "HARDENED_GLASS",
+                           "PHANTOM_MEMBRANE", "AV_CONDENSED_SOUL", "PHANTOM_MEMBRANE" ]
+
+    trueaim-recipe: [ "SYNTHETIC_SHULKER_SHELL", "INFUSED_MAGNET", "STAFF_ELEMENTAL_WIND",
+                      "AV_DARKSTEEL",                                "AV_EXP_CRYSTAL",
+                      "SHULKER_BOX", "INFUSED_ELYTRA", "REINFORCED_ALLOY_JETPACK" ]
+
+    forceful-recipe: [ "ELECTRO_MAGNET", "PISTON", "STAFF_ELEMENTAL_WIND",
+                       "INFUSED_MAGNET",      "REINFORCED_ALLOY_JETBOOTS",
+                       "ELECTRO_MAGNET", "PISTON", "TRAVELLER_TALISMAN" ]
+
+    volatile-recipe: [ "BLAZE_ROD", "STAFF_ELEMENTAL_FIRE", "FIRE_TALISMAN",
+                       "AV_DARKSTEEL",                "LAVA_GENERATOR_2",
+                       "TNT", "SYNTHETIC_DIAMOND", "LAVA_CRYSTAL" ]
+
+    healing-recipe: [ "AV_BENEVOLENT_BREW_POTION", "MEDICINE", "VITAMINS",
+                      "AV_ILLUMIUM",               "TOTEM_OF_UNDYING",
+                      "ENCHANTED_GOLDEN_APPLE", "MEDICINE", "MAGIC_SUGAR" ]
+
+    autoreplant-recipe: [ "HAY_BALE", "AV_GOOD_ESSENCE", "WATER_BUCKET",
+                          "AV_ILLUMIUM",                     "FLUID_PUMP",
+                          "BONE_BLOCK", "AV_GOOD_MAGIC_PLANT", "GRINDSTONE" ]
+
+    totemstorage-recipe: [ "NECROTIC_SKULL", "AV_CONDENSED_SOUL", "AV_BENEVOLENT_BREW",
+                           "AV_ILLUMIUM",                                 "AV_EXP_CRYSTAL",
+                           "TOTEM_OF_UNDYING", "ENERGIZED_CAPACITOR", "ESSENCE_OF_AFTERLIFE" ]
+
   # Options for transmutations
   transmutations:
     # Enable or disable specific transmutations (true = enabled, false = disabled)
