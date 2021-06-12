@@ -2,6 +2,7 @@ package me.apeiros.alchimiavitae.setup;
 
 import io.github.mooy1.infinitylib.recipes.inputs.MultiInput;
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
+import io.github.thebusybiscuit.slimefun4.core.services.CustomTextureService;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
@@ -162,8 +163,9 @@ public class Setup {
         boolean compressedCarbonTransmutationEnabled = p.getConfig().getBoolean("options.transmutations.compressed-carbon-transmutation");
         boolean useSlimefunItemCustomModelData = p.getConfig().getBoolean("options.transmutations.use-same-custommodeldata");
 
-        // ItemStack
+        // ItemStack and custom texture service
         SlimefunItemStack item;
+        CustomTextureService cts = SlimefunPlugin.getItemTextureService();
 
         // Add transmutations
         if (reinforcedTransmutationEnabled) {
@@ -176,7 +178,8 @@ public class Setup {
             item = new SlimefunItemStack("AV_REINFORCED_ALLOY_INGOT", Material.IRON_INGOT, "&b&lReinforced Alloy Ingot");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("REINFORCED_ALLOY_INGOT"));
+                item.setCustomModel(cts.getModelData("REINFORCED_ALLOY_INGOT"));
+                cts.setTexture(item, "AV_REINFORCED_ALLOY_INGOT");
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -196,7 +199,8 @@ public class Setup {
             item = new SlimefunItemStack("AV_HARDENED_METAL_INGOT", Material.IRON_INGOT, "&b&lHardened Metal");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("HARDENED_METAL_INGOT"));
+                item.setCustomModel(cts.getModelData("HARDENED_METAL_INGOT"));
+                cts.setTexture(item, "AV_HARDENED_METAL_INGOT");
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -216,7 +220,8 @@ public class Setup {
             item = new SlimefunItemStack("AV_STEEL_INGOT", Material.IRON_INGOT, "&bSteel Ingot");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("STEEL_INGOT"));
+                item.setCustomModel(cts.getModelData("STEEL_INGOT"));
+                cts.setTexture(item, "AV_STEEL_INGOT");
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -236,7 +241,8 @@ public class Setup {
             item = new SlimefunItemStack("AV_DAMASCUS_STEEL_INGOT", Material.IRON_INGOT, "&bDamascus Steel Ingot");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("DAMASCUS_STEEL_INGOT"));
+                item.setCustomModel(cts.getModelData("DAMASCUS_STEEL_INGOT"));
+                cts.setTexture(item, "AV_DAMASCUS_STEEL_INGOT");
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
@@ -256,7 +262,8 @@ public class Setup {
             item = new SlimefunItemStack("AV_COMPRESSED_CARBON", HeadTexture.COMPRESSED_CARBON, "&cCompressed Carbon");
 
             if (useSlimefunItemCustomModelData) {
-                item.setCustomModel(SlimefunPlugin.getItemTextureService().getModelData("COMPRESSED_CARBON"));
+                item.setCustomModel(cts.getModelData("COMPRESSED_CARBON"));
+                cts.setTexture(item, "AV_COMPRESSED_CARBON");
             }
 
             new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
