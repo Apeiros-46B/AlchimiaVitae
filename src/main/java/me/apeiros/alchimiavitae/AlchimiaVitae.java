@@ -51,7 +51,7 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     @Override
     @Nonnull
     protected String getGithubPath() {
-        return "Apeiros-46B/AlchimiaVitae";
+        return "Apeiros-46B/AlchimiaVitae/master";
     }
 
     public static AlchimiaVitae i() {
