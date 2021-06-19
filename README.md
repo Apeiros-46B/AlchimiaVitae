@@ -3,6 +3,10 @@ Slimefun addon that adds various magic, alchemy, and herbalism techniques and as
 
 My entry to the **2021 Slimefun Addon Jam**
 
+Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/) 
+
+![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
+
 ### Features:
 - Plants of Dark and Light Magic
   - Used to brew potions
