@@ -19,9 +19,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
-public class EntityDeathListener implements Listener {
+public class MobDropListener implements Listener {
 
-    public EntityDeathListener(JavaPlugin plugin) {
+    public MobDropListener(JavaPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 

@@ -10,12 +10,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class InfusionSwordAttackListener implements Listener {
+public class InfusionSwordListener implements Listener {
 
     // Key
 
     // Constructor
-    public InfusionSwordAttackListener(AlchimiaVitae p) {
+    public InfusionSwordListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 

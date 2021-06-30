@@ -16,14 +16,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class InfusionFishHookHitListener implements Listener {
+public class InfusionFishingRodListener implements Listener {
 
     // Key
     private final NamespacedKey infusionSpikedHook = new NamespacedKey(AlchimiaVitae.i(), "infusion_spikedhook");
     private final NamespacedKey infusionKnockback = new NamespacedKey(AlchimiaVitae.i(), "infusion_knockback");
 
     // Constructor
-    public InfusionFishHookHitListener(AlchimiaVitae p) {
+    public InfusionFishingRodListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 

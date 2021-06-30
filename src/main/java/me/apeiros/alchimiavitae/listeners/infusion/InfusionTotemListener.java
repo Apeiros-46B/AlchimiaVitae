@@ -22,13 +22,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
-public class InfusionTotemStorageDeathListener implements Listener {
+public class InfusionTotemListener implements Listener {
 
     // Key
     private final NamespacedKey infusionTotemStorage = new NamespacedKey(AlchimiaVitae.i(), "infusion_totemstorage");
 
     // Constructor
-    public InfusionTotemStorageDeathListener(AlchimiaVitae p) {
+    public InfusionTotemListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 

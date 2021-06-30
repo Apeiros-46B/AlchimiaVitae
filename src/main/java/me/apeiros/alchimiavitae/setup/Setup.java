@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.listeners.EntityDeathListener;
+import me.apeiros.alchimiavitae.listeners.MobDropListener;
 import me.apeiros.alchimiavitae.listeners.infusion.*;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.apeiros.alchimiavitae.setup.items.crafters.DivineAltar;
@@ -81,13 +81,13 @@ public class Setup {
         setupInfusionAltar(p);
 
         // Listeners
-        new EntityDeathListener(p);
-        new InfusionAxeAttackListener(p);
-        new InfusionBowShootListener(p);
-        new InfusionHoeReapListener(p);
-        new InfusionTotemStorageDeathListener(p);
-        new InfusionFishHookHitListener(p);
-        new InfusionSwordAttackListener(p);
+        new MobDropListener(p);
+        new InfusionAxeListener(p);
+        new InfusionBowListener(p);
+        new InfusionHoeListener(p);
+        new InfusionTotemListener(p);
+        new InfusionFishingRodListener(p);
+        new InfusionSwordListener(p);
 
         // Researches
         setupResearches(p);

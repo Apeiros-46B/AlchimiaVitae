@@ -16,14 +16,14 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class InfusionAxeAttackListener implements Listener {
+public class InfusionAxeListener implements Listener {
 
     // Keys
     private final NamespacedKey infusionDestructiveCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_destructivecrits");
     private final NamespacedKey infusionPhantomCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_phantomcrits");
 
     // Constructor
-    public InfusionAxeAttackListener(AlchimiaVitae p) {
+    public InfusionAxeListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
@@ -41,7 +41,7 @@ public class InfusionAxeAttackListener implements Listener {
                 PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
 
                 // Check what infusion the axe has
-                if (container.has(infusionDestructiveCrits, PersistentDataType.BYTE) && e.getEntity() instanceof Player) {
+                if (container.has(infusionDestructiveCrits, PersistentDataType.BYTE) && e.getEntity() instanceof Player && e.getEntity().getFallDistance() > 0) {
                     // Store the victim of the attack in a variable
                     Player victim = (Player) e.getEntity();
 
@@ -53,20 +53,20 @@ public class InfusionAxeAttackListener implements Listener {
                     }
 
                     // 1/5 chance to add slowness
-                    if (r.nextInt(4) == 0) {
+                    if (r.nextInt(5) == 0) {
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 15, 1));
                     }
 
                     // 1/5 chance to add weakness
-                    if (r.nextInt(4) == 0) {
+                    if (r.nextInt(5) == 0) {
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 15, 1));
                     }
 
                     // 1/20 Chance to add brief mining fatigue
-                    if (r.nextInt(19) == 0) {
+                    if (r.nextInt(20) == 0) {
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
                     }
-                } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity) {
+                } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity && e.getEntity().getFallDistance() > 0) {
                     // Store victim in a variable
                     LivingEntity victim = (LivingEntity) e.getEntity();
 

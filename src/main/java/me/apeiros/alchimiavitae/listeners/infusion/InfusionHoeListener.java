@@ -14,13 +14,13 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-public class InfusionHoeReapListener implements Listener {
+public class InfusionHoeListener implements Listener {
 
     // Key
     private final NamespacedKey infusionAutoReplant = new NamespacedKey(AlchimiaVitae.i(), "infusion_autoreplant");
 
     // Constructor
-    public InfusionHoeReapListener(AlchimiaVitae p) {
+    public InfusionHoeListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
