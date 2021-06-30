@@ -85,8 +85,9 @@ public class Setup {
         new InfusionAxeAttackListener(p);
         new InfusionBowShootListener(p);
         new InfusionHoeReapListener(p);
-        new InfusionTotemRightClickListener(p);
         new InfusionTotemStorageDeathListener(p);
+        new InfusionFishHookHitListener(p);
+        new InfusionSwordAttackListener(p);
 
         // Researches
         setupResearches(p);
