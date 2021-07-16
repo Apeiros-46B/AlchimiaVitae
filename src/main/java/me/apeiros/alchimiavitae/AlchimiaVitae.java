@@ -39,7 +39,6 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     public void disable() {
         // Set instance to null
         instance = null;
-        super.onDisable();
     }
 
     @Override
