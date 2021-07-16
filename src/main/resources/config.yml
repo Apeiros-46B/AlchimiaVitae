@@ -13,6 +13,11 @@ options:
     infusion-healing: true
     infusion-autoreplant: true
     infusion-totemstorage: true
+    # Shield Disruptor is currently non-functional
+    infusion-shielddisruptor: true
+    # Spiked Hook is currently non-functional
+    infusion-spikedhook: true
+    infusion-knockback: true
 
   # Options for transmutations
   transmutations:

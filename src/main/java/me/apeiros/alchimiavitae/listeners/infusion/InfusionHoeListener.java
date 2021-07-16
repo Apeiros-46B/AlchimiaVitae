@@ -1,9 +1,9 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
@@ -15,9 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 public class InfusionHoeListener implements Listener {
-
-    // Key
-    private final NamespacedKey infusionAutoReplant = new NamespacedKey(AlchimiaVitae.i(), "infusion_autoreplant");
 
     // Constructor
     public InfusionHoeListener(AlchimiaVitae p) {
@@ -37,7 +34,7 @@ public class InfusionHoeListener implements Listener {
             if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
                 // Check if the tool has the Auto-Replant infusion
                 if (p.getInventory().getItemInMainHand().getItemMeta().
-                        getPersistentDataContainer().has(infusionAutoReplant, PersistentDataType.BYTE)) {
+                        getPersistentDataContainer().has(AltarOfInfusion.SPIKED_HOOK, PersistentDataType.BYTE)) {
                     // Check if the crop is at maximum age
                     if (a.getAge() == a.getMaximumAge()) {
                         // Cancel event

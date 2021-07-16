@@ -1,20 +1,31 @@
 package me.apeiros.alchimiavitae.setup.items.crafters;
 
-import io.github.mooy1.infinitylib.recipes.inputs.MultiInput;
+import io.github.mooy1.infinitylib.items.StackUtils;
+import io.github.mooy1.infinitylib.recipes.RecipeMap;
+import io.github.mooy1.infinitylib.recipes.RecipeOutput;
+import io.github.mooy1.infinitylib.recipes.ShapedRecipe;
 import io.github.mooy1.infinitylib.slimefun.AbstractContainer;
+import io.github.thebusybiscuit.slimefun4.core.services.CustomTextureService;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.utils.Categories;
 import me.apeiros.alchimiavitae.utils.ChestMenuItems;
+import me.apeiros.alchimiavitae.utils.RecipeTypes;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -22,8 +33,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Nonnull;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
@@ -36,25 +46,161 @@ public class DivineAltar extends AbstractContainer {
 
     private static final int[] CRAFT_BUTTON = {15, 16, 24, 25, 33, 34};
 
-    public static final Map<MultiInput, ItemStack> RECIPES = new HashMap<>();
+    public static final RecipeMap<ItemStack> RECIPES = new RecipeMap<>(ShapedRecipe::new);
 
     public DivineAltar(Category c) {
 
         super(c, Items.DIVINE_ALTAR, RecipeType.ANCIENT_ALTAR, new ItemStack[]{
-                Items.EXP_CRYSTAL, SlimefunItems.ELECTRIC_MOTOR, Items.EXP_CRYSTAL,
+                Items.EXP_CRYSTAL, SlimefunItems.ELECTRO_MAGNET, Items.EXP_CRYSTAL,
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.BLISTERING_INGOT_3,
-                SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.HEATED_PRESSURE_CHAMBER_2, SlimefunItems.ANCIENT_PEDESTAL
+                SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.ANCIENT_PEDESTAL
         });
+
+        // Get config values
+        boolean reinforcedTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.reinforced-transmutation");
+        boolean hardenedTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.hardened-transmutation");
+        boolean steelTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.steel-transmutation");
+        boolean damascusTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.damascus-transmutation");
+        boolean compressedCarbonTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.compressed-carbon-transmutation");
+        boolean useSlimefunItemCustomModelData = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.use-same-custommodeldata");
+
+        // ItemStack and custom texture service
+        SlimefunItemStack item;
+        CustomTextureService cts = SlimefunPlugin.getItemTextureService();
+
+        // Add transmutations
+        if (reinforcedTransmutationEnabled) {
+            RECIPES.put(new ItemStack[] {
+                    null, SlimefunItems.DAMASCUS_STEEL_INGOT, null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.DAMASCUS_STEEL_INGOT, null
+            }, new SlimefunItemStack(SlimefunItems.REINFORCED_ALLOY_INGOT, 2));
+
+            item = new SlimefunItemStack("AV_REINFORCED_ALLOY_INGOT", Material.IRON_INGOT, "&b&lReinforced Alloy Ingot");
+
+            if (useSlimefunItemCustomModelData) {
+                item.setCustomModel(cts.getModelData("REINFORCED_ALLOY_INGOT"));
+                cts.setTexture(item, "AV_REINFORCED_ALLOY_INGOT");
+            }
+
+            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+                    null, SlimefunItems.DAMASCUS_STEEL_INGOT, null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.DAMASCUS_STEEL_INGOT, null
+            }, new SlimefunItemStack(item, 2)).register(AlchimiaVitae.i());
+        }
+
+        if (hardenedTransmutationEnabled) {
+            RECIPES.put(new ItemStack[] {
+                    null, SlimefunItems.STEEL_INGOT, null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.STEEL_INGOT, null
+            }, new SlimefunItemStack(SlimefunItems.HARDENED_METAL_INGOT, 2));
+
+            item = new SlimefunItemStack("AV_HARDENED_METAL_INGOT", Material.IRON_INGOT, "&b&lHardened Metal");
+
+            if (useSlimefunItemCustomModelData) {
+                item.setCustomModel(cts.getModelData("HARDENED_METAL_INGOT"));
+                cts.setTexture(item, "AV_HARDENED_METAL_INGOT");
+            }
+
+            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+                    null, SlimefunItems.STEEL_INGOT, null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.STEEL_INGOT, null
+            }, new SlimefunItemStack(item, 2)).register(AlchimiaVitae.i());
+        }
+
+        if (steelTransmutationEnabled) {
+            RECIPES.put(new ItemStack[] {
+                    null, new ItemStack(Material.IRON_BLOCK), null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.CARBON, null
+            }, new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8));
+
+            item = new SlimefunItemStack("AV_STEEL_INGOT", Material.IRON_INGOT, "&bSteel Ingot");
+
+            if (useSlimefunItemCustomModelData) {
+                item.setCustomModel(cts.getModelData("STEEL_INGOT"));
+                cts.setTexture(item, "AV_STEEL_INGOT");
+            }
+
+            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+                    null, new ItemStack(Material.IRON_BLOCK), null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.CARBON, null
+            }, new SlimefunItemStack(item, 8)).register(AlchimiaVitae.i());
+        }
+
+        if (damascusTransmutationEnabled) {
+            RECIPES.put(new ItemStack[] {
+                    null, new ItemStack(Material.IRON_BLOCK), null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.COMPRESSED_CARBON, null
+            }, new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8));
+
+            item = new SlimefunItemStack("AV_DAMASCUS_STEEL_INGOT", Material.IRON_INGOT, "&bDamascus Steel Ingot");
+
+            if (useSlimefunItemCustomModelData) {
+                item.setCustomModel(cts.getModelData("DAMASCUS_STEEL_INGOT"));
+                cts.setTexture(item, "AV_DAMASCUS_STEEL_INGOT");
+            }
+
+            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+                    null, new ItemStack(Material.IRON_BLOCK), null,
+                    Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
+                    null, SlimefunItems.COMPRESSED_CARBON, null
+            }, new SlimefunItemStack(item, 8)).register(AlchimiaVitae.i());
+        }
+
+        if (compressedCarbonTransmutationEnabled) {
+            RECIPES.put(new ItemStack[] {
+                    new ItemStack(Material.COAL), new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.COAL),
+                    new ItemStack(Material.OAK_LEAVES), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.KELP),
+                    new ItemStack(Material.COAL), new ItemStack(Material.ROTTEN_FLESH), new ItemStack(Material.COAL)
+            }, SlimefunItems.COMPRESSED_CARBON);
+
+            item = new SlimefunItemStack("AV_COMPRESSED_CARBON", HeadTexture.COMPRESSED_CARBON, "&cCompressed Carbon");
+
+            if (useSlimefunItemCustomModelData) {
+                item.setCustomModel(cts.getModelData("COMPRESSED_CARBON"));
+                cts.setTexture(item, "AV_COMPRESSED_CARBON");
+            }
+
+            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+                    new ItemStack(Material.COAL), new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.COAL),
+                    new ItemStack(Material.OAK_LEAVES), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.KELP),
+                    new ItemStack(Material.COAL), new ItemStack(Material.ROTTEN_FLESH), new ItemStack(Material.COAL)
+            }, item).register(AlchimiaVitae.i());
+        }
+
+        // Add normal recipes to recipe map
+        RECIPES.put(new ItemStack[] {
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
+                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
+                Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
+        }, Items.MOLTEN_MYSTERY_METAL);
+
+        RECIPES.put(new ItemStack[] {
+                Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
+                Items.DARKSTEEL, Items.DIVINE_ALTAR, Items.ILLUMIUM,
+                SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
+        }, Items.ORNATE_CAULDRON);
+
+        RECIPES.put(new ItemStack[]{
+                Items.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, Items.EXP_CRYSTAL,
+                SlimefunItems.REINFORCED_PLATE, new ItemStack(Material.BEACON), SlimefunItems.REINFORCED_PLATE,
+                SlimefunItems.BLISTERING_INGOT_3, Items.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
+        }, Items.ALTAR_OF_INFUSION);
 
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected int[] getTransportSlots(@NotNull DirtyChestMenu dirtyChestMenu, @NotNull ItemTransportFlow itemTransportFlow, ItemStack itemStack) {
         return new int[0];
     }
 
-    @Override
     protected void tick(@NotNull Block block) {
         // Spawn Standard Galactic symbol particles
         block.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, block.getLocation(), 30, 0.5, 0.5, 0.5);
@@ -103,10 +249,15 @@ public class DivineAltar extends AbstractContainer {
 
     private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
         // Get expected output
-        ItemStack output = RECIPES.get(new MultiInput(inv, IN_SLOTS));
+        RecipeOutput<ItemStack> output = RECIPES.get(StackUtils.arrayFrom(inv, IN_SLOTS));
+        ItemStack item = null;
+
+        if (output != null) {
+            item = output.getOutput();
+        }
 
         // Invalid recipe
-        if (output == null) {
+        if (item == null) {
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That recipe is invalid!")));
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
             return;
@@ -120,6 +271,7 @@ public class DivineAltar extends AbstractContainer {
         }
 
         // Pre-craft effects
+        ItemStack finalItem = item;
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
             b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
             b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
@@ -144,7 +296,7 @@ public class DivineAltar extends AbstractContainer {
                         b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation(), 300, 2, 2, 2);
 
                         // Drop item
-                        b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), output.clone()).setGlowing(true);
+                        b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), finalItem.clone()).setGlowing(true);
 
                         // Send message
                         p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(

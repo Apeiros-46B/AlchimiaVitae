@@ -20,3 +20,9 @@ api-version: 1.16
 ## This is required and marks Slimefun as a plugin dependency.
 depend:
 - Slimefun
+
+# Test command
+# commands:
+#   giveinfusion:
+#     description: Testing
+#     usage: /giveinfusion

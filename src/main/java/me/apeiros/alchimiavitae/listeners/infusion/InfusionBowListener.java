@@ -2,9 +2,9 @@ package me.apeiros.alchimiavitae.listeners.infusion;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectionManager;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Fireball;
@@ -25,12 +25,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class InfusionBowListener implements Listener {
 
-    // Keys
-    private final NamespacedKey infusionTrueAim = new NamespacedKey(AlchimiaVitae.i(), "infusion_trueaim");
-    private final NamespacedKey infusionVolatile = new NamespacedKey(AlchimiaVitae.i(), "infusion_volatile");
-    private final NamespacedKey infusionForceful = new NamespacedKey(AlchimiaVitae.i(), "infusion_forceful");
-    private final NamespacedKey infusionHealing = new NamespacedKey(AlchimiaVitae.i(), "infusion_healing");
-
     // Constructor
     public InfusionBowListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
@@ -50,13 +44,13 @@ public class InfusionBowListener implements Listener {
                     PersistentDataContainer container = e.getBow().getItemMeta().getPersistentDataContainer();
 
                     // True aim infusion
-                    if (container.has(infusionTrueAim, PersistentDataType.BYTE)) {
+                    if (container.has(AltarOfInfusion.TRUE_AIM, PersistentDataType.BYTE)) {
                         // Set gravity to false
                         e.getProjectile().setGravity(false);
                     }
 
                     // Volatility infusion
-                    if (container.has(infusionVolatile, PersistentDataType.BYTE)) {
+                    if (container.has(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE)) {
                         // Declare fb
                         Fireball fb;
 
@@ -80,18 +74,18 @@ public class InfusionBowListener implements Listener {
                         fb.setShooter(p);
 
                         // Add data
-                        fb.getPersistentDataContainer().set(infusionVolatile, PersistentDataType.BYTE, (byte) 1);
+                        fb.getPersistentDataContainer().set(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE, (byte) 1);
                     }
 
                     // Forceful infusion
-                    if (container.has(infusionForceful, PersistentDataType.BYTE)) {
+                    if (container.has(AltarOfInfusion.FORCEFUL, PersistentDataType.BYTE)) {
                         e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
                     }
 
                     // Healing infusion
-                    if (container.has(infusionHealing, PersistentDataType.BYTE)) {
+                    if (container.has(AltarOfInfusion.HEALING, PersistentDataType.BYTE)) {
                         // Add data
-                        e.getProjectile().getPersistentDataContainer().set(infusionHealing, PersistentDataType.BYTE, (byte) 1);
+                        e.getProjectile().getPersistentDataContainer().set(AltarOfInfusion.HEALING, PersistentDataType.BYTE, (byte) 1);
                     }
                 }
             }
@@ -105,7 +99,7 @@ public class InfusionBowListener implements Listener {
             if (((Fireball) e.getEntity()).getShooter() instanceof Player
                     && ((Fireball) e.getEntity()).getShooter() != null &&
                     e.getEntity().getPersistentDataContainer().has
-                    (infusionVolatile, PersistentDataType.BYTE)) {
+                    (AltarOfInfusion.VOLATILE, PersistentDataType.BYTE)) {
                 Player shooter = (Player) ((Fireball) e.getEntity()).getShooter();
                 ProtectionManager pm = SlimefunPlugin.getProtectionManager();
 
@@ -127,7 +121,7 @@ public class InfusionBowListener implements Listener {
                 e.getHitEntity() instanceof LivingEntity &&
                 e.getEntity() instanceof AbstractArrow &&
                 e.getEntity().getPersistentDataContainer().has(
-                        infusionHealing, PersistentDataType.BYTE)) {
+                AltarOfInfusion.HEALING, PersistentDataType.BYTE)) {
             // Variables
             AbstractArrow arrow = (AbstractArrow) e.getEntity();
             LivingEntity entity = (LivingEntity) e.getHitEntity();

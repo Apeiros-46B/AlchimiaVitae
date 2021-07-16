@@ -1,7 +1,7 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import org.bukkit.NamespacedKey;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,10 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class InfusionAxeListener implements Listener {
-
-    // Keys
-    private final NamespacedKey infusionDestructiveCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_destructivecrits");
-    private final NamespacedKey infusionPhantomCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_phantomcrits");
 
     // Constructor
     public InfusionAxeListener(AlchimiaVitae p) {
@@ -41,7 +37,7 @@ public class InfusionAxeListener implements Listener {
                 PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
 
                 // Check what infusion the axe has
-                if (container.has(infusionDestructiveCrits, PersistentDataType.BYTE) && e.getEntity() instanceof Player && e.getEntity().getFallDistance() > 0) {
+            if (container.has(AltarOfInfusion.DESTRUCTIVE_CRITS, PersistentDataType.BYTE) && e.getEntity() instanceof Player && e.getEntity().getFallDistance() > 0) {
                     // Store the victim of the attack in a variable
                     Player victim = (Player) e.getEntity();
 
@@ -66,7 +62,7 @@ public class InfusionAxeListener implements Listener {
                     if (r.nextInt(20) == 0) {
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
                     }
-                } else if (container.has(infusionPhantomCrits, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity && e.getEntity().getFallDistance() > 0) {
+                } else if (container.has(AltarOfInfusion.PHANTOM_CRITS, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity && e.getEntity().getFallDistance() > 0) {
                     // Store victim in a variable
                     LivingEntity victim = (LivingEntity) e.getEntity();
 

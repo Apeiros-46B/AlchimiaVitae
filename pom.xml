@@ -130,9 +130,9 @@
         </dependency>
 
         <dependency>
-            <groupId>io.github.mooy1</groupId>
+            <groupId>com.github.Mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>0979d01</version>
+            <version>7d20c9c</version>
             <scope>compile</scope>
         </dependency>
 

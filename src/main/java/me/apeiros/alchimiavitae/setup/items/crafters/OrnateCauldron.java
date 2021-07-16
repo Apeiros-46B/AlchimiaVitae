@@ -1,6 +1,9 @@
 package me.apeiros.alchimiavitae.setup.items.crafters;
 
-import io.github.mooy1.infinitylib.recipes.inputs.MultiInput;
+import io.github.mooy1.infinitylib.items.StackUtils;
+import io.github.mooy1.infinitylib.recipes.RecipeMap;
+import io.github.mooy1.infinitylib.recipes.RecipeOutput;
+import io.github.mooy1.infinitylib.recipes.ShapedRecipe;
 import io.github.mooy1.infinitylib.slimefun.AbstractContainer;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -15,6 +18,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -22,8 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Nonnull;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
@@ -35,7 +38,7 @@ public class OrnateCauldron extends AbstractContainer {
 
     private static final int[] CRAFT_BUTTON = {15, 16, 24, 25, 33, 34};
 
-    public static final Map<MultiInput, ItemStack> RECIPES = new HashMap<>();
+    public static final RecipeMap<ItemStack> RECIPES = new RecipeMap<>(ShapedRecipe::new);
 
     public OrnateCauldron(Category c) {
 
@@ -45,15 +48,32 @@ public class OrnateCauldron extends AbstractContainer {
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
         });
 
+        // Add recipes to recipe map
+        RECIPES.put(new ItemStack[] {
+                Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,
+                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.GOOD_ESSENCE,
+                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.ILLUMIUM
+        }, Items.POTION_OF_OSMOSIS);
+
+        RECIPES.put(new ItemStack[] {
+                Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
+                Items.GOOD_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
+                Items.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
+        }, Items.BENEVOLENT_BREW);
+
+        RECIPES.put(new ItemStack[] {
+                Items.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
+                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
+                Items.DARKSTEEL, Items.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH)
+        }, Items.MALEVOLENT_CONCOCTION);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected int[] getTransportSlots(@NotNull DirtyChestMenu dirtyChestMenu, @NotNull ItemTransportFlow itemTransportFlow, ItemStack itemStack) {
         return new int[0];
     }
 
-    @Override
     protected void tick(@NotNull Block block) {
 
     }
@@ -101,10 +121,15 @@ public class OrnateCauldron extends AbstractContainer {
 
     private void brew(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
         // Get expected output
-        ItemStack output = RECIPES.get(new MultiInput(inv, IN_SLOTS));
+        RecipeOutput<ItemStack> output = RECIPES.get(StackUtils.arrayFrom(inv, IN_SLOTS));
+        ItemStack item = null;
+
+        if (output != null) {
+            item = output.getOutput();
+        }
 
         // Invalid recipe
-        if (output == null) {
+        if (item == null) {
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That recipe is invalid!")));
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
             return;
@@ -118,6 +143,7 @@ public class OrnateCauldron extends AbstractContainer {
         }
 
         // First pre-craft effect burst
+        ItemStack finalItem = item;
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
             b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
             b.getWorld().spawnParticle(Particle.SPELL_WITCH, b.getLocation(), 2, 1, 1, 1);
@@ -139,7 +165,7 @@ public class OrnateCauldron extends AbstractContainer {
                     b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation(), 200, 0.1, 4, 0.1);
 
                     // Drop item
-                    b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), output.clone()).setGlowing(true);
+                    b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), finalItem.clone()).setGlowing(true);
 
                     // Send message
                     p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
