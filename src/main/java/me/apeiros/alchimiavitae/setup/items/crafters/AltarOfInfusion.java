@@ -289,11 +289,6 @@ public class AltarOfInfusion extends AbstractContainer {
         return new int[0];
     }
 
-    protected void tick(@NotNull Block block) {
-        // Spawn end rod particles
-        block.getWorld().spawnParticle(Particle.END_ROD, block.getLocation(), 3, 0.5, 0.5, 0.5);
-    }
-
     @Override
     protected void setupMenu(@NotNull BlockMenuPreset blockMenuPreset) {
         // Input background
@@ -336,20 +331,25 @@ public class AltarOfInfusion extends AbstractContainer {
     }
 
     private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
-        // Get expected Infusion
-        RecipeOutput<NamespacedKey> output = RECIPES.get(StackUtils.arrayFrom(inv, IN_SLOTS_EXCLUDING_MID));
-        NamespacedKey infusion = null;
+        /*ItemStack[] items = StackUtils.arrayFrom(inv, IN_SLOTS_EXCLUDING_MID);
 
-        if (output != null) {
-            infusion = output.getOutput();
-        }
+        for (ItemStack i : items) {
+            if (i.getType() == Material.AIR) {
+                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Invalid Infusion!")));
+                return;
+            }
+        }*/
+
+        // Get expected Infusion
+        RecipeOutput<NamespacedKey> output = RECIPES.get(/*items*/ StackUtils.arrayFrom(inv, IN_SLOTS_EXCLUDING_MID));
 
         // Invalid Infusion
-        if (infusion == null) {
+        if (output == null) {
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Invalid Infusion!")));
             return;
         }
 
+        NamespacedKey infusion = output.getOutput();
         Material mat = inv.getItemInSlot(TOOL_SLOT).getType();
 
         // Check if item is valid

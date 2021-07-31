@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -33,7 +34,7 @@ public class InfusionTotemListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onShiftRightClick(PlayerInteractEvent e) {
         if (e.getPlayer().isSneaking() && e.getPlayer().getInventory().getChestplate() != null && e.getItem() != null &&
-                (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+                e.getHand() == EquipmentSlot.HAND && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             // Get the container
             ItemMeta meta = e.getPlayer().getInventory().getChestplate().getItemMeta();
 
@@ -50,6 +51,7 @@ public class InfusionTotemListener implements Listener {
                     // Check if there are already 8 totems
                     if (totemsStored >= 8) {
                         e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is no more space for this Totem!")));
+                        return;
                     }
 
                     // Remove the totem in the hand
@@ -62,7 +64,7 @@ public class InfusionTotemListener implements Listener {
 
                     // Send a message to the player
                     e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<green>Your Totem has been added to the Battery of Totems.")));
-                    e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<green>There are now " + totemsStored + " Totems stored.")));
+                    e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(totemsStored == 1 ? "<green>There is now 1 Totem stored." : "<green>There are now " + totemsStored + " Totems stored.")));
 
                     // Play effects
                     e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 1);
