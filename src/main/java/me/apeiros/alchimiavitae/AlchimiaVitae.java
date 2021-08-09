@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
 
-    private static AlchimiaVitae instance;
+    private static AlchimiaVitae i;
 
     public static final MiniMessage MM = MiniMessage.builder()
             .removeDefaultTransformations()
@@ -29,16 +29,16 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     @Override
     public void enable() {
         // Instance and super
-        instance = this;
+        i = this;
 
         // Setup items and listeners
-        Setup.setup(instance);
+        Setup.setup(this);
     }
 
     @Override
     public void disable() {
         // Set instance to null
-        instance = null;
+        i = null;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     }
 
     public static AlchimiaVitae i() {
-        return instance;
+        return i;
     }
 
 }
