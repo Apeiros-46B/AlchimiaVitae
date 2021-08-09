@@ -29,6 +29,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -56,13 +57,17 @@ public class DivineAltar extends AbstractContainer {
                 SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.ANCIENT_PEDESTAL
         });
 
+        // Get plugin and config
+        AlchimiaVitae av = AlchimiaVitae.i();
+        Configuration cfg = av.getConfig();
+
         // Get config values
-        boolean reinforcedTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.reinforced-transmutation");
-        boolean hardenedTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.hardened-transmutation");
-        boolean steelTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.steel-transmutation");
-        boolean damascusTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.damascus-transmutation");
-        boolean compressedCarbonTransmutationEnabled = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.compressed-carbon-transmutation");
-        boolean useSlimefunItemCustomModelData = AlchimiaVitae.i().getConfig().getBoolean("options.transmutations.use-same-custommodeldata");
+        boolean reinforcedTransmutationEnabled = cfg.getBoolean("options.transmutations.reinforced-transmutation");
+        boolean hardenedTransmutationEnabled = cfg.getBoolean("options.transmutations.hardened-transmutation");
+        boolean steelTransmutationEnabled = cfg.getBoolean("options.transmutations.steel-transmutation");
+        boolean damascusTransmutationEnabled = cfg.getBoolean("options.transmutations.damascus-transmutation");
+        boolean compressedCarbonTransmutationEnabled = cfg.getBoolean("options.transmutations.compressed-carbon-transmutation");
+        boolean useSlimefunItemCustomModelData = cfg.getBoolean("options.transmutations.use-same-custommodeldata");
 
         // ItemStack and custom texture service
         SlimefunItemStack item;
@@ -87,7 +92,7 @@ public class DivineAltar extends AbstractContainer {
                     null, SlimefunItems.DAMASCUS_STEEL_INGOT, null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.DAMASCUS_STEEL_INGOT, null
-            }, new SlimefunItemStack(item, 2)).register(AlchimiaVitae.i());
+            }, new SlimefunItemStack(item, 2)).register(av);
         }
 
         if (hardenedTransmutationEnabled) {
@@ -108,7 +113,7 @@ public class DivineAltar extends AbstractContainer {
                     null, SlimefunItems.STEEL_INGOT, null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.STEEL_INGOT, null
-            }, new SlimefunItemStack(item, 2)).register(AlchimiaVitae.i());
+            }, new SlimefunItemStack(item, 2)).register(av);
         }
 
         if (steelTransmutationEnabled) {
@@ -129,7 +134,7 @@ public class DivineAltar extends AbstractContainer {
                     null, new ItemStack(Material.IRON_BLOCK), null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.CARBON, null
-            }, new SlimefunItemStack(item, 8)).register(AlchimiaVitae.i());
+            }, new SlimefunItemStack(item, 8)).register(av);
         }
 
         if (damascusTransmutationEnabled) {
@@ -150,7 +155,7 @@ public class DivineAltar extends AbstractContainer {
                     null, new ItemStack(Material.IRON_BLOCK), null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.COMPRESSED_CARBON, null
-            }, new SlimefunItemStack(item, 8)).register(AlchimiaVitae.i());
+            }, new SlimefunItemStack(item, 8)).register(av);
         }
 
         if (compressedCarbonTransmutationEnabled) {
@@ -171,7 +176,7 @@ public class DivineAltar extends AbstractContainer {
                     new ItemStack(Material.COAL), new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.COAL),
                     new ItemStack(Material.OAK_LEAVES), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.KELP),
                     new ItemStack(Material.COAL), new ItemStack(Material.ROTTEN_FLESH), new ItemStack(Material.COAL)
-            }, item).register(AlchimiaVitae.i());
+            }, item).register(av);
         }
 
         // Add normal recipes to recipe map
@@ -199,11 +204,6 @@ public class DivineAltar extends AbstractContainer {
     @Override
     protected int[] getTransportSlots(@NotNull DirtyChestMenu dirtyChestMenu, @NotNull ItemTransportFlow itemTransportFlow, ItemStack itemStack) {
         return new int[0];
-    }
-
-    protected void tick(@NotNull Block block) {
-        // Spawn Standard Galactic symbol particles
-        block.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, block.getLocation(), 30, 0.5, 0.5, 0.5);
     }
 
     @Override

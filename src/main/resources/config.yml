@@ -13,10 +13,6 @@ options:
     infusion-healing: true
     infusion-autoreplant: true
     infusion-totemstorage: true
-    # Shield Disruptor is currently non-functional
-    infusion-shielddisruptor: true
-    # Spiked Hook is currently non-functional
-    infusion-spikedhook: true
     infusion-knockback: true
 
   # Options for transmutations
@@ -30,3 +26,65 @@ options:
 
     # Whether or not to use the same custom model data as the resulting Slimefun items
     use-same-custommodeldata: true
+
+  # Options for potions
+  potions:
+    # Options for the Benevolent Brew potion
+    benevolent-brew:
+      # Effect configurations
+      resistance:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 6000
+        # The level of the effect (resistance 5 and above will make players completely immune to damage)
+        level: 1
+      haste:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 6000
+        # The level of the effect
+        level: 2
+      regen:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 6000
+        # The level of the effect
+        level: 2
+      speed:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 6000
+        # The level of the effect
+        level: 2
+      jump:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 6000
+        # The level of the effect
+        level: 2
+
+      # How many half hearts of absorption to grant upon consuming the potion (has to be in this format: 0.0, 1.0, etc.)
+      absorption-halfhearts: 0.0
+    # Options for the Malevolent Concoction splash potion
+    malevolent-concoction:
+      # Effect configurations
+      weakness:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 6000
+        # The level of the effect
+        level: 3
+      slowness:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 3000
+        # The level of the effect
+        level: 2
+      poison:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 600
+        # The level of the effect
+        level: 2
+      blindness:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 1200
+        # The level of the effect
+        level: 1
+      hunger:
+        # How many game ticks (there are 20 game ticks in a second) the effect should last
+        ticks: 600
+        # The level of the effect
+        level: 2

@@ -33,15 +33,6 @@ import org.bukkit.NamespacedKey;
 
 public class Setup {
 
-    private static final NamespacedKey axeInfusionDestructiveCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_destructivecrits");
-    private static final NamespacedKey axeInfusionPhantomCrits = new NamespacedKey(AlchimiaVitae.i(), "infusion_phantomcrits");
-    private static final NamespacedKey chestplateInfusionTotemBattery = new NamespacedKey(AlchimiaVitae.i(), "infusion_totemstorage");
-    private static final NamespacedKey bowInfusionTrueAim = new NamespacedKey(AlchimiaVitae.i(), "infusion_trueaim");
-    private static final NamespacedKey bowInfusionForceful = new NamespacedKey(AlchimiaVitae.i(), "infusion_forceful");
-    private static final NamespacedKey bowInfusionVolatile = new NamespacedKey(AlchimiaVitae.i(), "infusion_volatile");
-    private static final NamespacedKey bowInfusionHealing = new NamespacedKey(AlchimiaVitae.i(), "infusion_healing");
-    private static final NamespacedKey hoeInfusionAutoReplant = new NamespacedKey(AlchimiaVitae.i(), "infusion_autoreplant");
-
     public static void setup(AlchimiaVitae p) {
         // Category
         Categories.MAIN.register(p);
@@ -78,9 +69,6 @@ public class Setup {
 
         // Researches
         setupResearches(p);
-
-        // TODO: Test command, remove after testing is finished
-        // new TempTestCMD(p);
     }
 
     public static void setupResearches(AlchimiaVitae p) {

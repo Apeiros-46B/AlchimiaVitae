@@ -27,6 +27,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -88,30 +89,35 @@ public class AltarOfInfusion extends AbstractContainer {
                 SlimefunItems.BLISTERING_INGOT_3, Items.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
         });
 
-        // Get instance
-        AlchimiaVitae p = AlchimiaVitae.i();
+        // Get plugin and config
+        AlchimiaVitae av = AlchimiaVitae.i();
+        Configuration cfg = av.getConfig();
 
         // Get config values
-        boolean destructiveCritsEnabled = p.getConfig().getBoolean("options.infusions.infusion-destructivecrits");
-        boolean phantomCritsEnabled = p.getConfig().getBoolean("options.infusions.infusion-phantomcrits");
-        boolean trueAimEnabled = p.getConfig().getBoolean("options.infusions.infusion-trueaim");
-        boolean forcefulEnabled = p.getConfig().getBoolean("options.infusions.infusion-forceful");
-        boolean volatileEnabled = p.getConfig().getBoolean("options.infusions.infusion-volatile");
-        boolean healingEnabled = p.getConfig().getBoolean("options.infusions.infusion-healing");
-        boolean autoReplantEnabled = p.getConfig().getBoolean("options.infusions.infusion-autoreplant");
-        boolean totemStorageEnabled = p.getConfig().getBoolean("options.infusions.infusion-totemstorage");
-        // Currently non-functional
-        boolean shieldDisruptorEnabled = p.getConfig().getBoolean("options.infusions.infusion-shielddisruptor");
-        // Currently non-functional
-        boolean spikedHookEnabled = p.getConfig().getBoolean("options.infusions.infusion-spikedhook");
-        boolean knockbackEnabled = p.getConfig().getBoolean("options.infusions.infusion-knockback");
+        boolean destructiveCritsEnabled = cfg.getBoolean("options.infusions.infusion-destructivecrits");
+        boolean phantomCritsEnabled = cfg.getBoolean("options.infusions.infusion-phantomcrits");
+        boolean trueAimEnabled = cfg.getBoolean("options.infusions.infusion-trueaim");
+        boolean forcefulEnabled = cfg.getBoolean("options.infusions.infusion-forceful");
+        boolean volatileEnabled = cfg.getBoolean("options.infusions.infusion-volatile");
+        boolean healingEnabled = cfg.getBoolean("options.infusions.infusion-healing");
+        boolean autoReplantEnabled = cfg.getBoolean("options.infusions.infusion-autoreplant");
+        boolean totemStorageEnabled = cfg.getBoolean("options.infusions.infusion-totemstorage");
+        /*
+         **Useless atm**
+         boolean shieldDisruptorEnabled = cfg.getBoolean("options.infusions.infusion-shielddisruptor");
+         boolean spikedHookEnabled = cfg.getBoolean("options.infusions.infusion-spikedhook");
+        */
+        boolean knockbackEnabled = cfg.getBoolean("options.infusions.infusion-knockback");
 
         // ItemStacks
         CustomItem validInfuseAxe = new CustomItem(Material.DIAMOND_AXE, "&b&lA valid axe to infuse", "&aA gold, iron, diamond,", "&aor netherite axe will suffice");
         CustomItem validInfuseBow = new CustomItem(Material.BOW, "&b&lA valid bow to infuse", "&aA bow or crossbow will suffice");
         CustomItem validInfuseHoe = new CustomItem(Material.DIAMOND_HOE, "&b&lA valid hoe to infuse", "&aA gold, iron, diamond,", "&aor netherite hoe will suffice");
         CustomItem validInfuseChestplate = new CustomItem(Material.DIAMOND_CHESTPLATE, "&b&lA valid chestplate to infuse", "&aA gold, iron, diamond,", "&aor netherite chestplate will suffice");
-        CustomItem validInfuseSword = new CustomItem(Material.DIAMOND_SWORD, "&b&lA valid sword to infuse", "&aA gold, iron, diamond,", "&aor netherite sword will suffice");
+        /*
+         **Useless atm**
+         CustomItem validInfuseSword = new CustomItem(Material.DIAMOND_SWORD, "&b&lA valid sword to infuse", "&aA gold, iron, diamond,", "&aor netherite sword will suffice");
+        */
         CustomItem validInfuseRod = new CustomItem(Material.FISHING_ROD, "&b&lA valid fishing rod to infuse", "&aA normal fishing rod will suffice");
         SlimefunItemStack item;
 
@@ -133,7 +139,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     new ItemStack(Material.TNT), SlimefunItems.EXPLOSIVE_PICKAXE, new ItemStack(Material.STONECUTTER),
                     Items.DARKSTEEL, validInfuseAxe, SlimefunItems.WITHER_PROOF_OBSIDIAN,
                     new ItemStack(Material.REDSTONE_BLOCK), SlimefunItems.WITHER_PROOF_OBSIDIAN, new ItemStack(Material.TNT)
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (phantomCritsEnabled) {
@@ -151,7 +157,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
                     Items.DARKSTEEL, validInfuseAxe, SlimefunItems.HARDENED_GLASS,
                     new ItemStack(Material.PHANTOM_MEMBRANE), Items.CONDENSED_SOUL, new ItemStack(Material.PHANTOM_MEMBRANE)
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (trueAimEnabled) {
@@ -169,7 +175,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
                     Items.DARKSTEEL, validInfuseBow, Items.EXP_CRYSTAL,
                     new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.STEEL_THRUSTER
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (forcefulEnabled) {
@@ -187,7 +193,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
                     SlimefunItems.INFUSED_MAGNET, validInfuseBow, SlimefunItems.STEEL_THRUSTER,
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (volatileEnabled) {
@@ -206,7 +212,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
                     Items.DARKSTEEL, validInfuseBow, SlimefunItems.LAVA_GENERATOR_2,
                     new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (healingEnabled) {
@@ -224,7 +230,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     Items.BENEVOLENT_BREW, SlimefunItems.MEDICINE, SlimefunItems.VITAMINS,
                     Items.ILLUMIUM, validInfuseBow, new ItemStack(Material.TOTEM_OF_UNDYING),
                     new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), SlimefunItems.MEDICINE, SlimefunItems.MAGIC_SUGAR
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (autoReplantEnabled) {
@@ -242,7 +248,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
                     Items.ILLUMIUM, validInfuseHoe, SlimefunItems.FLUID_PUMP,
                     new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (totemStorageEnabled) {
@@ -261,7 +267,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     SlimefunItems.NECROTIC_SKULL, Items.CONDENSED_SOUL, Items.BENEVOLENT_BREW,
                     Items.ILLUMIUM, validInfuseChestplate, Items.EXP_CRYSTAL,
                     SlimefunItems.ESSENCE_OF_AFTERLIFE, SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.ESSENCE_OF_AFTERLIFE
-            }, item).register(p);
+            }, item).register(av);
         }
 
         if (knockbackEnabled) {
@@ -279,7 +285,7 @@ public class AltarOfInfusion extends AbstractContainer {
                     SlimefunItems.TALISMAN_WHIRLWIND, new ItemStack(Material.STICKY_PISTON), Items.EXP_CRYSTAL,
                     SlimefunItems.GRANDPAS_WALKING_STICK, validInfuseRod, new ItemStack(Material.STICKY_PISTON),
                     new ItemStack(Material.SLIME_BALL), SlimefunItems.GRANDPAS_WALKING_STICK, SlimefunItems.TALISMAN_WHIRLWIND
-            }, item).register(p);
+            }, item).register(av);
         }
     }
 
@@ -331,15 +337,6 @@ public class AltarOfInfusion extends AbstractContainer {
     }
 
     private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
-        /*ItemStack[] items = StackUtils.arrayFrom(inv, IN_SLOTS_EXCLUDING_MID);
-
-        for (ItemStack i : items) {
-            if (i.getType() == Material.AIR) {
-                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Invalid Infusion!")));
-                return;
-            }
-        }*/
-
         // Get expected Infusion
         RecipeOutput<NamespacedKey> output = RECIPES.get(/*items*/ StackUtils.arrayFrom(inv, IN_SLOTS_EXCLUDING_MID));
 

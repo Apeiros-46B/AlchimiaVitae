@@ -74,10 +74,6 @@ public class OrnateCauldron extends AbstractContainer {
         return new int[0];
     }
 
-    protected void tick(@NotNull Block block) {
-
-    }
-
     @Override
     protected void setupMenu(@NotNull BlockMenuPreset blockMenuPreset) {
         // Input background
