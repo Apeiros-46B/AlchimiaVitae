@@ -84,7 +84,7 @@ public class AltarOfInfusion extends AbstractContainer {
     public AltarOfInfusion(Category c) {
 
         super(c, Items.ALTAR_OF_INFUSION, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
-                Items.EXP_CRYSTAL, SlimefunItems.HARDENED_GLASS, Items.EXP_CRYSTAL,
+                Items.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, Items.EXP_CRYSTAL,
                 SlimefunItems.REINFORCED_PLATE, new ItemStack(Material.BEACON), SlimefunItems.REINFORCED_PLATE,
                 SlimefunItems.BLISTERING_INGOT_3, Items.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
         });
