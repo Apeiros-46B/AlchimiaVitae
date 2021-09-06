@@ -65,3 +65,8 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
   - Effects:
     - Allows you to store up to 8 Totems of Undying inside a pocket dimension, resurrecting you upon death, but then being consumed.
     - Totems are added to this battery by shift-rightclicking with one while a chestplate infused with this Infusion is worn
+- Knockback
+  - Applicable items: Fishing Rod
+  - Effects:
+    - Whenever an entity is reeled by a fishing rod infused with Knockback, it gets pushed away instead of being pulled.
+    - The fishing hook from the infused fishing rod flies 2x farther.
