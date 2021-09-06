@@ -1,11 +1,11 @@
 package me.apeiros.alchimiavitae.setup.items.potions;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class BenevolentBrew extends SlimefunItem implements Listener {
 
-    public BenevolentBrew(Category c, AlchimiaVitae p) {
+    public BenevolentBrew(ItemGroup c, AlchimiaVitae p) {
 
         super(c, Items.BENEVOLENT_BREW, RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),

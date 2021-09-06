@@ -1,8 +1,8 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.data.Ageable;
@@ -50,18 +50,18 @@ public class InfusionHoeListener implements Listener {
                             for (ItemStack i : e.getBlock().getDrops(item, p)) {
                                 ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
                                 p.getWorld().dropItemNaturally(e.getBlock().getLocation(),
-                                        new CustomItem(itemToDrop, item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 2));
+                                        new CustomItemStack(itemToDrop, item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 2));
                             }
                         } else {
                             for (ItemStack i : e.getBlock().getDrops(item, p)) {
                                 ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
-                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItem(itemToDrop, 2));
+                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItemStack(itemToDrop, 2));
                             }
                         }
 
                         // Drop seeds if the crop is wheat
                         if (e.getBlock().getType() == Material.WHEAT) {
-                            p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItem(new ItemStack(Material.WHEAT_SEEDS), 2));
+                            p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItemStack(new ItemStack(Material.WHEAT_SEEDS), 2));
                         }
                     }
                 }

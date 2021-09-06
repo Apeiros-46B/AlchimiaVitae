@@ -1,12 +1,12 @@
 package me.apeiros.alchimiavitae.setup.items.potions;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.PotionUtils;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -26,7 +26,7 @@ import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
 
-    public PotionOfOsmosis(Category c) {
+    public PotionOfOsmosis(ItemGroup c) {
 
         super(c, Items.POTION_OF_OSMOSIS, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,

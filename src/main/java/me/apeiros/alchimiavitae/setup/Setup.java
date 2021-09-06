@@ -1,6 +1,6 @@
 package me.apeiros.alchimiavitae.setup;
 
-import io.github.thebusybiscuit.slimefun4.core.researching.Research;
+import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.listeners.MobDropListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionAxeListener;

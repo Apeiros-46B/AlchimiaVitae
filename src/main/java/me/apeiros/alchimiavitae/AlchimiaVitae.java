@@ -1,16 +1,11 @@
 package me.apeiros.alchimiavitae;
 
-import io.github.mooy1.infinitylib.AbstractAddon;
-import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
+import io.github.mooy1.infinitylib.core.AbstractAddon;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import lombok.SneakyThrows;
 import me.apeiros.alchimiavitae.setup.Setup;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.markdown.DiscordFlavor;
 import net.kyori.adventure.text.minimessage.transformation.TransformationType;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
 
@@ -25,7 +20,10 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
             .markdownFlavor(DiscordFlavor.get())
             .build();
 
-    @SneakyThrows
+    public AlchimiaVitae() {
+        super("Apeiros-46B", "AlchimiaVitae", "master", "options.auto-update");
+    }
+
     @Override
     public void enable() {
         // Instance and super
@@ -39,24 +37,6 @@ public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
     public void disable() {
         // Set instance to null
         i = null;
-    }
-
-    @Override
-    @Nullable
-    protected Metrics setupMetrics() {
-        return null;
-    }
-
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public String getAutoUpdatePath() {
-        return null;
-    }
-
-    @Override
-    @Nonnull
-    protected String getGithubPath() {
-        return "Apeiros-46B/AlchimiaVitae/master";
     }
 
     public static AlchimiaVitae i() {

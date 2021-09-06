@@ -1,10 +1,10 @@
 package me.apeiros.alchimiavitae.setup.items.electric;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 
 public class PlantInfusionChamber extends AContainer implements RecipeDisplayItem {
 
-    public PlantInfusionChamber(Category c) {
+    public PlantInfusionChamber(ItemGroup c) {
 
         super(c, Items.PLANT_INFUSION_CHAMBER, RecipeType.ANCIENT_ALTAR, new ItemStack[]{
                 SlimefunItems.ELECTRIC_PRESS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.ELECTRIC_PRESS,

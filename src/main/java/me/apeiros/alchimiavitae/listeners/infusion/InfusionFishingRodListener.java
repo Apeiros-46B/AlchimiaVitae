@@ -1,9 +1,9 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
@@ -34,7 +34,7 @@ public class InfusionFishingRodListener implements Listener {
 
         if (e.getHook().getPersistentDataContainer().has(AltarOfInfusion.SPIKED_HOOK, PersistentDataType.BYTE) && en instanceof LivingEntity) {
             if (en instanceof Player) {
-                if (SlimefunPlugin.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), ProtectableAction.ATTACK_PLAYER)) {
+                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_PLAYER)) {
                     // Variables
                     LivingEntity len = (LivingEntity) en;
 
@@ -48,7 +48,7 @@ public class InfusionFishingRodListener implements Listener {
                     e.setCancelled(true);
                 }
             } else {
-                if (SlimefunPlugin.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), ProtectableAction.ATTACK_ENTITY)) {
+                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_ENTITY)) {
                     // Variables
                     LivingEntity len = (LivingEntity) en;
 
@@ -64,7 +64,7 @@ public class InfusionFishingRodListener implements Listener {
             }
         } else if (proj.getPersistentDataContainer().has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE) && en != null) {
             if (en instanceof Player) {
-                if (SlimefunPlugin.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), ProtectableAction.ATTACK_PLAYER)) {
+                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_PLAYER)) {
                     // Deal knockback
                     en.setVelocity(en.getVelocity().add(e.getPlayer().getEyeLocation().getDirection().setY(0).multiply(3).normalize()));
 
@@ -74,7 +74,7 @@ public class InfusionFishingRodListener implements Listener {
                     e.setCancelled(true);
                 }
             } else {
-                if (SlimefunPlugin.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), ProtectableAction.ATTACK_ENTITY)) {
+                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_ENTITY)) {
                     // Deal knockback
                     en.setVelocity(en.getVelocity().add(e.getPlayer().getEyeLocation().getDirection().setY(0).multiply(3).normalize()));
 

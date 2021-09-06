@@ -1,27 +1,24 @@
 package me.apeiros.alchimiavitae.setup.items.crafters;
 
-import io.github.mooy1.infinitylib.items.StackUtils;
-import io.github.mooy1.infinitylib.recipes.RecipeMap;
-import io.github.mooy1.infinitylib.recipes.RecipeOutput;
-import io.github.mooy1.infinitylib.recipes.ShapedRecipe;
-import io.github.mooy1.infinitylib.slimefun.AbstractContainer;
+import io.github.mooy1.infinitylib.core.AbstractAddon;
+import io.github.mooy1.infinitylib.machines.CraftingBlock;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.Categories;
 import me.apeiros.alchimiavitae.utils.ChestMenuItems;
+import me.apeiros.alchimiavitae.utils.InfusionMap;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
-import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -29,13 +26,13 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,20 +40,20 @@ import java.util.List;
 
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
-public class AltarOfInfusion extends AbstractContainer {
+public class AltarOfInfusion extends CraftingBlock {
 
     // Keys
-    public static final NamespacedKey DESTRUCTIVE_CRITS = AlchimiaVitae.i().getKey("infusion_destructivecrits");
-    public static final NamespacedKey PHANTOM_CRITS = AlchimiaVitae.i().getKey("infusion_phantomcrits");
-    public static final NamespacedKey TRUE_AIM = AlchimiaVitae.i().getKey("infusion_trueaim");
-    public static final NamespacedKey FORCEFUL = AlchimiaVitae.i().getKey("infusion_forceful");
-    public static final NamespacedKey VOLATILE = AlchimiaVitae.i().getKey("infusion_volatile");
-    public static final NamespacedKey HEALING = AlchimiaVitae.i().getKey("infusion_healing");
-    public static final NamespacedKey REPLANT = AlchimiaVitae.i().getKey("infusion_autoreplant");
-    public static final NamespacedKey TOTEM_STORAGE = AlchimiaVitae.i().getKey("infusion_totemstorage");
-    public static final NamespacedKey SHIELD_DISRUPTOR = AlchimiaVitae.i().getKey("infusion_shielddisruptor");
-    public static final NamespacedKey SPIKED_HOOK = AlchimiaVitae.i().getKey("infusion_spikedhook");
-    public static final NamespacedKey KNOCKBACK = AlchimiaVitae.i().getKey("infusion_knockback");
+    public static final NamespacedKey DESTRUCTIVE_CRITS = AbstractAddon.createKey("infusion_destructivecrits");
+    public static final NamespacedKey PHANTOM_CRITS = AbstractAddon.createKey("infusion_phantomcrits");
+    public static final NamespacedKey TRUE_AIM = AbstractAddon.createKey("infusion_trueaim");
+    public static final NamespacedKey FORCEFUL = AbstractAddon.createKey("infusion_forceful");
+    public static final NamespacedKey VOLATILE = AbstractAddon.createKey("infusion_volatile");
+    public static final NamespacedKey HEALING = AbstractAddon.createKey("infusion_healing");
+    public static final NamespacedKey REPLANT = AbstractAddon.createKey("infusion_autoreplant");
+    public static final NamespacedKey TOTEM_STORAGE = AbstractAddon.createKey("infusion_totemstorage");
+    public static final NamespacedKey SHIELD_DISRUPTOR = AbstractAddon.createKey("infusion_shielddisruptor");
+    public static final NamespacedKey SPIKED_HOOK = AbstractAddon.createKey("infusion_spikedhook");
+    public static final NamespacedKey KNOCKBACK = AbstractAddon.createKey("infusion_knockback");
 
     // Tool categories
     private static final List<Material> VALID_AXE = Arrays.asList(Material.GOLDEN_AXE, Material.IRON_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
@@ -78,10 +75,10 @@ public class AltarOfInfusion extends AbstractContainer {
     private static final int TOOL_SLOT = 20;
 
     // Recipes
-    public static final RecipeMap<NamespacedKey> RECIPES = new RecipeMap<>(ShapedRecipe::new);
+    private static final InfusionMap recipes = new InfusionMap();
 
     // Constructor
-    public AltarOfInfusion(Category c) {
+    public AltarOfInfusion(ItemGroup c) {
 
         super(c, Items.ALTAR_OF_INFUSION, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
                 Items.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, Items.EXP_CRYSTAL,
@@ -110,20 +107,20 @@ public class AltarOfInfusion extends AbstractContainer {
         boolean knockbackEnabled = cfg.getBoolean("options.infusions.infusion-knockback");
 
         // ItemStacks
-        CustomItem validInfuseAxe = new CustomItem(Material.DIAMOND_AXE, "&b&lA valid axe to infuse", "&aA gold, iron, diamond,", "&aor netherite axe will suffice");
-        CustomItem validInfuseBow = new CustomItem(Material.BOW, "&b&lA valid bow to infuse", "&aA bow or crossbow will suffice");
-        CustomItem validInfuseHoe = new CustomItem(Material.DIAMOND_HOE, "&b&lA valid hoe to infuse", "&aA gold, iron, diamond,", "&aor netherite hoe will suffice");
-        CustomItem validInfuseChestplate = new CustomItem(Material.DIAMOND_CHESTPLATE, "&b&lA valid chestplate to infuse", "&aA gold, iron, diamond,", "&aor netherite chestplate will suffice");
+        CustomItemStack validInfuseAxe = new CustomItemStack(Material.DIAMOND_AXE, "&b&lA valid axe to infuse", "&aA gold, iron, diamond,", "&aor netherite axe will suffice");
+        CustomItemStack validInfuseBow = new CustomItemStack(Material.BOW, "&b&lA valid bow to infuse", "&aA bow or crossbow will suffice");
+        CustomItemStack validInfuseHoe = new CustomItemStack(Material.DIAMOND_HOE, "&b&lA valid hoe to infuse", "&aA gold, iron, diamond,", "&aor netherite hoe will suffice");
+        CustomItemStack validInfuseChestplate = new CustomItemStack(Material.DIAMOND_CHESTPLATE, "&b&lA valid chestplate to infuse", "&aA gold, iron, diamond,", "&aor netherite chestplate will suffice");
         /*
          **Useless atm**
-         CustomItem validInfuseSword = new CustomItem(Material.DIAMOND_SWORD, "&b&lA valid sword to infuse", "&aA gold, iron, diamond,", "&aor netherite sword will suffice");
+         CustomItemStack validInfuseSword = new CustomItemStack(Material.DIAMOND_SWORD, "&b&lA valid sword to infuse", "&aA gold, iron, diamond,", "&aor netherite sword will suffice");
         */
-        CustomItem validInfuseRod = new CustomItem(Material.FISHING_ROD, "&b&lA valid fishing rod to infuse", "&aA normal fishing rod will suffice");
+        CustomItemStack validInfuseRod = new CustomItemStack(Material.FISHING_ROD, "&b&lA valid fishing rod to infuse", "&aA normal fishing rod will suffice");
         SlimefunItemStack item;
 
         // Register Infusions
         if (destructiveCritsEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     new ItemStack(Material.TNT), SlimefunItems.EXPLOSIVE_PICKAXE, new ItemStack(Material.STONECUTTER),
                     Items.DARKSTEEL, SlimefunItems.WITHER_PROOF_OBSIDIAN,
                     new ItemStack(Material.REDSTONE_BLOCK), SlimefunItems.WITHER_PROOF_OBSIDIAN, new ItemStack(Material.TNT)
@@ -143,7 +140,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (phantomCritsEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
                     Items.DARKSTEEL, SlimefunItems.HARDENED_GLASS,
                     new ItemStack(Material.PHANTOM_MEMBRANE), Items.CONDENSED_SOUL, new ItemStack(Material.PHANTOM_MEMBRANE)
@@ -161,7 +158,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (trueAimEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
                     Items.DARKSTEEL, Items.EXP_CRYSTAL,
                     new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.STEEL_THRUSTER
@@ -179,7 +176,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (forcefulEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
                     SlimefunItems.INFUSED_MAGNET, SlimefunItems.STEEL_THRUSTER,
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
@@ -197,7 +194,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (volatileEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
                     Items.DARKSTEEL, SlimefunItems.LAVA_GENERATOR_2,
                     new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
@@ -216,7 +213,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (healingEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     Items.BENEVOLENT_BREW, SlimefunItems.MEDICINE, SlimefunItems.VITAMINS,
                     Items.ILLUMIUM, new ItemStack(Material.TOTEM_OF_UNDYING),
                     new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), SlimefunItems.MEDICINE, SlimefunItems.MAGIC_SUGAR
@@ -234,7 +231,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (autoReplantEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
                     Items.ILLUMIUM, SlimefunItems.FLUID_PUMP,
                     new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
@@ -252,7 +249,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (totemStorageEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     SlimefunItems.NECROTIC_SKULL, Items.CONDENSED_SOUL, Items.BENEVOLENT_BREW,
                     Items.ILLUMIUM, Items.EXP_CRYSTAL,
                     SlimefunItems.ESSENCE_OF_AFTERLIFE, SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.ESSENCE_OF_AFTERLIFE
@@ -271,7 +268,7 @@ public class AltarOfInfusion extends AbstractContainer {
         }
 
         if (knockbackEnabled) {
-            RECIPES.put(new ItemStack[] {
+            recipes.put(new ItemStack[] {
                     SlimefunItems.TALISMAN_WHIRLWIND, new ItemStack(Material.STICKY_PISTON), Items.EXP_CRYSTAL,
                     SlimefunItems.GRANDPAS_WALKING_STICK, new ItemStack(Material.STICKY_PISTON),
                     new ItemStack(Material.SLIME_BALL), SlimefunItems.GRANDPAS_WALKING_STICK, SlimefunItems.TALISMAN_WHIRLWIND
@@ -289,14 +286,8 @@ public class AltarOfInfusion extends AbstractContainer {
         }
     }
 
-    @Nonnull
     @Override
-    protected int[] getTransportSlots(@NotNull DirtyChestMenu dirtyChestMenu, @NotNull ItemTransportFlow itemTransportFlow, ItemStack itemStack) {
-        return new int[0];
-    }
-
-    @Override
-    protected void setupMenu(@NotNull BlockMenuPreset blockMenuPreset) {
+    protected void setup(@NotNull BlockMenuPreset blockMenuPreset) {
         // Input background
         for (int slot : IN_BG) {
             blockMenuPreset.addItem(slot, ChestMenuItems.IN_BG, ChestMenuUtils.getEmptyClickHandler());
@@ -331,22 +322,33 @@ public class AltarOfInfusion extends AbstractContainer {
                 return false;
             });
         }
-
-        // Menu close handler
-        menu.addMenuCloseHandler(player -> menu.dropItems(player.getLocation(), IN_SLOTS));
     }
 
-    private void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
+    @Override
+    protected void onBreak(BlockBreakEvent e, BlockMenu menu) {
+        Location l = menu.getLocation();
+        menu.dropItems(l, IN_SLOTS);
+    }
+
+    @Override
+    protected void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
         // Get expected Infusion
-        RecipeOutput<NamespacedKey> output = RECIPES.get(/*items*/ StackUtils.arrayFrom(inv, IN_SLOTS_EXCLUDING_MID));
+        ItemStack[] input = new ItemStack[8];
+
+        int index = 0;
+        for (int i : IN_SLOTS_EXCLUDING_MID) {
+            input[index] = inv.getItemInSlot(i);
+            index++;
+        }
+
+        NamespacedKey infusion = recipes.get(input);
 
         // Invalid Infusion
-        if (output == null) {
+        if (infusion == null) {
             p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Invalid Infusion!")));
             return;
         }
 
-        NamespacedKey infusion = output.getOutput();
         Material mat = inv.getItemInSlot(TOOL_SLOT).getType();
 
         // Check if item is valid

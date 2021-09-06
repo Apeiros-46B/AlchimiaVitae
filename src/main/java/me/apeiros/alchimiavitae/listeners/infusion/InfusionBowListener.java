@@ -1,10 +1,10 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.ProtectionManager;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
-import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectionManager;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.Particle;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Fireball;
@@ -101,10 +101,10 @@ public class InfusionBowListener implements Listener {
                     e.getEntity().getPersistentDataContainer().has
                     (AltarOfInfusion.VOLATILE, PersistentDataType.BYTE)) {
                 Player shooter = (Player) ((Fireball) e.getEntity()).getShooter();
-                ProtectionManager pm = SlimefunPlugin.getProtectionManager();
+                ProtectionManager pm = Slimefun.getProtectionManager();
 
-                if (pm.hasPermission(shooter, e.getLocation(), ProtectableAction.ATTACK_ENTITY) ||
-                        pm.hasPermission(shooter, e.getLocation(), ProtectableAction.ATTACK_PLAYER)) {
+                if (pm.hasPermission(shooter, e.getLocation(), Interaction.ATTACK_ENTITY) ||
+                        pm.hasPermission(shooter, e.getLocation(), Interaction.ATTACK_PLAYER)) {
                     // Remove explosion damage
                     e.blockList().clear();
                 } else {

@@ -1,9 +1,9 @@
 package me.apeiros.alchimiavitae.utils;
 
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import org.bukkit.NamespacedKey;
 
 /**

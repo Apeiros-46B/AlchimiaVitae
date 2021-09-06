@@ -1,7 +1,7 @@
 package me.apeiros.alchimiavitae.utils;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import lombok.experimental.UtilityClass;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.ChatColor;
