@@ -34,7 +34,7 @@ public class InfusionHoeListener implements Listener {
             if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
                 // Check if the tool has the Auto-Replant infusion
                 if (p.getInventory().getItemInMainHand().getItemMeta().
-                        getPersistentDataContainer().has(AltarOfInfusion.SPIKED_HOOK, PersistentDataType.BYTE)) {
+                        getPersistentDataContainer().has(AltarOfInfusion.REPLANT, PersistentDataType.BYTE)) {
                     // Check if the crop is at maximum age
                     if (a.getAge() == a.getMaximumAge()) {
                         // Cancel event
