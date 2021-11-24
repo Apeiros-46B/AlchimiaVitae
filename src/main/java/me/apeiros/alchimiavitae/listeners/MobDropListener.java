@@ -2,7 +2,7 @@ package me.apeiros.alchimiavitae.listeners;
 
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.apeiros.alchimiavitae.setup.Items;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.EnderDragon;

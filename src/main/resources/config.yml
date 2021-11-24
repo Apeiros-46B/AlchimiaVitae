@@ -2,6 +2,11 @@ options:
   # Whether or not to automatically update
   auto-update: true
 
+  # Whether or not the output from each crafting machine should drop the output on the ground
+  divine-altar-drop: false
+  ornate-cauldron-drop: false
+  infusion-altar-drop: false
+
   # Options for Infusions
   infusions:
     # Enable or disable specific Infusions (true = enabled, false = disabled)
@@ -23,8 +28,8 @@ options:
     steel-transmutation: true
     damascus-transmutation: true
     compressed-carbon-transmutation: true
-
-    # Whether or not to use the same custom model data as the resulting Slimefun items
+    # Whether or not the display items in the Slimefun Guide should use the same
+    # custom model data as the real Slimefun items that will be dropped
     use-same-custommodeldata: true
 
   # Options for potions
@@ -32,6 +37,7 @@ options:
     # Options for the Benevolent Brew potion
     benevolent-brew:
       # Effect configurations
+      # NOTE: To set the duration of the potions in seconds, multiply the amount of seconds by 20 and put that value in
       resistance:
         # How many game ticks (there are 20 game ticks in a second) the effect should last
         ticks: 6000
@@ -63,6 +69,7 @@ options:
     # Options for the Malevolent Concoction splash potion
     malevolent-concoction:
       # Effect configurations
+      # NOTE: To set the duration of the potions in seconds, multiply the amount of seconds by 20 and put that value in
       weakness:
         # How many game ticks (there are 20 game ticks in a second) the effect should last
         ticks: 6000

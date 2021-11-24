@@ -7,7 +7,7 @@ import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.PotionUtils;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;

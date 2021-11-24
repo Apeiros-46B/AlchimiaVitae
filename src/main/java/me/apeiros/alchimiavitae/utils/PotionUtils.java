@@ -3,7 +3,7 @@ package me.apeiros.alchimiavitae.utils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;

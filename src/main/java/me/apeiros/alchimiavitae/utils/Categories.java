@@ -20,7 +20,7 @@ public class Categories {
 
     public static final ItemGroup ALTAR_RECIPES = new SubGroup(
             "av_altar_recipes",
-            new CustomItemStack(Material.ENCHANTING_TABLE, "&6Alchimia Vitae &7- &5Altar Transformation Recipes")
+            new CustomItemStack(Material.ENCHANTING_TABLE, "&6Alchimia Vitae &7- &5Transmutation")
     );
 
     public static final ItemGroup INFUSIONS = new SubGroup(

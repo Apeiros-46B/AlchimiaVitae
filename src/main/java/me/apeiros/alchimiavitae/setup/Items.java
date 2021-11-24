@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.MachineType;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.utils.PotionUtils;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;

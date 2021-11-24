@@ -31,7 +31,7 @@ public class MalevolentConcoction extends SlimefunItem implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPotionSplash(PotionSplashEvent e) {
-        if (SlimefunUtils.isItemSimilar(e.getEntity().getItem(), Items.BENEVOLENT_BREW, true, false)) {
+        if (SlimefunUtils.isItemSimilar(e.getEntity().getItem(), Items.MALEVOLENT_CONCOCTION, true, false)) {
             e.getEntity().getWorld().spawnParticle(Particle.SPELL_WITCH, e.getEntity().getLocation(), 75, 1, 1, 1);
             e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 0.4F, 1);
             e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 1);

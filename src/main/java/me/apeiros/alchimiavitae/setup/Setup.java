@@ -132,16 +132,4 @@ public class Setup {
                 .addItems(Items.ALTAR_OF_INFUSION)
                 .register();
     }
-
-    private static void setupDivineAltar(AlchimiaVitae p) {
-
-    }
-
-    private static void setupOrnateCauldron() {
-
-    }
-
-    private static void setupInfusionAltar(AlchimiaVitae p) {
-
-    }
 }

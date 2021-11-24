@@ -11,7 +11,7 @@ import me.apeiros.alchimiavitae.utils.ChestMenuItems;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,12 +26,14 @@ import org.jetbrains.annotations.NotNull;
 import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class OrnateCauldron extends CraftingBlock {
+
     private static final int[] IN_SLOTS = {10, 11, 12, 19, 20, 21, 28, 29, 30};
-
     private static final int[] IN_BG = {0, 1, 2, 3, 4, 9, 13, 18, 22, 27, 31, 36, 37, 38, 39, 40};
-    private static final int[] CRAFT_BG = {5, 6, 7, 8, 14, 17, 23, 26, 32, 35, 41, 42, 43, 44};
 
+    private static final int[] CRAFT_BG = {5, 6, 7, 8, 14, 17, 23, 26, 32, 35, 41, 42, 43, 44};
     private static final int[] CRAFT_BUTTON = {15, 16, 24, 25, 33, 34};
+
+    private static final int OUTPUT_SLOT = 20;
 
     public OrnateCauldron(ItemGroup c) {
 
@@ -84,7 +86,10 @@ public class OrnateCauldron extends CraftingBlock {
     @Override
     protected void onNewInstance(@NotNull BlockMenu menu, @NotNull Block b) {
         // Spawn ender particles
-        b.getWorld().spawnParticle(Particle.TOTEM, b.getLocation(), 100, 3, 3, 3);
+        b.getWorld().spawnParticle(Particle.TOTEM, b.getLocation().add(0.5, 0.5, 0.5), 100, 3, 3, 3);
+
+        // Sound effect
+        b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_ACTIVATE, 1F, 1F);
 
         // Craft button click handler
         for (int slot : CRAFT_BUTTON) {
@@ -100,6 +105,7 @@ public class OrnateCauldron extends CraftingBlock {
     protected void onBreak(BlockBreakEvent e, BlockMenu menu) {
         Location l = menu.getLocation();
         menu.dropItems(l, IN_SLOTS);
+        e.getBlock().getWorld().playSound(e.getBlock().getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_DEACTIVATE, 1F, 1F);
     }
 
     @Override
@@ -137,31 +143,35 @@ public class OrnateCauldron extends CraftingBlock {
         // First pre-craft effect burst
         ItemStack finalItem = item;
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
-            b.getWorld().spawnParticle(Particle.SPELL_WITCH, b.getLocation(), 2, 1, 1, 1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
+            b.getWorld().spawnParticle(Particle.SPELL_WITCH, b.getLocation().add(0.5, 0.5, 0.5), 2, 1, 1, 1);
 
             // Pre-craft effects
             Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-                b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
-                b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
-                b.getWorld().spawnParticle(Particle.CRIT_MAGIC, b.getLocation(), 200, 1, 1, 1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
+                b.getWorld().spawnParticle(Particle.CRIT_MAGIC, b.getLocation().add(0.5, 0.5, 0.5), 200, 1, 1, 1);
 
                 Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
                     // Post-craft effects
-                    b.getWorld().playSound(b.getLocation(), Sound.ITEM_BOTTLE_FILL, 1, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.5F, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 2, 1);
-                    b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 1, 0.1, 0.1, 0.1);
-                    b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation(), 200, 0.1, 4, 0.1);
-
-                    // Drop item
-                    b.getWorld().dropItemNaturally(b.getLocation().add(0, 2, 0), finalItem.clone()).setGlowing(true);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_BOTTLE_FILL, 1, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.5F, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_LODESTONE_COMPASS_LOCK, 2, 1);
+                    b.getWorld().spawnParticle(Particle.FLASH, b.getLocation().add(0.5, 0.5, 0.5), 1, 0.1, 0.1, 0.1);
+                    b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation().add(0.5, 0.5, 0.5), 200, 0.1, 4, 0.1);
 
                     // Send message
                     p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
                             "<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>")));
+
+                    // Output the item
+                    if (AlchimiaVitae.i().getConfig().getBoolean("options.ornate-cauldron-drop")) {
+                        b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 2, 0.5), finalItem.clone()).setGlowing(true);
+                    } else {
+                        inv.addItem(OUTPUT_SLOT, finalItem);
+                    }
                 }, 30);
             }, 30);
         }, 30);

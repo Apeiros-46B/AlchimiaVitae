@@ -2,7 +2,7 @@ package me.apeiros.alchimiavitae.listeners.infusion;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.EntityEffect;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -107,14 +107,17 @@ public class InfusionTotemListener implements Listener {
                                 container.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
                                 p.getInventory().getChestplate().setItemMeta(meta);
 
-                                // Add potion effects and heal by half a heart
+                                // Add potion effects, add absorption, and heal by half a heart
                                 p.setHealth(1);
                                 p.setAbsorptionAmount(4);
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45, 2));
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40, 1));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 900, 2));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 800, 1));
 
                                 // Totem visual effects
                                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
+
+                                // Custom effects
+                                p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5F, 1F);
                             }
                         }
                     }

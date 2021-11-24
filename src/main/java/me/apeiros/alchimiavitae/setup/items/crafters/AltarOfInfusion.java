@@ -16,7 +16,7 @@ import me.apeiros.alchimiavitae.utils.InfusionMap;
 import me.apeiros.alchimiavitae.utils.RecipeTypes;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
+import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -312,7 +312,10 @@ public class AltarOfInfusion extends CraftingBlock {
     @Override
     protected void onNewInstance(@NotNull BlockMenu menu, @NotNull Block b) {
         // Spawn end rod particles
-        b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation(), 100, 0.5, 0.5, 0.5);
+        b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation().add(0.5, 0.5, 0.5), 100, 0.5, 0.5, 0.5);
+
+        // Sound effect
+        b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_ACTIVATE, 1F, 1F);
 
         // Craft button click handler
         for (int slot : CRAFT_BUTTON) {
@@ -326,8 +329,12 @@ public class AltarOfInfusion extends CraftingBlock {
 
     @Override
     protected void onBreak(BlockBreakEvent e, BlockMenu menu) {
+        // Drop items
         Location l = menu.getLocation();
         menu.dropItems(l, IN_SLOTS);
+
+        // Sound effect
+        e.getBlock().getWorld().playSound(e.getBlock().getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_DEACTIVATE, 1F, 1F);
     }
 
     @Override
@@ -375,7 +382,7 @@ public class AltarOfInfusion extends CraftingBlock {
         ItemStack tool = inv.getItemInSlot(TOOL_SLOT);
         if (tool == null || tool.getType().equals(Material.AIR)) {
             // No tool
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot infuse air!")));
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is nothing to infuse!")));
             return;
         }
 
@@ -484,41 +491,57 @@ public class AltarOfInfusion extends CraftingBlock {
             inv.consumeItem(slot, 1);
         }
 
+        // Temporarily consume the infused item
+        inv.consumeItem(TOOL_SLOT, 1);
+
+        p.sendMessage("material of the item:");
+        p.sendMessage(tool.getType().toString());
+
         // Pre-craft effects
-        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1, 1);
-        b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.5F, 1);
-        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+        b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1, 1);
+        b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_POWER_SELECT, 1.5F, 1);
+        b.getWorld().spawnParticle(Particle.FLASH, b.getLocation().add(0.5, 0.5, 0.5), 2, 0.1, 0.1, 0.1);
 
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 1);
-            b.getWorld().playSound(b.getLocation(), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 0.5F, 1);
-            b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
-            b.getWorld().playSound(b.getLocation(), Sound.ITEM_TOTEM_USE, 0.1F, 1);
-            b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 0.3F, 1);
-            b.getWorld().playSound(b.getLocation(), Sound.BLOCK_LODESTONE_PLACE, 1.5F, 1);
-            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 0.5F, 1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_TOTEM_USE, 0.1F, 1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_POWER_SELECT, 0.3F, 1);
+            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_LODESTONE_PLACE, 1.5F, 1);
+            b.getWorld().spawnParticle(Particle.FLASH, b.getLocation().add(0.5, 0.5, 0.5), 2, 0.1, 0.1, 0.1);
 
             Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-                b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-                b.getWorld().playSound(b.getLocation(), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1.5F, 1);
-                b.getWorld().playSound(b.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
-                b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 0.3F, 1);
-                b.getWorld().playSound(b.getLocation(), Sound.ITEM_TOTEM_USE, 0.3F, 1);
-                b.getWorld().spawnParticle(Particle.FLASH, b.getLocation(), 2, 0.1, 0.1, 0.1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1.5F, 1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_POWER_SELECT, 0.3F, 1);
+                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_TOTEM_USE, 0.3F, 1);
+                b.getWorld().spawnParticle(Particle.FLASH, b.getLocation().add(0.5, 0.5, 0.5), 2, 0.1, 0.1, 0.1);
 
                 Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
                     // Post-craft effects
-                    b.getWorld().strikeLightningEffect(b.getLocation().add(0, 1, 0));
-                    b.getWorld().playSound(b.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 0.5F, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
-                    b.getWorld().playSound(b.getLocation(), Sound.ITEM_TOTEM_USE, 0.5F, 1);
-                    b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation(), 5, 0, 8, 0);
-                    b.getWorld().spawnParticle(Particle.PORTAL, b.getLocation(), 300, 2, 2, 2);
+                    b.getWorld().strikeLightningEffect(b.getLocation().add(0.5, 1, 0.5));
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_TRIDENT_THUNDER, 0.5F, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
+                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_TOTEM_USE, 0.5F, 1);
+                    b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation().add(0.5, 0.5, 0.5), 5, 0, 8, 0);
+                    b.getWorld().spawnParticle(Particle.PORTAL, b.getLocation().add(0.5, 0.5, 0.5), 300, 2, 2, 2);
 
                     // Send message
                     p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
                             "<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>")));
+
+                    p.sendMessage("material of the item:");
+                    p.sendMessage(tool.getType().toString());
+
+                    // Output the item
+                    if (AlchimiaVitae.i().getConfig().getBoolean("options.infusion-altar-drop")) {
+                        b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 2, 0.5), tool.clone()).setGlowing(true);
+                    } else {
+                        inv.addItem(TOOL_SLOT, tool);
+                    }
                 }, 30);
             }, 30);
         }, 30);
