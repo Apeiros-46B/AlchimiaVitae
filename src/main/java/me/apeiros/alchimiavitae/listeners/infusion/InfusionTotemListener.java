@@ -51,6 +51,7 @@ public class InfusionTotemListener implements Listener {
                     // Check if there are already 8 totems
                     if (totemsStored >= 8) {
                         e.getPlayer().sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is no more space for this Totem!")));
+                        e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
                         return;
                     }
 

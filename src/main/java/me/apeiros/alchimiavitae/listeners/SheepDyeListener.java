@@ -1,4 +1,4 @@
-package me.apeiros.alchimiavitae.listeners.infusion;
+package me.apeiros.alchimiavitae.listeners;
 
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;

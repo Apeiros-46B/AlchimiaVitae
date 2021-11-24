@@ -8,7 +8,7 @@ import me.apeiros.alchimiavitae.listeners.infusion.InfusionBowListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionFishingRodListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionHoeListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionTotemListener;
-import me.apeiros.alchimiavitae.listeners.infusion.SheepDyeListener;
+import me.apeiros.alchimiavitae.listeners.SheepDyeListener;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.apeiros.alchimiavitae.setup.items.crafters.DivineAltar;
 import me.apeiros.alchimiavitae.setup.items.crafters.OrnateCauldron;
