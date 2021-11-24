@@ -36,13 +36,13 @@ import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class DivineAltar extends CraftingBlock {
 
-    private static final int[] IN_SLOTS = {10, 11, 12, 19, 20, 21, 28, 29, 30};
-    private static final int[] IN_BG = {0, 1, 2, 3, 4, 9, 13, 18, 22, 27, 31, 36, 37, 38, 39, 40};
+    private static final int[] IN_SLOTS = {0, 1, 2, 9, 10, 11, 18, 19, 20};
+    private static final int[] IN_BG = {3, 12, 21};
 
-    private static final int[] CRAFT_BG = {5, 6, 7, 8, 14, 17, 23, 26, 32, 35, 41, 42, 43, 44};
-    private static final int[] CRAFT_BUTTON = {15, 16, 24, 25, 33, 34};
+    private static final int[] CRAFT_BUTTON = {4, 13, 22};
 
-    private static final int OUTPUT_SLOT = 20;
+    private static final int[] OUT_BG = {5, 14, 23};
+    private static final int[] OUT_SLOTS = {6, 7, 8, 15, 16, 17, 24, 25, 26};
 
     public DivineAltar(ItemGroup c) {
 
@@ -207,12 +207,17 @@ public class DivineAltar extends CraftingBlock {
 
         // Input slots
         for (int slot : IN_SLOTS) {
-            blockMenuPreset.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> i == slot || i > 44);
+            blockMenuPreset.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> i == slot || i > 26);
         }
 
-        // Craft button background
-        for (int slot : CRAFT_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.CRAFT_BG, ChestMenuUtils.getEmptyClickHandler());
+        // Output background
+        for (int slot : OUT_BG) {
+            blockMenuPreset.addItem(slot, ChestMenuItems.OUT_BG, ChestMenuUtils.getEmptyClickHandler());
+        }
+
+        // Output slots
+        for (int slot : OUT_SLOTS) {
+            blockMenuPreset.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> i == slot || i > 26);
         }
 
         // Craft button
@@ -271,6 +276,12 @@ public class DivineAltar extends CraftingBlock {
             return;
         }
 
+        // Check for space
+        if (!inv.fits(item, OUT_SLOTS)) {
+            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is not enough space in the output slots!")));
+            return;
+        }
+
         // Consume items
         for (int slot : IN_SLOTS) {
             if (inv.getItemInSlot(slot) != null) {
@@ -278,14 +289,8 @@ public class DivineAltar extends CraftingBlock {
             }
         }
 
-        p.sendMessage("material of the item:");
-        p.sendMessage(item.getType().toString());
-
         // Pre-craft effects
         ItemStack finalItem = item;
-
-        p.sendMessage("material of the item:");
-        p.sendMessage(finalItem.getType().toString());
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
             b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
             b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
@@ -313,15 +318,8 @@ public class DivineAltar extends CraftingBlock {
                         p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
                                 "<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>")));
 
-                        p.sendMessage("material of the item:");
-                        p.sendMessage(finalItem.getType().toString());
-
-                        // Output the item
-                        if (AlchimiaVitae.i().getConfig().getBoolean("options.divine-altar-drop")) {
-                            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 2, 0.5), finalItem.clone()).setGlowing(true);
-                        } else {
-                            inv.addItem(OUTPUT_SLOT, finalItem);
-                        }
+                        // Output the item(s)
+                        inv.pushItem(finalItem.clone(), OUT_SLOTS);
                     }, 30);
                 }, 30);
             }, 30);

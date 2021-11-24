@@ -2,11 +2,6 @@ options:
   # Whether or not to automatically update
   auto-update: true
 
-  # Whether or not the output from each crafting machine should drop the output on the ground
-  divine-altar-drop: false
-  ornate-cauldron-drop: false
-  infusion-altar-drop: false
-
   # Options for Infusions
   infusions:
     # Enable or disable specific Infusions (true = enabled, false = disabled)
@@ -29,7 +24,7 @@ options:
     damascus-transmutation: true
     compressed-carbon-transmutation: true
     # Whether or not the display items in the Slimefun Guide should use the same
-    # custom model data as the real Slimefun items that will be dropped
+    # custom model data as the real Slimefun items that will be crafted
     use-same-custommodeldata: true
 
   # Options for potions

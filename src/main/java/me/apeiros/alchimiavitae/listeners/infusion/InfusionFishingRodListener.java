@@ -4,15 +4,11 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
@@ -32,37 +28,7 @@ public class InfusionFishingRodListener implements Listener {
         FishHook proj = e.getHook();
         Entity en = proj.getHookedEntity();
 
-        if (e.getHook().getPersistentDataContainer().has(AltarOfInfusion.SPIKED_HOOK, PersistentDataType.BYTE) && en instanceof LivingEntity) {
-            if (en instanceof Player) {
-                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_PLAYER)) {
-                    // Variables
-                    LivingEntity len = (LivingEntity) en;
-
-                    // Set health
-                    len.setHealth(len.getHealth() - Math.pow(2 * 1.1, 0.3));
-                    Bukkit.getServer().getPluginManager().callEvent(new EntityDamageByEntityEvent(e.getPlayer(), en, EntityDamageEvent.DamageCause.CUSTOM, Math.pow(2 * 1.1, 0.3)));
-
-                    // Remove fishing hook and cancel event
-                    proj.setHookedEntity(null);
-                    proj.remove();
-                    e.setCancelled(true);
-                }
-            } else {
-                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_ENTITY)) {
-                    // Variables
-                    LivingEntity len = (LivingEntity) en;
-
-                    // Set health
-                    len.setHealth(len.getHealth() - Math.pow(2 * 1.1, 0.3));
-                    Bukkit.getServer().getPluginManager().callEvent(new EntityDamageByEntityEvent(e.getPlayer(), en, EntityDamageEvent.DamageCause.CUSTOM, Math.pow(2 * 1.1, 0.3)));
-
-                    // Remove fishing hook and cancel event
-                    proj.setHookedEntity(null);
-                    proj.remove();
-                    e.setCancelled(true);
-                }
-            }
-        } else if (proj.getPersistentDataContainer().has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE) && en != null) {
+        if (proj.getPersistentDataContainer().has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE) && en != null) {
             if (en instanceof Player) {
                 if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), en.getLocation(), Interaction.ATTACK_PLAYER)) {
                     // Deal knockback
@@ -103,10 +69,7 @@ public class InfusionFishingRodListener implements Listener {
                 PersistentDataContainer pdc = rod.getItemMeta().getPersistentDataContainer();
 
                 // Check if the fishing rod has infusion
-                if (pdc.has(AltarOfInfusion.SPIKED_HOOK, PersistentDataType.BYTE)) {
-                    f.getPersistentDataContainer().set(AltarOfInfusion.SPIKED_HOOK, PersistentDataType.BYTE, (byte) 1);
-                    f.setVelocity(f.getVelocity().multiply(2));
-                } else if (pdc.has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE)) {
+                if (pdc.has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE)) {
                     f.getPersistentDataContainer().set(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE, (byte) 1);
                     f.setVelocity(f.getVelocity().multiply(2));
                 }

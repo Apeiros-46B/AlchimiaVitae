@@ -51,7 +51,7 @@ public class MobDropListener implements Listener {
                 killer.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<aqua>You extracted a soul from a <gradient:#6baefa:#7145b0>" + mobName + "</gradient><aqua>!")));
                 killer.playSound(killer.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1,1);
 
-                if (e.getEntity() instanceof Wither /*(1.17) || e.getEntity() instanceof Warden */) {
+                if (e.getEntity() instanceof Wither /*(1.19) || e.getEntity() instanceof Warden */) {
                     for (int i = 0; i < r.nextInt(9); i++) {
                         e.getDrops().add(Items.CONDENSED_SOUL);
                     }

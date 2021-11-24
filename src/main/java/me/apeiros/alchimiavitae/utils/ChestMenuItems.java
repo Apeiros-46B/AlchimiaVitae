@@ -25,4 +25,7 @@ public class ChestMenuItems {
     public static final ItemStack CRAFT_BG = new CustomItemStack(Material.CYAN_STAINED_GLASS_PANE,
             BukkitComponentSerializer.legacy().serialize(MM.parse("<gradient:#39f792:#5c95ff>Craft</gradient>")));
 
+    public static final ItemStack OUT_BG = new CustomItemStack(Material.CYAN_STAINED_GLASS_PANE,
+            BukkitComponentSerializer.legacy().serialize(MM.parse("<gradient:#5cb8ff:#39f7e1>Output</gradient>")));
+
 }
