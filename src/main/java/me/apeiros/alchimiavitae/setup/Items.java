@@ -25,7 +25,7 @@ public class Items {
     public static final SlimefunItemStack SOUL_COLLECTOR = new SlimefunItemStack("AV_SOUL_COLLECTOR",
             Material.DIAMOND_SWORD, BukkitComponentSerializer.legacy().serialize
             (MM.parse("<gradient:#6baefa:#7145b0>Soul Collector</gradient>")),
-            "&bCollects Souls", "&bKill any mob with this", "&bto extract its Soul");
+            "&bCollects Souls", "&bKill any mob with this", "&bto extract its Soul", "&a3x EXP drops from all mobs", "&9Wither-related mobs will", "&9drop more souls");
 
     private static final Configuration cfg = AlchimiaVitae.i().getConfig();
 
