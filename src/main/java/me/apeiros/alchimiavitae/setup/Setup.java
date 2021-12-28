@@ -60,7 +60,8 @@ public class Setup {
 
         // Listeners
         new SheepDyeListener(p);
-        new MobDropListener(p);
+        
+        // Infusion listeners
         new InfusionAxeListener(p);
         new InfusionBowListener(p);
         new InfusionHoeListener(p);
