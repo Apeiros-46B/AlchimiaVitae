@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.apeiros.alchimiavitae.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +16,7 @@ public class MoltenMysteryMetal extends SimpleSlimefunItem<ItemUseHandler> imple
 
     public MoltenMysteryMetal(ItemGroup c) {
 
-        super(c, Items.MOLTEN_MYSTERY_METAL, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+        super(c, Items.MOLTEN_MYSTERY_METAL, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL

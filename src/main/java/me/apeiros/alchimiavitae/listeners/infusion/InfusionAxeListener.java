@@ -26,9 +26,8 @@ public class InfusionAxeListener implements Listener {
     // Main event
     @EventHandler(ignoreCancelled = true)
     public void onAxeHit(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) {
+        if (e.getDamager() instanceof Player p) {
             // Store the attacker and a ThreadLocalRandom in 3 variables
-            Player p = (Player) e.getDamager();
             ThreadLocalRandom r = ThreadLocalRandom.current();
 
             // Null check
@@ -37,9 +36,8 @@ public class InfusionAxeListener implements Listener {
                 PersistentDataContainer container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
 
                 // Check what infusion the axe has
-            if (container.has(AltarOfInfusion.DESTRUCTIVE_CRITS, PersistentDataType.BYTE) && e.getEntity() instanceof Player && e.getEntity().getFallDistance() > 0) {
+            if (container.has(AltarOfInfusion.DESTRUCTIVE_CRITS, PersistentDataType.BYTE) && e.getEntity() instanceof Player victim && e.getEntity().getFallDistance() > 0) {
                     // Store the victim of the attack in a variable
-                    Player victim = (Player) e.getEntity();
 
                     // Damage armor
                     for (ItemStack d : victim.getInventory().getArmorContents()) {
@@ -62,9 +60,8 @@ public class InfusionAxeListener implements Listener {
                     if (r.nextInt(20) == 0) {
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
                     }
-                } else if (container.has(AltarOfInfusion.PHANTOM_CRITS, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity && e.getEntity().getFallDistance() > 0) {
+                } else if (container.has(AltarOfInfusion.PHANTOM_CRITS, PersistentDataType.BYTE) && e.getEntity() instanceof LivingEntity victim && e.getEntity().getFallDistance() > 0) {
                     // Store victim in a variable
-                    LivingEntity victim = (LivingEntity) e.getEntity();
 
                     // Set health
                     if (r.nextInt(4) == 0) {

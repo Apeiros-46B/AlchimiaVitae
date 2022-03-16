@@ -2,12 +2,12 @@ package me.apeiros.alchimiavitae.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.listeners.SheepDyeListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionAxeListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionBowListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionFishingRodListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionHoeListener;
 import me.apeiros.alchimiavitae.listeners.infusion.InfusionTotemListener;
-import me.apeiros.alchimiavitae.listeners.SheepDyeListener;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.apeiros.alchimiavitae.setup.items.crafters.DivineAltar;
 import me.apeiros.alchimiavitae.setup.items.crafters.OrnateCauldron;
@@ -27,35 +27,35 @@ import me.apeiros.alchimiavitae.setup.items.plants.GoodMagicPlant;
 import me.apeiros.alchimiavitae.setup.items.potions.BenevolentBrew;
 import me.apeiros.alchimiavitae.setup.items.potions.MalevolentConcoction;
 import me.apeiros.alchimiavitae.setup.items.potions.PotionOfOsmosis;
-import me.apeiros.alchimiavitae.utils.Categories;
+import me.apeiros.alchimiavitae.utils.Utils;
 import org.bukkit.NamespacedKey;
 
 public class Setup {
 
     public static void setup(AlchimiaVitae p) {
         // Category
-        Categories.MAIN.register(p);
+        Utils.ItemGroups.MAIN.register(p);
 
         // Items
-        new SoulCollector(Categories.GENERAL).register(p);
-        new CondensedSoul(Categories.GENERAL).register(p);
-        new PlantInfusionChamber(Categories.GENERAL).register(p);
-        new GoodMagicPlant(Categories.GENERAL).register(p);
-        new EvilMagicPlant(Categories.GENERAL).register(p);
-        new GoodEssence(Categories.GENERAL).register(p);
-        new EvilEssence(Categories.GENERAL).register(p);
-        new EXPCrystallizer(Categories.GENERAL).register(p);
-        new EXPCrystal(Categories.GENERAL).register(p);
-        new Illumium(Categories.GENERAL).register(p);
-        new Darksteel(Categories.GENERAL).register(p);
-        new DivineAltar(Categories.GENERAL).register(p);
-        new MoltenMysteryMetal(Categories.GENERAL).register(p);
-        new MysteryMetal(Categories.GENERAL).register(p);
-        new OrnateCauldron(Categories.GENERAL).register(p);
-        new PotionOfOsmosis(Categories.GENERAL).register(p);
-        new BenevolentBrew(Categories.GENERAL, p).register(p);
-        new MalevolentConcoction(Categories.GENERAL, p).register(p);
-        new AltarOfInfusion(Categories.INFUSIONS).register(p);
+        new SoulCollector(Utils.ItemGroups.GENERAL).register(p);
+        new CondensedSoul(Utils.ItemGroups.GENERAL).register(p);
+        new PlantInfusionChamber(Utils.ItemGroups.GENERAL).register(p);
+        new GoodMagicPlant(Utils.ItemGroups.GENERAL).register(p);
+        new EvilMagicPlant(Utils.ItemGroups.GENERAL).register(p);
+        new GoodEssence(Utils.ItemGroups.GENERAL).register(p);
+        new EvilEssence(Utils.ItemGroups.GENERAL).register(p);
+        new EXPCrystallizer(Utils.ItemGroups.GENERAL).register(p);
+        new EXPCrystal(Utils.ItemGroups.GENERAL).register(p);
+        new Illumium(Utils.ItemGroups.GENERAL).register(p);
+        new Darksteel(Utils.ItemGroups.GENERAL).register(p);
+        new DivineAltar(Utils.ItemGroups.GENERAL).register(p);
+        new MoltenMysteryMetal(Utils.ItemGroups.GENERAL).register(p);
+        new MysteryMetal(Utils.ItemGroups.GENERAL).register(p);
+        new OrnateCauldron(Utils.ItemGroups.GENERAL).register(p);
+        new PotionOfOsmosis(Utils.ItemGroups.GENERAL).register(p);
+        new BenevolentBrew(Utils.ItemGroups.GENERAL).register(p);
+        new MalevolentConcoction(Utils.ItemGroups.GENERAL).register(p);
+        new AltarOfInfusion(Utils.ItemGroups.INFUSIONS).register(p);
 
         // Listeners
         new SheepDyeListener(p);
@@ -113,7 +113,7 @@ public class Setup {
                 .register();
 
         new Research(new NamespacedKey(p, "potion_of_osmosis"), 131080,
-                "Osmosis and absorption", 30)
+                "Absorbing and reflecting", 30)
                 .addItems(Items.POTION_OF_OSMOSIS)
                 .register();
 

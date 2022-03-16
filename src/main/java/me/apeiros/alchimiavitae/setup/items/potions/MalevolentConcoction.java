@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.apeiros.alchimiavitae.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -17,14 +17,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class MalevolentConcoction extends SlimefunItem implements Listener {
 
-    public MalevolentConcoction(ItemGroup c, AlchimiaVitae p) {
+    public MalevolentConcoction(ItemGroup c) {
 
-        super(c, Items.MALEVOLENT_CONCOCTION, RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
+        super(c, Items.MALEVOLENT_CONCOCTION, Utils.RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
                 Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
                 Items.DARKSTEEL, Items.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH)
         });
 
+        AlchimiaVitae p = AlchimiaVitae.i();
         p.getServer().getPluginManager().registerEvents(this, p);
 
     }

@@ -13,12 +13,9 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Categories;
-import me.apeiros.alchimiavitae.utils.ChestMenuItems;
-import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.apeiros.alchimiavitae.utils.Utils;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,8 +28,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-
-import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class DivineAltar extends CraftingBlock {
 
@@ -84,7 +79,7 @@ public class DivineAltar extends CraftingBlock {
                 cts.setTexture(item, "AV_REINFORCED_ALLOY_INGOT");
             }
 
-            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.ALTAR_RECIPES, item, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                     null, SlimefunItems.DAMASCUS_STEEL_INGOT, null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.DAMASCUS_STEEL_INGOT, null
@@ -106,7 +101,7 @@ public class DivineAltar extends CraftingBlock {
                 cts.setTexture(item, "AV_HARDENED_METAL_INGOT");
             }
 
-            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.ALTAR_RECIPES, item, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                     null, SlimefunItems.STEEL_INGOT, null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.STEEL_INGOT, null
@@ -128,7 +123,7 @@ public class DivineAltar extends CraftingBlock {
                 cts.setTexture(item, "AV_STEEL_INGOT");
             }
 
-            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.ALTAR_RECIPES, item, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                     null, new ItemStack(Material.IRON_BLOCK), null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.CARBON, null
@@ -150,7 +145,7 @@ public class DivineAltar extends CraftingBlock {
                 cts.setTexture(item, "AV_DAMASCUS_STEEL_INGOT");
             }
 
-            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.ALTAR_RECIPES, item, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                     null, new ItemStack(Material.IRON_BLOCK), null,
                     Items.DARKSTEEL, Items.MYSTERY_METAL, Items.ILLUMIUM,
                     null, SlimefunItems.COMPRESSED_CARBON, null
@@ -172,7 +167,7 @@ public class DivineAltar extends CraftingBlock {
                 cts.setTexture(item, "AV_COMPRESSED_CARBON");
             }
 
-            new SlimefunItem(Categories.ALTAR_RECIPES, item, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.ALTAR_RECIPES, item, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.COAL), new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.COAL),
                     new ItemStack(Material.OAK_LEAVES), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.KELP),
                     new ItemStack(Material.COAL), new ItemStack(Material.ROTTEN_FLESH), new ItemStack(Material.COAL)
@@ -202,7 +197,7 @@ public class DivineAltar extends CraftingBlock {
     protected void setup(@NotNull BlockMenuPreset blockMenuPreset) {
         // Input background
         for (int slot : IN_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.IN_BG, ChestMenuUtils.getEmptyClickHandler());
+            blockMenuPreset.addItem(slot, Items.IN_BG, ChestMenuUtils.getEmptyClickHandler());
         }
 
         // Input slots
@@ -212,7 +207,7 @@ public class DivineAltar extends CraftingBlock {
 
         // Output background
         for (int slot : OUT_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.OUT_BG, ChestMenuUtils.getEmptyClickHandler());
+            blockMenuPreset.addItem(slot, Items.OUT_BG, ChestMenuUtils.getEmptyClickHandler());
         }
 
         // Output slots
@@ -222,7 +217,7 @@ public class DivineAltar extends CraftingBlock {
 
         // Craft button
         for (int slot : CRAFT_BUTTON) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.CRAFT_BTN);
+            blockMenuPreset.addItem(slot, Items.CRAFT_BTN);
         }
     }
 
@@ -271,14 +266,14 @@ public class DivineAltar extends CraftingBlock {
 
         // Invalid recipe
         if (item == null) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That recipe is invalid!")));
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
+            p.sendMessage(Utils.parse("<red>That recipe is invalid!"));
+            p.sendMessage(Utils.parse("<red>Please try again."));
             return;
         }
 
         // Check for space
         if (!inv.fits(item, OUT_SLOTS)) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is not enough space in the output slots!")));
+            p.sendMessage(Utils.parse("<red>There is not enough space in the output slots!"));
             return;
         }
 
@@ -315,8 +310,7 @@ public class DivineAltar extends CraftingBlock {
                         b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation().add(0.5, 0.5, 0.5), 300, 2, 2, 2);
 
                         // Send message
-                        p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
-                                "<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>")));
+                        p.sendMessage(Utils.parse("<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>"));
 
                         // Output the item(s)
                         inv.pushItem(finalItem.clone(), OUT_SLOTS);

@@ -57,10 +57,9 @@ public class InfusionFishingRodListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHookThrow(ProjectileLaunchEvent e) {
         // Check if the projectile is a FishHook and if the shooter exists
-        if (e.getEntity().getShooter() != null && e.getEntity() instanceof FishHook) {
+        if (e.getEntity().getShooter() != null && e.getEntity() instanceof FishHook f) {
             // Variables
             Player p = (Player) e.getEntity().getShooter();
-            FishHook f = (FishHook) e.getEntity();
             ItemStack rod = p.getInventory().getItemInMainHand();
 
             // Null check

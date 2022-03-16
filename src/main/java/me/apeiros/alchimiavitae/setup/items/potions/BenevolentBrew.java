@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.apeiros.alchimiavitae.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -17,14 +17,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class BenevolentBrew extends SlimefunItem implements Listener {
 
-    public BenevolentBrew(ItemGroup c, AlchimiaVitae p) {
+    public BenevolentBrew(ItemGroup c) {
 
-        super(c, Items.BENEVOLENT_BREW, RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
+        super(c, Items.BENEVOLENT_BREW, Utils.RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
                 Items.GOOD_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
                 Items.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
         });
 
+        AlchimiaVitae p = AlchimiaVitae.i();
         p.getServer().getPluginManager().registerEvents(this, p);
 
     }

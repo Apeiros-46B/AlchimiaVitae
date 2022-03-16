@@ -7,11 +7,9 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.ChestMenuItems;
-import me.apeiros.alchimiavitae.utils.RecipeTypes;
+import me.apeiros.alchimiavitae.utils.Utils;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,8 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
 
 public class OrnateCauldron extends CraftingBlock {
 
@@ -37,7 +33,7 @@ public class OrnateCauldron extends CraftingBlock {
 
     public OrnateCauldron(ItemGroup c) {
 
-        super(c, Items.ORNATE_CAULDRON, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
+        super(c, Items.ORNATE_CAULDRON, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
                 Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, Items.DIVINE_ALTAR, Items.ILLUMIUM,
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
@@ -64,7 +60,7 @@ public class OrnateCauldron extends CraftingBlock {
     protected void setup(@NotNull BlockMenuPreset blockMenuPreset) {
         // Input background
         for (int slot : IN_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.IN_BG, ChestMenuUtils.getEmptyClickHandler());
+            blockMenuPreset.addItem(slot, Items.IN_BG, ChestMenuUtils.getEmptyClickHandler());
         }
 
         // Input slots
@@ -74,7 +70,7 @@ public class OrnateCauldron extends CraftingBlock {
 
         // Output background
         for (int slot : OUT_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.OUT_BG, ChestMenuUtils.getEmptyClickHandler());
+            blockMenuPreset.addItem(slot, Items.OUT_BG, ChestMenuUtils.getEmptyClickHandler());
         }
 
         // Output slots
@@ -84,7 +80,7 @@ public class OrnateCauldron extends CraftingBlock {
 
         // Craft button
         for (int slot : CRAFT_BUTTON) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.CRAFT_BTN);
+            blockMenuPreset.addItem(slot, Items.CRAFT_BTN);
         }
     }
 
@@ -133,14 +129,14 @@ public class OrnateCauldron extends CraftingBlock {
 
         // Invalid recipe
         if (item == null) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>That recipe is invalid!")));
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Please try again.")));
+            p.sendMessage(Utils.parse("<red>That recipe is invalid!"));
+            p.sendMessage(Utils.parse("<red>Please try again."));
             return;
         }
 
         // Check for space
         if (!inv.fits(item, OUT_SLOTS)) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>There is not enough space in the output slots!")));
+            p.sendMessage(Utils.parse("<red>There is not enough space in the output slots!"));
             return;
         }
 
@@ -174,8 +170,7 @@ public class OrnateCauldron extends CraftingBlock {
                     b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation().add(0.5, 0.5, 0.5), 200, 0.1, 4, 0.1);
 
                     // Send message
-                    p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
-                            "<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>")));
+                    p.sendMessage(Utils.parse("<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>"));
 
                     // Output the item
                     inv.pushItem(finalItem.clone(), OUT_SLOTS);

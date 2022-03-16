@@ -10,13 +10,11 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Categories;
-import me.apeiros.alchimiavitae.utils.ChestMenuItems;
+import me.apeiros.alchimiavitae.utils.Utils;
 import me.apeiros.alchimiavitae.utils.InfusionMap;
-import me.apeiros.alchimiavitae.utils.RecipeTypes;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,8 +36,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
-
 public class AltarOfInfusion extends CraftingBlock {
 
     // Keys
@@ -53,7 +49,7 @@ public class AltarOfInfusion extends CraftingBlock {
     public static final NamespacedKey TOTEM_STORAGE = AbstractAddon.createKey("infusion_totemstorage");
     public static final NamespacedKey KNOCKBACK = AbstractAddon.createKey("infusion_knockback");
 
-    // Tool categories
+    // Tool Utils.ItemGroups
     private static final List<Material> VALID_AXE = Arrays.asList(Material.GOLDEN_AXE, Material.IRON_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
     private static final List<Material> VALID_BOW = Arrays.asList(Material.BOW, Material.CROSSBOW);
     private static final List<Material> VALID_HOE = Arrays.asList(Material.GOLDEN_HOE, Material.IRON_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE);
@@ -77,7 +73,7 @@ public class AltarOfInfusion extends CraftingBlock {
     // Constructor
     public AltarOfInfusion(ItemGroup c) {
 
-        super(c, Items.ALTAR_OF_INFUSION, RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
+        super(c, Items.ALTAR_OF_INFUSION, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
                 Items.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, Items.EXP_CRYSTAL,
                 SlimefunItems.REINFORCED_PLATE, new ItemStack(Material.BEACON), SlimefunItems.REINFORCED_PLATE,
                 SlimefunItems.BLISTERING_INGOT_3, Items.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
@@ -129,7 +125,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&41/5 chance to give opponent Weakness I for 15 seconds on crit",
                     "&4Deals 0-5 extra damage to opponent's armor on crit");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.TNT), SlimefunItems.EXPLOSIVE_PICKAXE, new ItemStack(Material.STONECUTTER),
                     Items.DARKSTEEL, validInfuseAxe, SlimefunItems.WITHER_PROOF_OBSIDIAN,
                     new ItemStack(Material.REDSTONE_BLOCK), SlimefunItems.WITHER_PROOF_OBSIDIAN, new ItemStack(Material.TNT)
@@ -147,7 +143,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&a1/4 chance to deal (your attack damage to the power of 1.15",
                     "&amultiplied by 5/8) extra damage on a crit, bypassing armor");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
                     Items.DARKSTEEL, validInfuseAxe, SlimefunItems.HARDENED_GLASS,
                     new ItemStack(Material.PHANTOM_MEMBRANE), Items.CONDENSED_SOUL, new ItemStack(Material.PHANTOM_MEMBRANE)
@@ -165,7 +161,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&5Partially using the levitation charm", "&5Shulkers use to terminate their victims,",
                     "&5a bow infused with this magic can fire", "&5arrows that are not affected by gravity");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.SYNTHETIC_SHULKER_SHELL, SlimefunItems.INFUSED_MAGNET, SlimefunItems.STAFF_WIND,
                     Items.DARKSTEEL, validInfuseBow, Items.EXP_CRYSTAL,
                     new ItemStack(Material.SHULKER_BOX), SlimefunItems.INFUSED_ELYTRA, SlimefunItems.STEEL_THRUSTER
@@ -183,7 +179,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&aThis infusion uses mechanical", "&adevices and electromagnets to accelerate",
                     "&aprojectiles to blistering speeds", "&aArrows will travel 2x farther and faster");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
                     SlimefunItems.INFUSED_MAGNET, validInfuseBow, SlimefunItems.STEEL_THRUSTER,
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.TALISMAN_TRAVELLER
@@ -202,7 +198,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&cdelivering a mini-inferno to the target", "&41/7 chance to fire a large fireball",
                     "&46/7 chance to fire a small fireball");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
                     Items.DARKSTEEL, validInfuseBow, SlimefunItems.LAVA_GENERATOR_2,
                     new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
@@ -220,7 +216,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&cThis infusion will heal hit entities", " &cand recover their &4health", "" +
                     "&aHeals for the same amount that a bow shot would damage");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     Items.BENEVOLENT_BREW, SlimefunItems.MEDICINE, SlimefunItems.VITAMINS,
                     Items.ILLUMIUM, validInfuseBow, new ItemStack(Material.TOTEM_OF_UNDYING),
                     new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), SlimefunItems.MEDICINE, SlimefunItems.MAGIC_SUGAR
@@ -238,7 +234,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&2Any fully-grown crops broken",
                     "&2with a hoe infused with this", "&2will &aautomatically &2be replanted");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
                     Items.ILLUMIUM, validInfuseHoe, SlimefunItems.FLUID_PUMP,
                     new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
@@ -257,7 +253,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&6Store a Totem in this apparatus", "&6by &e&lShift-Right-Clicking &6with a Totem in the hand",
                     "&6while the infused chestplate is worn");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.NECROTIC_SKULL, Items.CONDENSED_SOUL, Items.BENEVOLENT_BREW,
                     Items.ILLUMIUM, validInfuseChestplate, Items.EXP_CRYSTAL,
                     SlimefunItems.ESSENCE_OF_AFTERLIFE, SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.ESSENCE_OF_AFTERLIFE
@@ -275,7 +271,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     "&2Entities pulled by this fishing rod",
                     "&2will instead be pushed back");
 
-            new SlimefunItem(Categories.INFUSIONS, item, RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
+            new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.TALISMAN_WHIRLWIND, new ItemStack(Material.STICKY_PISTON), Items.EXP_CRYSTAL,
                     SlimefunItems.GRANDPAS_WALKING_STICK, validInfuseRod, new ItemStack(Material.STICKY_PISTON),
                     new ItemStack(Material.SLIME_BALL), SlimefunItems.GRANDPAS_WALKING_STICK, SlimefunItems.TALISMAN_WHIRLWIND
@@ -287,7 +283,7 @@ public class AltarOfInfusion extends CraftingBlock {
     protected void setup(@NotNull BlockMenuPreset blockMenuPreset) {
         // Input background
         for (int slot : IN_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.IN_BG, ChestMenuUtils.getEmptyClickHandler());
+            blockMenuPreset.addItem(slot, Items.IN_BG, ChestMenuUtils.getEmptyClickHandler());
         }
 
         // Input slots
@@ -297,12 +293,12 @@ public class AltarOfInfusion extends CraftingBlock {
 
         // Craft button background
         for (int slot : CRAFT_BG) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.CRAFT_BG, ChestMenuUtils.getEmptyClickHandler());
+            blockMenuPreset.addItem(slot, Items.CRAFT_BG, ChestMenuUtils.getEmptyClickHandler());
         }
 
         // Craft button
         for (int slot : CRAFT_BUTTON) {
-            blockMenuPreset.addItem(slot, ChestMenuItems.CRAFT_BTN);
+            blockMenuPreset.addItem(slot, Items.CRAFT_BTN);
         }
     }
 
@@ -322,7 +318,7 @@ public class AltarOfInfusion extends CraftingBlock {
     }
 
     @Override
-    protected void onBreak(BlockBreakEvent e, BlockMenu menu) {
+    protected void onBreak(@NotNull BlockBreakEvent e, @NotNull BlockMenu menu) {
         Location l = menu.getLocation();
         menu.dropItems(l, IN_SLOTS);
     }
@@ -342,7 +338,7 @@ public class AltarOfInfusion extends CraftingBlock {
 
         // Invalid Infusion
         if (infusion == null) {
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>Invalid Infusion!")));
+            p.sendMessage(Utils.parse("<red>Invalid Infusion!"));
             return;
         }
 
@@ -358,12 +354,12 @@ public class AltarOfInfusion extends CraftingBlock {
                 // Valid item
             } else {
                 // Invalid item
-                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot infuse that tool!")));
+                p.sendMessage(Utils.parse("<red>You cannot infuse that tool!"));
                 return;
             }
         } else {
             // Invalid item
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot infuse blocks!")));
+            p.sendMessage(Utils.parse("<red>This item cannot be infused!"));
             return;
         }
 
@@ -371,7 +367,7 @@ public class AltarOfInfusion extends CraftingBlock {
         ItemStack tool = inv.getItemInSlot(TOOL_SLOT);
         if (tool == null || tool.getType().equals(Material.AIR)) {
             // No tool
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot infuse air!")));
+            p.sendMessage(Utils.parse("<red>There is nothing to infuse!"));
             return;
         }
 
@@ -392,7 +388,7 @@ public class AltarOfInfusion extends CraftingBlock {
                 container.has(REPLANT, PersistentDataType.BYTE) ||
                 container.has(KNOCKBACK, PersistentDataType.BYTE)) {
             // Tool is already infused
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You have already applied an Infusion to this item!")));
+            p.sendMessage(Utils.parse("<red>You have already applied an Infusion to this item!"));
             return;
         }
 
@@ -402,68 +398,54 @@ public class AltarOfInfusion extends CraftingBlock {
             container.set(infusion, PersistentDataType.BYTE, (byte) 1);
 
             // Lore
-            List<String> lore;
-
-            // Assign lore
-            lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+            List<Component> lore = meta.lore() != null ? meta.lore() : new ArrayList<>();
 
             // Add lines to lore
-            lore.add("");
-            lore.add(BukkitComponentSerializer.legacy().serialize(
-                    MM.parse("<gray>Infusion:")));
+            lore.add(Component.newline());
+            lore.add(Utils.parse("<gray>Infusion:"));
 
             // Add infusion name to lore
             if (infusion.equals(DESTRUCTIVE_CRITS)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <red><bold>Destructive Criticals")));
+                lore.add(Utils.parse("<dark_gray>› <red><bold>Destructive Criticals"));
             } else if (infusion.equals(PHANTOM_CRITS)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <aqua>Phantom Criticals")));
+                lore.add(Utils.parse("<dark_gray>› <aqua>Phantom Criticals"));
             } else if (infusion.equals(TRUE_AIM)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <light_purple>True Aim")));
+                lore.add(Utils.parse("<dark_gray>› <light_purple>True Aim"));
             } else if (infusion.equals(FORCEFUL)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <dark_green>Forceful")));
+                lore.add(Utils.parse("<dark_gray>› <dark_green>Forceful"));
             } else if (infusion.equals(VOLATILE)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <dark_red><bold>Volatility")));
+                lore.add(Utils.parse("<dark_gray>› <dark_red><bold>Volatility"));
             } else if (infusion.equals(HEALING)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <red>Healing")));
+                lore.add(Utils.parse("<dark_gray>› <red>Healing"));
             } else if (infusion.equals(REPLANT)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <green>Automatic Re-plant")));
+                lore.add(Utils.parse("<dark_gray>› <green>Automatic Re-plant"));
             } else if (infusion.equals(KNOCKBACK)) {
-                lore.add(BukkitComponentSerializer.legacy().serialize(
-                        MM.parse("<dark_gray>› <green>Knockback")));
+                lore.add(Utils.parse("<dark_gray>› <green>Knockback"));
             }
 
             // Set lore and meta
-            meta.setLore(lore);
+            meta.lore(lore);
             tool.setItemMeta(meta);
         } else if (canBeInfused(tool, infusion) && infusion.equals(TOTEM_STORAGE)) {
             // Tool can be infused and the Infusion is the totem battery
             container.set(infusion, PersistentDataType.INTEGER, 0);
 
             // Lore
-            List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+            List<Component> lore = meta.lore() != null ? meta.lore() : new ArrayList<>();
 
             // Add lines to lore
-            lore.add("");
-            lore.add(BukkitComponentSerializer.legacy().serialize(
-                    MM.parse("<gray>Infusion:")));
+            lore.add(Component.newline());
+            lore.add(Utils.parse("<gray>Infusion:"));
 
             // Add infusion name to lore
-            lore.add(BukkitComponentSerializer.legacy().serialize(
-                    MM.parse("<dark_gray>› <gold><bold>Battery of Totems")));
+            lore.add(Utils.parse("<dark_gray>› <gold><bold>Battery of Totems"));
 
             // Set lore and meta
-            meta.setLore(lore);
+            meta.lore(lore);
             tool.setItemMeta(meta);
         } else {
             // Tool cannot be infused
-            p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot apply this infusion to this item!")));
+            p.sendMessage(Utils.parse("<red>You cannot apply this infusion to this item!"));
             return;
         }
 
@@ -505,8 +487,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     b.getWorld().spawnParticle(Particle.PORTAL, b.getLocation().add(0.5, 0.5, 0.5), 300, 2, 2, 2);
 
                     // Send message
-                    p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse(
-                            "<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>")));
+                    p.sendMessage(Utils.parse("<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>"));
                 }, 30);
             }, 30);
         }, 30);

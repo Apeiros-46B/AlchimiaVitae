@@ -25,9 +25,8 @@ public class InfusionHoeListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHarvestCrop(BlockBreakEvent e) {
         // Check if the block broken is a crop
-        if (e.getBlock().getBlockData() instanceof Ageable) {
+        if (e.getBlock().getBlockData() instanceof Ageable a) {
             Player p = e.getPlayer();
-            Ageable a = (Ageable) e.getBlock().getBlockData();
             ItemStack item = p.getInventory().getItemInMainHand();
 
             // Null check

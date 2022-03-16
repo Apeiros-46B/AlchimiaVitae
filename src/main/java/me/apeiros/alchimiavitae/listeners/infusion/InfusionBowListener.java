@@ -33,8 +33,7 @@ public class InfusionBowListener implements Listener {
     // Main event
     @EventHandler(ignoreCancelled = true)
     public void onBowShoot(EntityShootBowEvent e) {
-        if (e.getEntity() instanceof Player) {
-            Player p = (Player) e.getEntity();
+        if (e.getEntity() instanceof Player p) {
 
             // Null check
             if (e.getBow() != null) {
@@ -96,16 +95,15 @@ public class InfusionBowListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onFireballExplode(EntityExplodeEvent e) {
         if (e.getEntity() instanceof Fireball || e.getEntity() instanceof LargeFireball) {
-            if (((Fireball) e.getEntity()).getShooter() instanceof Player
+            if (((Fireball) e.getEntity()).getShooter() instanceof Player shooter
                     && ((Fireball) e.getEntity()).getShooter() != null &&
                     e.getEntity().getPersistentDataContainer().has
                     (AltarOfInfusion.VOLATILE, PersistentDataType.BYTE)) {
-                Player shooter = (Player) ((Fireball) e.getEntity()).getShooter();
                 ProtectionManager pm = Slimefun.getProtectionManager();
 
                 if (pm.hasPermission(shooter, e.getLocation(), Interaction.ATTACK_ENTITY) ||
                         pm.hasPermission(shooter, e.getLocation(), Interaction.ATTACK_PLAYER)) {
-                    // Remove explosion damage
+                    // Prevent block damage
                     e.blockList().clear();
                 } else {
                     e.setCancelled(true);
@@ -118,13 +116,10 @@ public class InfusionBowListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onArrowHit(ProjectileHitEvent e) {
         if (e.getHitEntity() != null &&
-                e.getHitEntity() instanceof LivingEntity &&
-                e.getEntity() instanceof AbstractArrow &&
+                e.getHitEntity() instanceof LivingEntity entity &&
+                e.getEntity() instanceof AbstractArrow arrow &&
                 e.getEntity().getPersistentDataContainer().has(
                 AltarOfInfusion.HEALING, PersistentDataType.BYTE)) {
-            // Variables
-            AbstractArrow arrow = (AbstractArrow) e.getEntity();
-            LivingEntity entity = (LivingEntity) e.getHitEntity();
 
             // Heal entity
             e.setCancelled(true);

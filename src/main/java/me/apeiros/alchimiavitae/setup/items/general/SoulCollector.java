@@ -1,16 +1,5 @@
 package me.apeiros.alchimiavitae.setup.items.general;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-import javax.annotation.Nonnull;
-
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import net.kyori.adventure.platform.bukkit.BukkitComponentSerializer;
-
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -18,8 +7,14 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.EntityKillHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.WeaponUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.utils.Utils;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-import static me.apeiros.alchimiavitae.AlchimiaVitae.MM;
+import javax.annotation.Nonnull;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SoulCollector extends SlimefunItem {
 
@@ -39,7 +34,7 @@ public class SoulCollector extends SlimefunItem {
             if (e.getEntity() instanceof Player) {
                 // The Soul Collector cannot be used on players
                 e.setCancelled(true);
-                p.sendMessage(BukkitComponentSerializer.legacy().serialize(MM.parse("<red>You cannot hurt a player using the Soul Collector!")));
+                p.sendMessage(Utils.parse("<red>You cannot hurt a player using the Soul Collector!"));
                 p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 1);
             }
         };
@@ -57,20 +52,10 @@ public class SoulCollector extends SlimefunItem {
                 int expMultiplier = 3;
 
                 switch (e.getEntityType()) {
-                    case WITHER:
-                        soulAmount = r.nextInt(9);
-                        expMultiplier = 3;
-                        break;
-                    case WITHER_SKELETON:
-                        soulAmount = r.nextInt(4);
-                        expMultiplier = 3;
-                        break;
-                    case ENDER_DRAGON:
-                        expMultiplier = 1;
-                        break;
-                    default:
-                        expMultiplier = 3;
-                        break;
+                    case WITHER -> soulAmount = r.nextInt(9);
+                    case WITHER_SKELETON -> soulAmount = r.nextInt(4);
+                    case ENDER_DRAGON -> expMultiplier = 1;
+                    default -> {}
                 }
 
                 for (int i = 0; i < soulAmount; i++) {
