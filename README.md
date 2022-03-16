@@ -7,6 +7,8 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
 
 ![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
 
+**Requires Java 17, Paper, and Minecraft 1.18.2!**
+
 ### Features:
 - Plants of Dark and Light Magic
   - Used to brew potions
