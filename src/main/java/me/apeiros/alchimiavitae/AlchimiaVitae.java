@@ -1,10 +1,9 @@
 package me.apeiros.alchimiavitae;
 
 import io.github.mooy1.infinitylib.core.AbstractAddon;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import me.apeiros.alchimiavitae.setup.Setup;
 
-public class AlchimiaVitae extends AbstractAddon implements SlimefunAddon {
+public class AlchimiaVitae extends AbstractAddon {
 
     private static AlchimiaVitae i;
 
