@@ -266,14 +266,14 @@ public class DivineAltar extends CraftingBlock {
 
         // Invalid recipe
         if (item == null) {
-            p.sendMessage(Utils.parse("<red>That recipe is invalid!"));
-            p.sendMessage(Utils.parse("<red>Please try again."));
+            p.sendMessage(Utils.legacySerialize("<red>That recipe is invalid!"));
+            p.sendMessage(Utils.legacySerialize("<red>Please try again."));
             return;
         }
 
         // Check for space
         if (!inv.fits(item, OUT_SLOTS)) {
-            p.sendMessage(Utils.parse("<red>There is not enough space in the output slots!"));
+            p.sendMessage(Utils.legacySerialize("<red>There is not enough space in the output slots!"));
             return;
         }
 
@@ -310,7 +310,7 @@ public class DivineAltar extends CraftingBlock {
                         b.getWorld().spawnParticle(Particle.REVERSE_PORTAL, b.getLocation().add(0.5, 0.5, 0.5), 300, 2, 2, 2);
 
                         // Send message
-                        p.sendMessage(Utils.parse("<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>"));
+                        p.sendMessage(Utils.legacySerialize("<gradient:#50fa75:#3dd2ff>Successful craft!</gradient>"));
 
                         // Output the item(s)
                         inv.pushItem(finalItem.clone(), OUT_SLOTS);

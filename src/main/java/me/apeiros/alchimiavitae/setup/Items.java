@@ -24,21 +24,21 @@ public class Items {
     // GUI items (for custom crafters)
 
     public static final ItemStack IN_BG = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE,
-            Utils.parseLegacy("<gradient:#ff68fc:#ff9a5c>Input</gradient>"));
+            Utils.legacySerialize("<gradient:#ff68fc:#ff9a5c>Input</gradient>"));
 
     public static final ItemStack CRAFT_BTN = new CustomItemStack(Material.LIME_STAINED_GLASS_PANE,
-            Utils.parseLegacy("<gradient:#39f792:#5c95ff>Craft</gradient>"), "&aClick to craft");
+            Utils.legacySerialize("<gradient:#39f792:#5c95ff>Craft</gradient>"), "&aClick to craft");
 
     public static final ItemStack CRAFT_BG = new CustomItemStack(Material.CYAN_STAINED_GLASS_PANE,
-            Utils.parseLegacy("<gradient:#39f792:#5c95ff>Craft</gradient>"));
+            Utils.legacySerialize("<gradient:#39f792:#5c95ff>Craft</gradient>"));
 
     public static final ItemStack OUT_BG = new CustomItemStack(Material.CYAN_STAINED_GLASS_PANE,
-            Utils.parseLegacy("<gradient:#5cb8ff:#39f7e1>Output</gradient>"));
+            Utils.legacySerialize("<gradient:#5cb8ff:#39f7e1>Output</gradient>"));
 
     // AlchimiaVitae items
 
     public static final SlimefunItemStack SOUL_COLLECTOR = new SlimefunItemStack("AV_SOUL_COLLECTOR",
-            Material.DIAMOND_SWORD, Utils.parseLegacy("<gradient:#6baefa:#7145b0>Soul Collector</gradient>"),
+            Material.DIAMOND_SWORD, Utils.legacySerialize("<gradient:#6baefa:#7145b0>Soul Collector</gradient>"),
             "&bCollects Souls",
             "&bKill any mob with this",
             "&bto extract its Soul",
@@ -57,7 +57,7 @@ public class Items {
     }
 
     public static final SlimefunItemStack CONDENSED_SOUL = new SlimefunItemStack("AV_CONDENSED_SOUL",
-            Material.LIGHT_BLUE_DYE, Utils.parseLegacy("<gradient:#6baefa:#7145b0>Condensed Soul</gradient>"),
+            Material.LIGHT_BLUE_DYE, Utils.legacySerialize("<gradient:#6baefa:#7145b0>Condensed Soul</gradient>"),
             "&bA Soul, condensed into an orb",
             "&9&oPerhaps there is a way",
             "&9&oto manipulate its power...");
@@ -71,7 +71,7 @@ public class Items {
     }
 
     public static final SlimefunItemStack PLANT_INFUSION_CHAMBER = new SlimefunItemStack("AV_PLANT_INFUSION_CHAMBER",
-            Material.LIME_STAINED_GLASS, Utils.parseLegacy("<gradient:#549c64:#1de078>Plant Infusion Chamber</gradient>"),
+            Material.LIME_STAINED_GLASS, Utils.legacySerialize("<gradient:#549c64:#1de078>Plant Infusion Chamber</gradient>"),
             "&bCan infuse plants with dark",
             "&bor light energy using",
             "&bSouls and Magical Lumps", "",
@@ -80,7 +80,7 @@ public class Items {
             LoreBuilder.powerPerSecond(64));
 
     public static final SlimefunItemStack GOOD_MAGIC_PLANT = new SlimefunItemStack("AV_GOOD_MAGIC_PLANT",
-            Material.OAK_SAPLING, Utils.parseLegacy("<gradient:#2ddae0:#31f876>Plant of Light Magic</gradient>"),
+            Material.OAK_SAPLING, Utils.legacySerialize("<gradient:#2ddae0:#31f876>Plant of Light Magic</gradient>"),
             "&7Light Magic I",
             "&aRadiates with an empyreal",
             "&aglow like no other...");
@@ -94,7 +94,7 @@ public class Items {
     }
 
     public static final SlimefunItemStack EVIL_MAGIC_PLANT = new SlimefunItemStack("AV_EVIL_MAGIC_PLANT",
-            Material.OAK_SAPLING, Utils.parseLegacy("<gradient:#ff5555:#ffa012>Plant of Dark Magic</gradient>"),
+            Material.OAK_SAPLING, Utils.legacySerialize("<gradient:#ff5555:#ffa012>Plant of Dark Magic</gradient>"),
             "&7Dark Magic I",
             "&cContains untold amounts of dark",
             "&cmagic locked away in its xylems...");
@@ -108,17 +108,17 @@ public class Items {
     }
 
     public static final SlimefunItemStack GOOD_ESSENCE = new SlimefunItemStack("AV_GOOD_ESSENCE",
-            Material.SUGAR, Utils.parseLegacy("<gradient:#2ddae0:#31f876>Light Essence</gradient>"),
+            Material.SUGAR, Utils.legacySerialize("<gradient:#2ddae0:#31f876>Light Essence</gradient>"),
             "&7Light Magic II",
             "&aLife. Illumination. ");
 
     public static final SlimefunItemStack EVIL_ESSENCE = new SlimefunItemStack("AV_EVIL_ESSENCE",
-            Material.GUNPOWDER, Utils.parseLegacy("<gradient:#ff5555:#ffa012>Dark Essence</gradient>"),
+            Material.GUNPOWDER, Utils.legacySerialize("<gradient:#ff5555:#ffa012>Dark Essence</gradient>"),
             "&7Dark Magic II",
             "&cDeath. Darkness.");
 
     public static final SlimefunItemStack EXP_CRYSTALLIZER = new SlimefunItemStack("AV_EXP_CRYSTALLIZER",
-            Material.LIME_STAINED_GLASS, Utils.parseLegacy("<gradient:#50fa75:#3dd2ff>Experience Crystallizer</gradient>"),
+            Material.LIME_STAINED_GLASS, Utils.legacySerialize("<gradient:#50fa75:#3dd2ff>Experience Crystallizer</gradient>"),
             "&aForms EXP orbs into a crystalline,",
             "&adurable, and energetic form.",
             LoreBuilder.machine(MachineTier.END_GAME, MachineType.MACHINE),
@@ -126,7 +126,7 @@ public class Items {
             LoreBuilder.powerPerSecond(32));
 
     public static final SlimefunItemStack EXP_CRYSTAL = new SlimefunItemStack("AV_EXP_CRYSTAL",
-            Material.EMERALD, Utils.parseLegacy("<gradient:#50fa75:#3dd2ff>Experience Crystal</gradient>"),
+            Material.EMERALD, Utils.legacySerialize("<gradient:#50fa75:#3dd2ff>Experience Crystal</gradient>"),
             "&aA chunk of crystalline experience");
 
     static {
@@ -138,7 +138,7 @@ public class Items {
     }
 
     public static final SlimefunItemStack ILLUMIUM = new SlimefunItemStack("AV_ILLUMIUM",
-            Material.IRON_INGOT, Utils.parseLegacy("<gradient:#2ddae0:#31f876>Illumium Ingot</gradient>"),
+            Material.IRON_INGOT, Utils.legacySerialize("<gradient:#2ddae0:#31f876>Illumium Ingot</gradient>"),
             "&aIt energetically effuses light in your hand");
 
     static {
@@ -150,7 +150,7 @@ public class Items {
     }
 
     public static final SlimefunItemStack DARKSTEEL = new SlimefunItemStack("AV_DARKSTEEL",
-            Material.NETHERITE_INGOT, Utils.parseLegacy("<gradient:#ff5555:#ffa012>Darksteel Ingot</gradient>"),
+            Material.NETHERITE_INGOT, Utils.legacySerialize("<gradient:#ff5555:#ffa012>Darksteel Ingot</gradient>"),
             "&cIt radiates... with darkness?");
 
     static {
@@ -162,24 +162,24 @@ public class Items {
     }
 
     public static final SlimefunItemStack DIVINE_ALTAR = new SlimefunItemStack("AV_DIVINE_ALTAR",
-            Material.ENCHANTING_TABLE, Utils.parseLegacy("<gradient:#ff5555:#ff6cfd>Divine Altar</gradient>"),
+            Material.ENCHANTING_TABLE, Utils.legacySerialize("<gradient:#ff5555:#ff6cfd>Divine Altar</gradient>"),
             "&5A sacred apparatus for the",
             "&5performance of ancient rituals");
 
     public static final SlimefunItemStack MOLTEN_MYSTERY_METAL = new SlimefunItemStack("AV_MOLTEN_MYSTERY_METAL",
-            Material.LAVA_BUCKET, Utils.parseLegacy("<gradient:#ff6745:#ff5555>Molten Mystery Metal</gradient>"),
+            Material.LAVA_BUCKET, Utils.legacySerialize("<gradient:#ff6745:#ff5555>Molten Mystery Metal</gradient>"),
             "&6A conglomerate of different metals");
 
     public static final SlimefunItemStack MYSTERY_METAL = new SlimefunItemStack("AV_MYSTERY_METAL",
-            Material.IRON_INGOT, Utils.parseLegacy("<gradient:#ff6745:#ff5555>Mystery Metal Ingot</gradient>"),
+            Material.IRON_INGOT, Utils.legacySerialize("<gradient:#ff6745:#ff5555>Mystery Metal Ingot</gradient>"),
             "&6Contains many metals");
 
     public static final SlimefunItemStack ORNATE_CAULDRON = new SlimefunItemStack("AV_ORNATE_CAULDRON",
-            Material.CAULDRON, Utils.parseLegacy("<gradient:#57ebbe:#f6fa2a>Ornate Cauldron</gradient>"),
+            Material.CAULDRON, Utils.legacySerialize("<gradient:#57ebbe:#f6fa2a>Ornate Cauldron</gradient>"),
             "&2An advanced cauldron for the brewing of potions");
 
     public static final SlimefunItemStack POTION_OF_OSMOSIS = new SlimefunItemStack("AV_POTION_OF_OSMOSIS",
-            Material.DRAGON_BREATH, Utils.parseLegacy("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"),
+            Material.DRAGON_BREATH, Utils.legacySerialize("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"),
             "&6Absorbs your potion effects",
             "&6and stores them in a bottle on &eRight Click");
 
@@ -209,7 +209,7 @@ public class Items {
         });
     }
 
-    public static final SlimefunItemStack BENEVOLENT_BREW = Utils.makePotion(Utils.parse(
+    public static final SlimefunItemStack BENEVOLENT_BREW = Utils.makePotion(Utils.legacySerialize(
             "<gradient:#2ddae0:#31f876>Benevolent Brew</gradient>"), Color.LIME, potEffectsMap);
 
     static {
@@ -239,11 +239,11 @@ public class Items {
         });
     }
 
-    public static final SlimefunItemStack MALEVOLENT_CONCOCTION = Utils.makeSplashPotion(Utils.parse(
+    public static final SlimefunItemStack MALEVOLENT_CONCOCTION = Utils.makeSplashPotion(Utils.legacySerialize(
             "<gradient:#ff5555:#ffa012>Malevolent Concoction</gradient>"), Color.MAROON, potEffectsMap);
 
     public static final SlimefunItemStack ALTAR_OF_INFUSION = new SlimefunItemStack("AV_ALTAR_OF_INFUSION",
-            Material.LODESTONE, Utils.parseLegacy("<gradient:#f78770:#ff607b>Altar of Infusion</gradient>"),
+            Material.LODESTONE, Utils.legacySerialize("<gradient:#f78770:#ff607b>Altar of Infusion</gradient>"),
             "&5An altar that combines technology",
             "&5and witchcraft to infuse items with",
             "&5powerful properties",

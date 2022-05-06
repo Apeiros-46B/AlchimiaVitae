@@ -1,6 +1,7 @@
 package me.apeiros.alchimiavitae;
 
 import io.github.mooy1.infinitylib.core.AbstractAddon;
+import io.github.mooy1.infinitylib.metrics.bukkit.Metrics;
 import me.apeiros.alchimiavitae.setup.Setup;
 
 public class AlchimiaVitae extends AbstractAddon {
@@ -18,6 +19,9 @@ public class AlchimiaVitae extends AbstractAddon {
 
         // Setup items and listeners
         Setup.setup(this);
+
+        // bStats
+        Metrics metrics = new Metrics(this, 15139);
     }
 
     @Override

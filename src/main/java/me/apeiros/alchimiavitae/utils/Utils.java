@@ -10,12 +10,12 @@ import lombok.experimental.UtilityClass;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -52,79 +52,72 @@ public class Utils {
             .build();
 
     private static final LegacyComponentSerializer LCS = LegacyComponentSerializer.builder()
-            .character('&')
             .hexColors()
             .useUnusualXRepeatedCharacterHexFormat()
             .build();
 
     private static final PlainTextComponentSerializer PTCS = PlainTextComponentSerializer.plainText();
 
-    public static Component parse(String s) {
+    public static Component serialize(String s) {
         return MM.deserialize(s);
     }
 
-    public static String parseLegacy(String s) {
-        return LCS.serialize(parse(s));
+    public static String legacySerialize(String s) {
+        return LCS.serialize(serialize(s));
     }
 
-    private static String parsePlain(Component c) {
+    private static String plainSerialize(Component c) {
         return PTCS.serialize(c);
     }
 
     // Methods for making potions
 
-    public static SlimefunItemStack makePotion(Component name, Color color, Map<PotionEffectType, int[]> effects) {
-        name = name.decoration(TextDecoration.ITALIC, false);
-
+    public static SlimefunItemStack makePotion(String name, Color color, Map<PotionEffectType, int[]> effects) {
         ItemStack potion = new ItemStack(Material.POTION);
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
 
-        potionMeta.displayName(name);
+        potionMeta.setDisplayName(name);
         potionMeta.setColor(color);
 
         for (Map.Entry<PotionEffectType, int[]> e : effects.entrySet()) {
             potionMeta.addCustomEffect(new PotionEffect(e.getKey(), e.getValue()[0], e.getValue()[1], true, true, true), true);
         }
 
-        String id = "AV_" + parsePlain(name).toUpperCase().replace(" ", "_") + "_POTION";
+        String id = "AV_" + ChatColor.stripColor(name).toUpperCase().replace(" ", "_") + "_POTION";
         potion.setItemMeta(potionMeta);
 
         return new SlimefunItemStack(id, potion);
     }
 
-    public static SlimefunItemStack makePotion(Component name, Color color, Collection<PotionEffect> effects) {
-        name = name.decoration(TextDecoration.ITALIC, false);
-
+    public static SlimefunItemStack makePotion(String name, Color color, Collection<PotionEffect> effects) {
         ItemStack potion = new ItemStack(Material.POTION);
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
 
-        potionMeta.displayName(name);
+        potionMeta.setDisplayName(name);
         potionMeta.setColor(color);
 
         for (PotionEffect e : effects) {
             potionMeta.addCustomEffect(e, true);
         }
 
-        String id = "AV_" + parsePlain(name).toUpperCase().replace(" ", "_") + "_POTION";
+        String id = "AV_" + ChatColor.stripColor(name).toUpperCase().replace(" ", "_") + "_POTION";
         potion.setItemMeta(potionMeta);
 
         return new SlimefunItemStack(id, potion);
     }
 
-    public static SlimefunItemStack makeSplashPotion(Component name, Color color, Map<PotionEffectType, int[]> effects) {
-        name = name.decoration(TextDecoration.ITALIC, false);
-
+    public static SlimefunItemStack makeSplashPotion(String name, Color color, Map<PotionEffectType, int[]> effects) {
         ItemStack potion = new ItemStack(Material.SPLASH_POTION);
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
 
-        potionMeta.displayName(name);
+        potionMeta.setDisplayName(name);
         potionMeta.setColor(color);
 
         for (Map.Entry<PotionEffectType, int[]> e : effects.entrySet()) {
             potionMeta.addCustomEffect(new PotionEffect(e.getKey(), e.getValue()[0], e.getValue()[1], true, true, true), true);
         }
 
-        String id = "AV_" + parsePlain(name).toUpperCase().replace(" ", "_") + "_SPLASH_POTION";
+        String id = "AV_" + ChatColor.stripColor(name).toUpperCase().replace(" ", "_") + "_SPLASH_POTION";
         potion.setItemMeta(potionMeta);
 
         return new SlimefunItemStack(id, potion);

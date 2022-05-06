@@ -7,7 +7,7 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
 
 ![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
 
-**Requires Java 17, Paper, and Minecraft 1.18.2!**
+**Requires Slimefun, at least Minecraft 1.17, and at least Java 16!**
 
 ### Features:
 - Plants of Dark and Light Magic
@@ -48,7 +48,7 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
 - Forceful
   - Applicable items: Bow, Crossbow
   - Effects:
-    - Arrows fly 2x farther and faster
+    - Arrows fly 2x further and deal more damage
 - Healing
   - Applicable items: Bow, Crossbow
   - Effects:
@@ -56,8 +56,7 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
 - Volatile
   - Applicable items: Bow, Crossbow
   - Effects:
-    - 1/7 chance to shoot a large fireball that does no block damage and does not create fire instead of an arrow
-    - If a large fireball is not fired, a small fireball will be fired instead that does no block damage and does not create fire
+    - Shoots fireballs instead of arrows (Does no block damage, does not cause fire)
 - Automatic Replant
   - Applicable items: Hoe
   - Effects:
@@ -66,7 +65,7 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
   - Applicable items: Chestplate
   - Effects:
     - Allows you to store up to 8 Totems of Undying inside a pocket dimension, resurrecting you upon death, but then being consumed.
-    - Totems are added to this battery by shift-rightclicking with one while a chestplate infused with this Infusion is worn
+    - Totems are added to this battery by shift-right-clicking with one while a chestplate infused with this Infusion is worn
 - Knockback
   - Applicable items: Fishing Rod
   - Effects:

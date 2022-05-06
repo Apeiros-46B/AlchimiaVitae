@@ -10,11 +10,10 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Utils;
 import me.apeiros.alchimiavitae.utils.InfusionMap;
+import me.apeiros.alchimiavitae.utils.Utils;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -140,8 +139,8 @@ public class AltarOfInfusion extends CraftingBlock {
             }, PHANTOM_CRITS);
 
             item = new SlimefunItemStack("AV_PHANTOM_CRITS_INFUSION", Material.PHANTOM_MEMBRANE, "&bPhantom Criticals",
-                    "&a1/4 chance to deal (your attack damage to the power of 1.15",
-                    "&amultiplied by 5/8) extra damage on a crit, bypassing armor");
+                    "&aA small chance to deal extra",
+                    "&adamage on a crit, bypassing armor");
 
             new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.PHANTOM_MEMBRANE), SlimefunItems.MAGICAL_GLASS, new ItemStack(Material.PHANTOM_MEMBRANE),
@@ -177,7 +176,7 @@ public class AltarOfInfusion extends CraftingBlock {
 
             item = new SlimefunItemStack("AV_FORCEFUL_INFUSION", Material.PISTON, "&2Forceful",
                     "&aThis infusion uses mechanical", "&adevices and electromagnets to accelerate",
-                    "&aprojectiles to blistering speeds", "&aArrows will travel 2x farther and faster");
+                    "&aprojectiles to blistering speeds", "&aArrows will travel 2x further and deal more damage");
 
             new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     SlimefunItems.ELECTRO_MAGNET, new ItemStack(Material.PISTON), SlimefunItems.STAFF_WIND,
@@ -195,8 +194,7 @@ public class AltarOfInfusion extends CraftingBlock {
 
             item = new SlimefunItemStack("AV_VOLATILE_INFUSION", Material.FIRE_CHARGE, "&4&lVolatility",
                     "&cThis extremely dangerous infusion creates", "&cspheres made of pure superheated lava,",
-                    "&cdelivering a mini-inferno to the target", "&41/7 chance to fire a large fireball",
-                    "&46/7 chance to fire a small fireball");
+                    "&cdelivering a mini-inferno to the target");
 
             new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
                     new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
@@ -338,7 +336,7 @@ public class AltarOfInfusion extends CraftingBlock {
 
         // Invalid Infusion
         if (infusion == null) {
-            p.sendMessage(Utils.parse("<red>Invalid Infusion!"));
+            p.sendMessage(Utils.legacySerialize("<red>Invalid Infusion!"));
             return;
         }
 
@@ -354,12 +352,12 @@ public class AltarOfInfusion extends CraftingBlock {
                 // Valid item
             } else {
                 // Invalid item
-                p.sendMessage(Utils.parse("<red>You cannot infuse that tool!"));
+                p.sendMessage(Utils.legacySerialize("<red>You cannot infuse that tool!"));
                 return;
             }
         } else {
             // Invalid item
-            p.sendMessage(Utils.parse("<red>This item cannot be infused!"));
+            p.sendMessage(Utils.legacySerialize("<red>This item cannot be infused!"));
             return;
         }
 
@@ -367,7 +365,7 @@ public class AltarOfInfusion extends CraftingBlock {
         ItemStack tool = inv.getItemInSlot(TOOL_SLOT);
         if (tool == null || tool.getType().equals(Material.AIR)) {
             // No tool
-            p.sendMessage(Utils.parse("<red>There is nothing to infuse!"));
+            p.sendMessage(Utils.legacySerialize("<red>There is nothing to infuse!"));
             return;
         }
 
@@ -388,7 +386,7 @@ public class AltarOfInfusion extends CraftingBlock {
                 container.has(REPLANT, PersistentDataType.BYTE) ||
                 container.has(KNOCKBACK, PersistentDataType.BYTE)) {
             // Tool is already infused
-            p.sendMessage(Utils.parse("<red>You have already applied an Infusion to this item!"));
+            p.sendMessage(Utils.legacySerialize("<red>You have already applied an Infusion to this item!"));
             return;
         }
 
@@ -398,54 +396,54 @@ public class AltarOfInfusion extends CraftingBlock {
             container.set(infusion, PersistentDataType.BYTE, (byte) 1);
 
             // Lore
-            List<Component> lore = meta.lore() != null ? meta.lore() : new ArrayList<>();
+            List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
             // Add lines to lore
-            lore.add(Component.newline());
-            lore.add(Utils.parse("<gray>Infusion:"));
+            lore.add("");
+            lore.add(Utils.legacySerialize("<gray>Infusion:"));
 
             // Add infusion name to lore
             if (infusion.equals(DESTRUCTIVE_CRITS)) {
-                lore.add(Utils.parse("<dark_gray>› <red><bold>Destructive Criticals"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <red><bold>Destructive Criticals"));
             } else if (infusion.equals(PHANTOM_CRITS)) {
-                lore.add(Utils.parse("<dark_gray>› <aqua>Phantom Criticals"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <aqua>Phantom Criticals"));
             } else if (infusion.equals(TRUE_AIM)) {
-                lore.add(Utils.parse("<dark_gray>› <light_purple>True Aim"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <light_purple>True Aim"));
             } else if (infusion.equals(FORCEFUL)) {
-                lore.add(Utils.parse("<dark_gray>› <dark_green>Forceful"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <dark_green>Forceful"));
             } else if (infusion.equals(VOLATILE)) {
-                lore.add(Utils.parse("<dark_gray>› <dark_red><bold>Volatility"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <dark_red><bold>Volatility"));
             } else if (infusion.equals(HEALING)) {
-                lore.add(Utils.parse("<dark_gray>› <red>Healing"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <red>Healing"));
             } else if (infusion.equals(REPLANT)) {
-                lore.add(Utils.parse("<dark_gray>› <green>Automatic Re-plant"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <green>Automatic Re-plant"));
             } else if (infusion.equals(KNOCKBACK)) {
-                lore.add(Utils.parse("<dark_gray>› <green>Knockback"));
+                lore.add(Utils.legacySerialize("<dark_gray>› <green>Knockback"));
             }
 
             // Set lore and meta
-            meta.lore(lore);
+            meta.setLore(lore);
             tool.setItemMeta(meta);
         } else if (canBeInfused(tool, infusion) && infusion.equals(TOTEM_STORAGE)) {
             // Tool can be infused and the Infusion is the totem battery
             container.set(infusion, PersistentDataType.INTEGER, 0);
 
             // Lore
-            List<Component> lore = meta.lore() != null ? meta.lore() : new ArrayList<>();
+            List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
             // Add lines to lore
-            lore.add(Component.newline());
-            lore.add(Utils.parse("<gray>Infusion:"));
+            lore.add("");
+            lore.add(Utils.legacySerialize("<gray>Infusion:"));
 
             // Add infusion name to lore
-            lore.add(Utils.parse("<dark_gray>› <gold><bold>Battery of Totems"));
+            lore.add(Utils.legacySerialize("<dark_gray>› <gold><bold>Battery of Totems"));
 
             // Set lore and meta
-            meta.lore(lore);
+            meta.setLore(lore);
             tool.setItemMeta(meta);
         } else {
             // Tool cannot be infused
-            p.sendMessage(Utils.parse("<red>You cannot apply this infusion to this item!"));
+            p.sendMessage(Utils.legacySerialize("<red>You cannot apply this infusion to this item!"));
             return;
         }
 
@@ -487,7 +485,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     b.getWorld().spawnParticle(Particle.PORTAL, b.getLocation().add(0.5, 0.5, 0.5), 300, 2, 2, 2);
 
                     // Send message
-                    p.sendMessage(Utils.parse("<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>"));
+                    p.sendMessage(Utils.legacySerialize("<gradient:#50fa75:#3dd2ff>Your item has been infused!</gradient>"));
                 }, 30);
             }, 30);
         }, 30);

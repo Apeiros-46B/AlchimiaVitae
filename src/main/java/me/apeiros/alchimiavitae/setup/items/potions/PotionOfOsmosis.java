@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunIte
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.Items;
 import me.apeiros.alchimiavitae.utils.Utils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -44,7 +43,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
 
             // If player has no effects
             if (p.getActivePotionEffects().isEmpty()) {
-                p.sendMessage(Utils.parse("<red>There are no effects to absorb!"));
+                p.sendMessage(Utils.legacySerialize("<red>There are no effects to absorb!"));
                 return;
             }
 
@@ -57,16 +56,16 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
             }
 
             // Make a new potion
-            ItemStack newPotion = Utils.makePotion(Utils.parse("<gradient:#6fe3e1:#53e6a6>Coruscating Potion</gradient>"), Color.FUCHSIA, playerEffectsList);
+            ItemStack newPotion = Utils.makePotion(Utils.legacySerialize("<gradient:#6fe3e1:#53e6a6>Coruscating Potion</gradient>"), Color.FUCHSIA, playerEffectsList);
             PotionMeta meta = (PotionMeta) newPotion.getItemMeta();
 
             // Make a lore
-            List<Component> lore = new ArrayList<>();
-            lore.add(Utils.parse("<green>Created from a"));
-            lore.add(Utils.parse("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"));
+            List<String> lore = new ArrayList<>();
+            lore.add(Utils.legacySerialize("<green>Created from a"));
+            lore.add(Utils.legacySerialize("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"));
 
             // Set the lore
-            meta.lore(lore);
+            meta.setLore(lore);
 
             // Set item meta
             newPotion.setItemMeta(meta);
@@ -90,7 +89,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
                     p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 60, 1, 1, 1);
 
                     // Message
-                    p.sendMessage(Utils.parse("<green>Successfully bottled your active effects into a potion!"));
+                    p.sendMessage(Utils.legacySerialize("<green>Successfully bottled your active effects into a potion!"));
 
                     // Add new potion
                     p.getInventory().addItem(newPotion);

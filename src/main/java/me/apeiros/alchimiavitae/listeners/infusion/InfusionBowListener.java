@@ -1,16 +1,20 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.ProtectionManager;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -20,8 +24,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.concurrent.ThreadLocalRandom;
+import org.bukkit.util.Vector;
 
 public class InfusionBowListener implements Listener {
 
@@ -42,43 +45,67 @@ public class InfusionBowListener implements Listener {
                     // Set container
                     PersistentDataContainer container = e.getBow().getItemMeta().getPersistentDataContainer();
 
+                    // For effects
+                    World w = p.getWorld();
+                    Location l = p.getLocation();
+
                     // True aim infusion
                     if (container.has(AltarOfInfusion.TRUE_AIM, PersistentDataType.BYTE)) {
                         // Set gravity to false
                         e.getProjectile().setGravity(false);
+
+                        // Effects
+                        w.spawnParticle(Particle.END_ROD, l, 50);
+                        w.playSound(l, Sound.ENTITY_SHULKER_SHOOT, 1F, 1F);
                     }
 
                     // Volatility infusion
                     if (container.has(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE)) {
-                        // Declare fb
+                        // Declare fireball
                         Fireball fb;
 
-                        // Random
-                        ThreadLocalRandom r = ThreadLocalRandom.current();
-                        int rNum = r.nextInt(7);
+                        // Calculate fireball's velocity
+                        Vector newVelocity = e.getProjectile().getVelocity().multiply(5).normalize();
 
-                        // Randomize fireball type and yield
-                        if (rNum == 0) {
-                            fb = p.launchProjectile(LargeFireball.class, e.getProjectile().getVelocity());
-                            fb.setYield(4F);
+                        // Determine fireball type and explosion yield based on force of the original projectile
+                        float force = e.getForce();
+                        if (force >= 0.95) {
+                            fb = p.launchProjectile(LargeFireball.class, newVelocity);
+                            fb.setYield(force * 3);
+                        } else if (force >= 0.3) {
+                            fb = p.launchProjectile(Fireball.class, newVelocity);
+                            fb.setYield(force * 3);
                         } else {
-                            fb = p.launchProjectile(Fireball.class, e.getProjectile().getVelocity());
-                            fb.setYield(1F);
+                            fb = p.launchProjectile(SmallFireball.class, newVelocity);
+                            fb.setYield(force * 2);
                         }
 
-                        // Set other things such as velocity and shooter
-                        fb.setVelocity(e.getProjectile().getVelocity().multiply(5).normalize());
+                        // Prevent fire
                         fb.setFireTicks(0);
                         fb.setIsIncendiary(false);
+
+                        // Set shooter to the player who shot the bow
                         fb.setShooter(p);
 
-                        // Add data
+                        // Add data (for explosion event)
                         fb.getPersistentDataContainer().set(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE, (byte) 1);
+
+                        // Remove the original projectile
+                        e.getProjectile().remove();
+
+                        // Play visual effects
+                        w.spawnParticle(Particle.FLAME, l, 50);
+                        w.playSound(l, Sound.ITEM_FIRECHARGE_USE, 0.6F, 1F);
                     }
 
                     // Forceful infusion
                     if (container.has(AltarOfInfusion.FORCEFUL, PersistentDataType.BYTE)) {
+                        // Increase velocity of arrow
                         e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
+
+                        // Effects
+                        w.spawnParticle(Particle.CRIT_MAGIC, l, 25);
+                        w.playSound(l, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1F, 1F);
                     }
 
                     // Healing infusion
@@ -94,7 +121,7 @@ public class InfusionBowListener implements Listener {
     // Event for volatility infusion
     @EventHandler(ignoreCancelled = true)
     public void onFireballExplode(EntityExplodeEvent e) {
-        if (e.getEntity() instanceof Fireball || e.getEntity() instanceof LargeFireball) {
+        if (e.getEntity() instanceof Fireball fireball) {
             if (((Fireball) e.getEntity()).getShooter() instanceof Player shooter
                     && ((Fireball) e.getEntity()).getShooter() != null &&
                     e.getEntity().getPersistentDataContainer().has
