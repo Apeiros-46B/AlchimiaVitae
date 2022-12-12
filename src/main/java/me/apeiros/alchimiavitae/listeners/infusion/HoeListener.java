@@ -1,8 +1,5 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.data.Ageable;
@@ -14,10 +11,17 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-public class InfusionHoeListener implements Listener {
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
-    // Constructor
-    public InfusionHoeListener(AlchimiaVitae p) {
+import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+
+/**
+ * {@link Listener} for Auto-Replant (hoe) infusion
+ */
+public class HoeListener implements Listener {
+
+    public HoeListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 

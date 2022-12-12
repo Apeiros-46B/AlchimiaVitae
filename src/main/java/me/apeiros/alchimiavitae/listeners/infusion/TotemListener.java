@@ -1,8 +1,5 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
-import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import me.apeiros.alchimiavitae.utils.Utils;
 import org.bukkit.EntityEffect;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -21,10 +18,16 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class InfusionTotemListener implements Listener {
+import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+import me.apeiros.alchimiavitae.utils.Utils;
 
-    // Constructor
-    public InfusionTotemListener(AlchimiaVitae p) {
+/**
+ * {@link Listener} for Totem Battery (chestplate) infusion
+ */
+public class TotemListener implements Listener {
+
+    public TotemListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
@@ -38,12 +41,12 @@ public class InfusionTotemListener implements Listener {
 
             // Null check
             if (meta != null) {
-                PersistentDataContainer container = meta.getPersistentDataContainer();
+                PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
                 // Check if the chestplate has the container
-                if (container.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER)) {
+                if (pdc.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER)) {
                     // Amount of totems stored in the chestplate
-                    int totemsStored = container.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
+                    int totemsStored = pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
                     Player p = e.getPlayer();
 
                     // Check if the item is a totem
@@ -51,7 +54,7 @@ public class InfusionTotemListener implements Listener {
                         if (e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING))) {
                             // Check if there are already 8 totems
                             if (totemsStored >= 8) {
-                                p.sendMessage(Utils.legacySerialize("<red>There is no more space for this Totem!"));
+                                p.sendMessage(Utils.format("<red>There is no more space for this Totem!"));
                                 p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
                                 return;
                             }
@@ -61,12 +64,12 @@ public class InfusionTotemListener implements Listener {
 
                             // Increment the totemsStored variable, set it to the container, and set the meta to the item
                             totemsStored++;
-                            container.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
+                            pdc.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
                             p.getInventory().getChestplate().setItemMeta(meta);
 
                             // Send a message to the player
-                            p.sendMessage(Utils.legacySerialize("<green>Your Totem has been added to the Battery of Totems."));
-                            p.sendMessage(Utils.legacySerialize(totemsStored == 1 ? "<green>There is now 1 Totem stored." : "<green>There are now " + totemsStored + " Totems stored."));
+                            p.sendMessage(Utils.format("<green>Your Totem has been added to the Battery of Totems."));
+                            p.sendMessage(Utils.format(totemsStored == 1 ? "<green>There is now 1 Totem stored." : "<green>There are now " + totemsStored + " Totems stored."));
 
                             // Play effects
                             p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 1);
@@ -77,7 +80,7 @@ public class InfusionTotemListener implements Listener {
                             p.getWorld().spawnParticle(Particle.END_ROD, e.getPlayer().getLocation(), 200, 1, 2, 1);
                         }
                     } else {
-                        p.sendMessage(Utils.legacySerialize(totemsStored == 1 ? "<green>There is 1 Totem stored in the Battery of Totems." : "<green>There are " + totemsStored + " Totems stored in the Battery of Totems."));
+                        p.sendMessage(Utils.format(totemsStored == 1 ? "<green>There is 1 Totem stored in the Battery of Totems." : "<green>There are " + totemsStored + " Totems stored in the Battery of Totems."));
                         p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1F, 1);
                     }
                 }
@@ -127,13 +130,13 @@ public class InfusionTotemListener implements Listener {
 
                                 // Send a message to the player with totem amount
                                 if (totemsStored >= 4) {
-                                    p.sendMessage(Utils.legacySerialize("<green>There are " + totemsStored + " Totems left in the Battery of Totems."));
+                                    p.sendMessage(Utils.format("<green>There are " + totemsStored + " Totems left in the Battery of Totems."));
                                 } else if (totemsStored >= 2) {
-                                    p.sendMessage(Utils.legacySerialize("<yellow>There are " + totemsStored + " Totems left in the Battery of Totems."));
+                                    p.sendMessage(Utils.format("<yellow>There are " + totemsStored + " Totems left in the Battery of Totems."));
                                 } else if (totemsStored == 1) {
-                                    p.sendMessage(Utils.legacySerialize("<red>There is 1 Totem left in the Battery of Totems."));
+                                    p.sendMessage(Utils.format("<red>There is 1 Totem left in the Battery of Totems."));
                                 } else {
-                                    p.sendMessage(Utils.legacySerialize("<dark_red>There are no Totems left in the Battery of Totems!"));
+                                    p.sendMessage(Utils.format("<dark_red>There are no Totems left in the Battery of Totems!"));
                                 }
                             }
                         }

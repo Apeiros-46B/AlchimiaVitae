@@ -129,14 +129,14 @@ public class OrnateCauldron extends CraftingBlock {
 
         // Invalid recipe
         if (item == null) {
-            p.sendMessage(Utils.legacySerialize("<red>That recipe is invalid!"));
-            p.sendMessage(Utils.legacySerialize("<red>Please try again."));
+            p.sendMessage(Utils.format("<red>That recipe is invalid!"));
+            p.sendMessage(Utils.format("<red>Please try again."));
             return;
         }
 
         // Check for space
         if (!inv.fits(item, OUT_SLOTS)) {
-            p.sendMessage(Utils.legacySerialize("<red>There is not enough space in the output slots!"));
+            p.sendMessage(Utils.format("<red>There is not enough space in the output slots!"));
             return;
         }
 
@@ -170,7 +170,7 @@ public class OrnateCauldron extends CraftingBlock {
                     b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation().add(0.5, 0.5, 0.5), 200, 0.1, 4, 0.1);
 
                     // Send message
-                    p.sendMessage(Utils.legacySerialize("<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>"));
+                    p.sendMessage(Utils.format("<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>"));
 
                     // Output the item
                     inv.pushItem(finalItem.clone(), OUT_SLOTS);

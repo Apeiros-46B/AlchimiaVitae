@@ -2,8 +2,12 @@ package me.apeiros.alchimiavitae;
 
 import io.github.mooy1.infinitylib.core.AbstractAddon;
 import io.github.mooy1.infinitylib.metrics.bukkit.Metrics;
+
 import me.apeiros.alchimiavitae.setup.Setup;
 
+/**
+ * Main class
+ */
 public class AlchimiaVitae extends AbstractAddon {
 
     private static AlchimiaVitae i;
@@ -14,19 +18,19 @@ public class AlchimiaVitae extends AbstractAddon {
 
     @Override
     public void enable() {
-        // Instance and super
+        // set instance
         i = this;
 
-        // Setup items and listeners
+        // setup items and listeners
         Setup.setup(this);
 
         // bStats
-        Metrics metrics = new Metrics(this, 15139);
+        new Metrics(this, 15139);
     }
 
     @Override
     public void disable() {
-        // Set instance to null
+        // set instance to null
         i = null;
     }
 
