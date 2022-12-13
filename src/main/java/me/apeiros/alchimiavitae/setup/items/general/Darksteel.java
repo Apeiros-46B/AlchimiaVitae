@@ -16,7 +16,7 @@ public class Darksteel extends SlimefunItem {
                 SlimefunItems.ENDER_LUMP_1, Items.EXP_CRYSTAL, SlimefunItems.ENDER_LUMP_1,
                 Items.EVIL_MAGIC_PLANT, SlimefunItems.STEEL_INGOT, Items.EVIL_MAGIC_PLANT,
                 SlimefunItems.ENDER_LUMP_1, Items.EXP_CRYSTAL, SlimefunItems.ENDER_LUMP_1
-        }, new SlimefunItemStack(Items.DARKSTEEL, 2));
+        }, new SlimefunItemStack(Items.DARKSTEEL, 4));
 
     }
 

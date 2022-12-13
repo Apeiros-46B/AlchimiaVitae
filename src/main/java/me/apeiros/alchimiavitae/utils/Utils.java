@@ -61,7 +61,7 @@ public class Utils {
                 "", "&b&oFabricate using the Divine Altar");
 
         public static final RecipeType ORNATE_CAULDRON_TYPE = new RecipeType(
-                AbstractAddon.createKey("ornate_cauldron_type"), Items.ORNATE_CAULDRON,
+                AbstractAddon.createKey("ornate_cauldron_type"), Items.COSMIC_CAULDRON,
                 "", "&b&oBrew using the Ornate Cauldron");
 
         public static final RecipeType INFUSION_ALTAR_TYPE = new RecipeType(
@@ -88,7 +88,7 @@ public class Utils {
 
         public static final ItemGroup INFUSIONS = new SubGroup(
                 "av_infusions",
-                new CustomItemStack(Material.LODESTONE, "&6Alchimia Vitae &7- &dInfusion"));
+                new CustomItemStack(Material.NETHER_STAR, "&6Alchimia Vitae &7- &dInfusion"));
 
         public static final ItemGroup MAIN = new MultiGroup(
                 "alchimia_vitae",
@@ -117,6 +117,10 @@ public class Utils {
     public static String format(String s) {
         return LCS.serialize(MM.deserialize(s));
     }
+
+    public static String itemType(String type) {
+        return LCS.serialize(MM.deserialize("<blue>" + type + "<blue> (<italic>AlchimiaVitae<blue>)"));
+    }
     // }}}
 
     // {{{ Methods for making potions
@@ -124,7 +128,8 @@ public class Utils {
             String name,
             Color color,
             Collection<PotionEffect> effects,
-            boolean splash) {
+            boolean splash,
+            String... lore) {
 
         ItemStack potion = new ItemStack(splash ? Material.SPLASH_POTION : Material.POTION);
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
@@ -139,14 +144,15 @@ public class Utils {
         String id = "AV_" + ChatColor.stripColor(name).toUpperCase().replace(" ", "_") + (splash ? "_SPLASH_POTION" : "_POTION");
         potion.setItemMeta(potionMeta);
 
-        return new SlimefunItemStack(id, potion);
+        return new SlimefunItemStack(id, potion, name, lore);
     }
 
     public static SlimefunItemStack makePotion(
             String name,
             Color color,
             Map<PotionEffectType, int[]> effects,
-            boolean splash) {
+            boolean splash,
+            String... lore) {
 
         List<PotionEffect> new_effects = new LinkedList<PotionEffect>();
 
@@ -154,7 +160,7 @@ public class Utils {
             new_effects.add(new PotionEffect(e.getKey(), e.getValue()[0], e.getValue()[1], true, true, true));
         }
 
-        return makePotion(name, color, new_effects, splash);
+        return makePotion(name, color, new_effects, splash, lore);
     }
     // }}}
 

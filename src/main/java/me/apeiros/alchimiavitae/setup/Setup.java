@@ -40,7 +40,7 @@ public class Setup {
 
     // {{{ Main
     public static void setup(AlchimiaVitae p) {
-        // Category
+        // ItemGroup
         Utils.ItemGroups.MAIN.register(p);
 
         // Items
@@ -87,7 +87,7 @@ public class Setup {
                 .register();
 
         new Research(AbstractAddon.createKey("magic_plants"), 131073,
-                "Two polar opposites", 30) // TODO: Make a word which is like photosynthesis but moon instead of sun
+                "Powerful plants", 30)
                 .addItems(Items.PLANT_INFUSION_CHAMBER, Items.GOOD_MAGIC_PLANT, Items.EVIL_MAGIC_PLANT)
                 .register();
 
@@ -118,7 +118,7 @@ public class Setup {
 
         new Research(AbstractAddon.createKey("ornate_cauldron"), 131079,
                 "Advanced brewery", 35)
-                .addItems(Items.ORNATE_CAULDRON)
+                .addItems(Items.COSMIC_CAULDRON)
                 .register();
 
         new Research(AbstractAddon.createKey("potion_of_osmosis"), 131080,

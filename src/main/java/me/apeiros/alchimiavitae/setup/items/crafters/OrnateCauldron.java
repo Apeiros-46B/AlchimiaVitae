@@ -33,7 +33,7 @@ public class OrnateCauldron extends CraftingBlock {
 
     public OrnateCauldron(ItemGroup c) {
 
-        super(c, Items.ORNATE_CAULDRON, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
+        super(c, Items.COSMIC_CAULDRON, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
                 Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, Items.DIVINE_ALTAR, Items.ILLUMIUM,
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3

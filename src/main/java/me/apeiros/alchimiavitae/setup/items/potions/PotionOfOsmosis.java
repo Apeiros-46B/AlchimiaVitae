@@ -63,6 +63,8 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
             List<String> lore = new ArrayList<>();
             lore.add(Utils.format("<green>Created from a"));
             lore.add(Utils.format("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"));
+            lore.add("");
+            lore.add(Utils.itemType("Potion"));
 
             // Set the lore
             meta.setLore(lore);

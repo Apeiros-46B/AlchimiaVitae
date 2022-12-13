@@ -180,7 +180,7 @@ public class DivineAltar extends CraftingBlock {
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL);
 
-        this.addRecipe(Items.ORNATE_CAULDRON,
+        this.addRecipe(Items.COSMIC_CAULDRON,
                 Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, Items.DIVINE_ALTAR, Items.ILLUMIUM,
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3);
