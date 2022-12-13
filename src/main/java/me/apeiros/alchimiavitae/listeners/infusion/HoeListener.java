@@ -2,6 +2,7 @@ package me.apeiros.alchimiavitae.listeners.infusion;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
@@ -25,50 +27,60 @@ public class HoeListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // Event
+    // {{{ Event to prevent block breaking and drop crops (fires when a block is broken)
     @EventHandler(ignoreCancelled = true)
-    public void onHarvestCrop(BlockBreakEvent e) {
-        // Check if the block broken is a crop
-        if (e.getBlock().getBlockData() instanceof Ageable a) {
-            Player p = e.getPlayer();
-            ItemStack item = p.getInventory().getItemInMainHand();
+    public void onCropHarvest(BlockBreakEvent e) {
+        // Make sure the block broken is a crop
+        if (!(e.getBlock().getBlockData() instanceof Ageable))
+            return;
 
-            // Null check
-            if (p.getInventory().getItemInMainHand().getItemMeta() != null) {
-                // Check if the tool has the Auto-Replant infusion
-                if (p.getInventory().getItemInMainHand().getItemMeta().
-                        getPersistentDataContainer().has(AltarOfInfusion.REPLANT, PersistentDataType.BYTE)) {
-                    // Check if the crop is at maximum age
-                    if (a.getAge() == a.getMaximumAge()) {
-                        // Cancel event
-                        e.setCancelled(true);
-                        e.getBlock().setBlockData(e.getBlock().getType().createBlockData());
+        Ageable a = (Ageable) e.getBlock().getBlockData();
 
-                        // Spawn particles
-                        Particle particleToSpawn = e.getBlock().getType() == Material.NETHER_WART ? Particle.CRIMSON_SPORE : Particle.VILLAGER_HAPPY;
-                        e.getBlock().getWorld().spawnParticle(particleToSpawn, e.getBlock().getLocation(), 50, 1, 1, 1);
+        Player p = e.getPlayer();
+        ItemStack item = p.getInventory().getItemInMainHand();
+        ItemMeta meta = item.getItemMeta();
 
-                        // Drop drops
-                        if (item.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
-                            for (ItemStack i : e.getBlock().getDrops(item, p)) {
-                                ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
-                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(),
-                                        new CustomItemStack(itemToDrop, item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 2));
-                            }
-                        } else {
-                            for (ItemStack i : e.getBlock().getDrops(item, p)) {
-                                ItemStack itemToDrop = e.getBlock().getType() == Material.WHEAT ? new ItemStack(Material.WHEAT) : i;
-                                p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItemStack(itemToDrop, 2));
-                            }
-                        }
+        // Make sure the player's tool has meta
+        if (meta == null)
+            return;
 
-                        // Drop seeds if the crop is wheat
-                        if (e.getBlock().getType() == Material.WHEAT) {
-                            p.getWorld().dropItemNaturally(e.getBlock().getLocation(), new CustomItemStack(new ItemStack(Material.WHEAT_SEEDS), 2));
-                        }
-                    }
-                }
-            }
+        // Make sure the tool has the infusion
+        if (!meta.getPersistentDataContainer().has(AltarOfInfusion.REPLANT, PersistentDataType.BYTE))
+            return;
+
+        // Make sure the crop is at maximum age
+        if (a.getAge() != a.getMaximumAge())
+            return;
+
+        // Cancel event (block is not broken)
+        e.setCancelled(true);
+
+        // Reset crop age to lowest
+        a.setAge(0);
+        e.getBlock().setBlockData(a);
+
+        World w = p.getWorld();
+
+        // Check if the tool has fortune
+        boolean isWheat = e.getBlock().getType() == Material.WHEAT;
+        boolean hasFortune = item.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS);
+        int amountToDrop = hasFortune ? item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 2 : 2;
+
+        // Drop items
+        for (ItemStack i : e.getBlock().getDrops(item, p)) {
+            // Drop wheat properly
+            ItemStack itemToDrop = isWheat ? new ItemStack(Material.WHEAT) : i;
+            w.dropItemNaturally(e.getBlock().getLocation(), new CustomItemStack(itemToDrop, amountToDrop));
         }
+
+        // Drop additional seeds if the crop is wheat
+        if (isWheat)
+            w.dropItemNaturally(e.getBlock().getLocation(), new CustomItemStack(new ItemStack(Material.WHEAT_SEEDS), 2));
+
+        // Effects
+        Particle particleToSpawn = e.getBlock().getType() == Material.NETHER_WART ? Particle.CRIMSON_SPORE : Particle.VILLAGER_HAPPY;
+        w.spawnParticle(particleToSpawn, e.getBlock().getLocation(), 50, 1, 1, 1);
     }
+    // }}}
+
 }

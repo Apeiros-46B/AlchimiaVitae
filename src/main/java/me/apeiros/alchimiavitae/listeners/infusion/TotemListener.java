@@ -1,9 +1,11 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
 import org.bukkit.EntityEffect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,118 +33,184 @@ public class TotemListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // Click event
-    @EventHandler(ignoreCancelled = true)
+    // {{{ Event to add totems to battery (fires on player interaction)
+    // Don't ignore cancelled events
+    @EventHandler(ignoreCancelled = false)
     public void onShiftRightClick(PlayerInteractEvent e) {
-        if (e.getPlayer().isSneaking() && e.getPlayer().getInventory().getChestplate() != null &&
-                e.getHand() == EquipmentSlot.HAND && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            // Get the container
-            ItemMeta meta = e.getPlayer().getInventory().getChestplate().getItemMeta();
+        // TODO: figure out what this does
+        if (e.getHand() != EquipmentSlot.HAND)
+            return;
 
-            // Null check
-            if (meta != null) {
-                PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        Player p = e.getPlayer();
 
-                // Check if the chestplate has the container
-                if (pdc.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER)) {
-                    // Amount of totems stored in the chestplate
-                    int totemsStored = pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
-                    Player p = e.getPlayer();
+        // Make sure the player is sneaking (SHIFT+right click)
+        if (!p.isSneaking())
+            return;
 
-                    // Check if the item is a totem
-                    if (e.getItem() != null) {
-                        if (e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING))) {
-                            // Check if there are already 8 totems
-                            if (totemsStored >= 8) {
-                                p.sendMessage(Utils.format("<red>There is no more space for this Totem!"));
-                                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
-                                return;
-                            }
+        Action action = e.getAction();
 
-                            // Remove the totem in the hand
-                            p.getInventory().getItemInMainHand().setAmount(0);
+        // Make sure the player is right-clicking
+        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK)
+            return;
 
-                            // Increment the totemsStored variable, set it to the container, and set the meta to the item
-                            totemsStored++;
-                            pdc.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
-                            p.getInventory().getChestplate().setItemMeta(meta);
+        // Make sure the player has a chestplate
+        if (p.getInventory().getChestplate() == null)
+            return;
 
-                            // Send a message to the player
-                            p.sendMessage(Utils.format("<green>Your Totem has been added to the Battery of Totems."));
-                            p.sendMessage(Utils.format(totemsStored == 1 ? "<green>There is now 1 Totem stored." : "<green>There are now " + totemsStored + " Totems stored."));
+        // Get meta
+        ItemMeta meta = p.getInventory().getChestplate().getItemMeta();
 
-                            // Play effects
-                            p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 1);
-                            p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 1);
-                            p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0.8F, 1);
-                            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_PREPARE_ATTACK, 1, 1);
-                            p.getWorld().playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 0.2F, 1);
-                            p.getWorld().spawnParticle(Particle.END_ROD, e.getPlayer().getLocation(), 200, 1, 2, 1);
-                        }
-                    } else {
-                        p.sendMessage(Utils.format(totemsStored == 1 ? "<green>There is 1 Totem stored in the Battery of Totems." : "<green>There are " + totemsStored + " Totems stored in the Battery of Totems."));
-                        p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1F, 1);
-                    }
-                }
-            }
+        // Make sure there is a meta
+        if (meta == null)
+            return;
+
+        // Get PDC
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+
+        // Make sure the chestplate has the infusion
+        if (!pdc.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER))
+            return;
+
+        // Get the number of totems stored in the chestplate
+        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
+
+        // Make sure the item is a totem
+        if (e.getItem() == null || !e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING))) {
+            // If the item isn't a totem, inform the player of the current number of totems
+            p.sendMessage(Utils.format(
+                    "<green>There "
+                    + (totemsStored == 1
+                          ? "is 1 totem"
+                          : "are " + totemsStored + " totems"
+                      )
+                    + " stored in the Battery of Totems."
+                )
+            );
+
+            p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1F, 1);
+            return;
         }
-    }
 
-    // Death event
+        // Check if there are already 8 totems
+        if (totemsStored == 8) {
+            p.sendMessage(Utils.format("<red>There is no more space for this totem!"));
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
+            return;
+        }
+
+        // Remove the totem in the hand
+        p.getInventory().getItemInMainHand().setAmount(0);
+
+        // Increase the number of totems in the battery
+        totemsStored++;
+        pdc.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
+        p.getInventory().getChestplate().setItemMeta(meta);
+
+        // Inform the player of the new number of totems
+        p.sendMessage(Utils.format("<green>Your totem has been added to the Battery of Totems."));
+        p.sendMessage(Utils.format(
+                "<green>There "
+                + (totemsStored == 1
+                      ? "is now 1 totem"
+                      : "are now " + totemsStored + " totems"
+                  )
+                + " stored."
+            )
+        );
+
+        // Effects
+        World w = p.getWorld();
+        Location l = p.getLocation();
+
+        w.playSound(l, Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 1);
+        w.playSound(l, Sound.BLOCK_BEACON_POWER_SELECT, 1, 1);
+        w.playSound(l, Sound.BLOCK_BEACON_ACTIVATE, 0.8F, 1);
+        w.playSound(l, Sound.ENTITY_EVOKER_PREPARE_ATTACK, 1, 1);
+        w.playSound(l, Sound.ITEM_TOTEM_USE, 0.2F, 1);
+        w.spawnParticle(Particle.END_ROD, l, 200, 1, 2, 1);
+    }
+    // }}}
+
+    // {{{ Event to resurrect player (fires on damage)
     @EventHandler(ignoreCancelled = true)
     public void onDamage(EntityDamageEvent e) {
-        if (!e.getCause().equals(EntityDamageEvent.DamageCause.VOID) && e.getEntity() instanceof Player p) {
+        // Make sure the damaged entity is a player
+        if (!(e.getEntity() instanceof Player))
+            return;
 
-            if (p.getInventory().getChestplate() != null) {
-                ItemMeta meta = p.getInventory().getChestplate().getItemMeta();
+        // Make sure the damage is not from the void
+        if (e.getCause() == EntityDamageEvent.DamageCause.VOID)
+            return;
 
-                // Null check
-                if (meta != null) {
-                    // Get container
-                    PersistentDataContainer container = meta.getPersistentDataContainer();
+        Player p = (Player) e.getEntity();
 
-                    // Check if the chestplate has the infusion
-                    if (container.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER)) {
-                        if (container.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER) > 0) {
-                            if (p.getHealth() - e.getFinalDamage() <= 0) {
-                                // The amount of totems stored in the chestplate
-                                int totemsStored = container.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
+        // Make sure the damage was fatal
+        if (p.getHealth() - e.getFinalDamage() > 0)
+            return;
 
-                                // Cancel the damage event
-                                e.setCancelled(true);
+        ItemStack chestplate = p.getInventory().getChestplate();
 
-                                // Decrement the totemsStored variable and set it to the container
-                                totemsStored--;
-                                container.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
-                                p.getInventory().getChestplate().setItemMeta(meta);
+        // Make sure the player has a chestplate
+        if (chestplate == null)
+            return;
 
-                                // Add potion effects, add absorption, and heal by half a heart
-                                p.setHealth(1);
-                                p.setAbsorptionAmount(4);
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 900, 2));
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 800, 1));
+        ItemMeta meta = chestplate.getItemMeta();
 
-                                // Totem visual effects
-                                p.playEffect(EntityEffect.TOTEM_RESURRECT);
+        // Make sure the chestplate has meta
+        if (meta == null)
+            return;
 
-                                // Custom effects
-                                p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5F, 1F);
+        // Get PDC
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-                                // Send a message to the player with totem amount
-                                if (totemsStored >= 4) {
-                                    p.sendMessage(Utils.format("<green>There are " + totemsStored + " Totems left in the Battery of Totems."));
-                                } else if (totemsStored >= 2) {
-                                    p.sendMessage(Utils.format("<yellow>There are " + totemsStored + " Totems left in the Battery of Totems."));
-                                } else if (totemsStored == 1) {
-                                    p.sendMessage(Utils.format("<red>There is 1 Totem left in the Battery of Totems."));
-                                } else {
-                                    p.sendMessage(Utils.format("<dark_red>There are no Totems left in the Battery of Totems!"));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        // Make sure the chestplate has the infusion
+        if (!pdc.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER))
+            return;
+
+        // Make sure there are totems stored
+        if (pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER) <= 0)
+            return;
+
+        // Cancel damage
+        e.setCancelled(true);
+
+        // Get the number of totems stored in the chestplate
+        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
+
+        // Decrease the number of totems in the chestplate
+        totemsStored--;
+        pdc.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
+        p.getInventory().getChestplate().setItemMeta(meta);
+
+        // Set health to half a heart, add absorption, and add potion effects
+        p.setHealth(1);
+        p.setAbsorptionAmount(4);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 900, 2));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 800, 1));
+
+        // Inform the player of remaining totems
+        String color = switch (totemsStored) {
+            default -> "<green>";
+            case 3 -> "<yellow>";
+            case 2 -> "<gold>";
+            case 1 -> "<red>";
+            case 0 -> "<dark_red>";
+        };
+
+        p.sendMessage(Utils.format(
+                color + "There "
+                + (totemsStored == 1
+                      ? "is 1 totem"
+                      : "are " + (totemsStored == 0 ? "no" : totemsStored) + " totems"
+                  )
+                + " left in the Battery of Totems."
+            )
+        );
+
+        // Effects
+        p.playEffect(EntityEffect.TOTEM_RESURRECT);
+        p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5F, 1F);
     }
+    // }}}
+
 }

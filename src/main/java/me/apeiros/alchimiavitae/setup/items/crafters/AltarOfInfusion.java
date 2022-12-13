@@ -365,18 +365,18 @@ public class AltarOfInfusion extends CraftingBlock {
         ItemMeta meta = tool.getItemMeta();
 
         // Container
-        PersistentDataContainer container = meta.getPersistentDataContainer();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         // Check if tool is already infused
-        if (container.has(DESTRUCTIVE_CRITS, PersistentDataType.BYTE) ||
-                container.has(PHANTOM_CRITS, PersistentDataType.BYTE) ||
-                container.has(TRUE_AIM, PersistentDataType.BYTE) ||
-                container.has(FORCEFUL, PersistentDataType.BYTE) ||
-                container.has(VOLATILE, PersistentDataType.BYTE) ||
-                container.has(HEALING, PersistentDataType.BYTE) ||
-                container.has(TOTEM_STORAGE, PersistentDataType.INTEGER) ||
-                container.has(REPLANT, PersistentDataType.BYTE) ||
-                container.has(KNOCKBACK, PersistentDataType.BYTE)) {
+        if (pdc.has(DESTRUCTIVE_CRITS, PersistentDataType.BYTE) ||
+                pdc.has(PHANTOM_CRITS, PersistentDataType.BYTE) ||
+                pdc.has(TRUE_AIM, PersistentDataType.BYTE) ||
+                pdc.has(FORCEFUL, PersistentDataType.BYTE) ||
+                pdc.has(VOLATILE, PersistentDataType.BYTE) ||
+                pdc.has(HEALING, PersistentDataType.BYTE) ||
+                pdc.has(TOTEM_STORAGE, PersistentDataType.INTEGER) ||
+                pdc.has(REPLANT, PersistentDataType.BYTE) ||
+                pdc.has(KNOCKBACK, PersistentDataType.BYTE)) {
             // Tool is already infused
             p.sendMessage(Utils.format("<red>You have already applied an Infusion to this item!"));
             return;
@@ -385,7 +385,7 @@ public class AltarOfInfusion extends CraftingBlock {
         // Check if the tool can be infused
         if (canBeInfused(tool, infusion) && !infusion.equals(TOTEM_STORAGE)) {
             // Tool can be infused and the Infusion is not the totem battery
-            container.set(infusion, PersistentDataType.BYTE, (byte) 1);
+            pdc.set(infusion, PersistentDataType.BYTE, (byte) 1);
 
             // Lore
             List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
@@ -418,7 +418,7 @@ public class AltarOfInfusion extends CraftingBlock {
             tool.setItemMeta(meta);
         } else if (canBeInfused(tool, infusion) && infusion.equals(TOTEM_STORAGE)) {
             // Tool can be infused and the Infusion is the totem battery
-            container.set(infusion, PersistentDataType.INTEGER, 0);
+            pdc.set(infusion, PersistentDataType.INTEGER, 0);
 
             // Lore
             List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();

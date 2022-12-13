@@ -18,10 +18,10 @@ public class AlchimiaVitae extends AbstractAddon {
 
     @Override
     public void enable() {
-        // set instance
+        // Set instance
         i = this;
 
-        // setup items and listeners
+        // Set up items and listeners
         Setup.setup(this);
 
         // bStats
@@ -30,7 +30,7 @@ public class AlchimiaVitae extends AbstractAddon {
 
     @Override
     public void disable() {
-        // set instance to null
+        // Set instance to null
         i = null;
     }
 

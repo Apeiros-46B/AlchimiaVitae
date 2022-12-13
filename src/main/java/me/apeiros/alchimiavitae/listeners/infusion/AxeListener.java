@@ -51,13 +51,13 @@ public class AxeListener implements Listener {
             return;
 
         // Get the item's PDC, a random number generator, and the protection manager
-        PersistentDataContainer container = meta.getPersistentDataContainer();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
         ThreadLocalRandom rand = ThreadLocalRandom.current();
         ProtectionManager pm = Slimefun.getProtectionManager();
 
         // Check what infusion the axe has
         // {{{ Destructive Criticals
-        if (e.getEntity() instanceof Player victim && container.has(AltarOfInfusion.DESTRUCTIVE_CRITS, PersistentDataType.BYTE)) {
+        if (e.getEntity() instanceof Player victim && pdc.has(AltarOfInfusion.DESTRUCTIVE_CRITS, PersistentDataType.BYTE)) {
             // Make sure attacker has permission
             if (!pm.hasPermission(p, victim.getLocation(), Interaction.ATTACK_PLAYER))
                 return;
@@ -88,7 +88,7 @@ public class AxeListener implements Listener {
         // }}}
 
         // {{{ Phantom Criticals
-        else if (e.getEntity() instanceof LivingEntity victim && container.has(AltarOfInfusion.PHANTOM_CRITS, PersistentDataType.BYTE)) {
+        else if (e.getEntity() instanceof LivingEntity victim && pdc.has(AltarOfInfusion.PHANTOM_CRITS, PersistentDataType.BYTE)) {
             // Make sure attacker has permission
             if (!pm.hasPermission(p, victim.getLocation(), victim instanceof Player ? Interaction.ATTACK_PLAYER : Interaction.ATTACK_ENTITY))
                 return;
