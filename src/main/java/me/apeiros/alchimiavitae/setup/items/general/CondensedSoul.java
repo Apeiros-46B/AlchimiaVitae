@@ -26,6 +26,7 @@ public class CondensedSoul extends SimpleSlimefunItem<ItemUseHandler> {
     @NotNull
     @Override
     public ItemUseHandler getItemHandler() {
+        // TODO: is this doing the work or is DyeListener.java doing it
         return PlayerRightClickEvent::cancel;
     }
 }

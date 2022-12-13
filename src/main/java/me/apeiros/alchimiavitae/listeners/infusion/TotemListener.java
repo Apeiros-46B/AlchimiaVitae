@@ -33,7 +33,7 @@ public class TotemListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // {{{ Event to add totems to battery (fires on player interaction)
+    // {{{ Handler to add totems to battery (fires on player interaction)
     // Don't ignore cancelled events
     @EventHandler(ignoreCancelled = false)
     public void onShiftRightClick(PlayerInteractEvent e) {
@@ -131,7 +131,7 @@ public class TotemListener implements Listener {
     }
     // }}}
 
-    // {{{ Event to resurrect player (fires on damage)
+    // {{{ Handler to resurrect player (fires on damage)
     @EventHandler(ignoreCancelled = true)
     public void onDamage(EntityDamageEvent e) {
         // Make sure the damaged entity is a player

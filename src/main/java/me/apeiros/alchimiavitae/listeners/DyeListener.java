@@ -19,7 +19,7 @@ public class DyeListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // {{{ Event to cancel dye (fires when a sheep is dyed)
+    // {{{ Handler to cancel dye (fires when a sheep is dyed)
     @EventHandler(ignoreCancelled = true)
     public void onDye(SheepDyeWoolEvent e) {
         PlayerInventory inventory = e.getPlayer().getInventory();

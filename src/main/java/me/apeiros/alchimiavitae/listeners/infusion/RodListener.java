@@ -27,7 +27,7 @@ public class RodListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // {{{ Main event to increase the range of and add data to fish hooks (fires when a hook is thrown)
+    // {{{ Main handler to increase the range of and add data to fish hooks (fires when a hook is thrown)
     @EventHandler(ignoreCancelled = true)
     public void onHookThrow(ProjectileLaunchEvent e) {
         Projectile en = e.getEntity();
@@ -63,7 +63,7 @@ public class RodListener implements Listener {
     }
     // }}}
 
-    // {{{ Event to deal knockback (fires when a hook is retracted)
+    // {{{ Handler to deal knockback (fires when a hook is retracted)
     @EventHandler(ignoreCancelled = true)
     public void onHookRetract(PlayerFishEvent e) {
         FishHook h = e.getHook();

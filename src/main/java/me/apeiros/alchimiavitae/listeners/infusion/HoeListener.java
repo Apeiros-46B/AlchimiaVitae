@@ -27,7 +27,7 @@ public class HoeListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // {{{ Event to prevent block breaking and drop crops (fires when a block is broken)
+    // {{{ Handler to prevent block breaking and drop crops (fires when a block is broken)
     @EventHandler(ignoreCancelled = true)
     public void onCropHarvest(BlockBreakEvent e) {
         // Make sure the block broken is a crop

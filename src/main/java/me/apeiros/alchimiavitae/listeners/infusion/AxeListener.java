@@ -31,7 +31,7 @@ public class AxeListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // {{{ Event to apply effects (fires when an entity damages another)
+    // {{{ Handler to apply effects (fires when an entity damages another)
     @EventHandler(ignoreCancelled = true)
     public void onAxeHit(EntityDamageByEntityEvent e) {
         // Make sure damager is a player
@@ -63,11 +63,15 @@ public class AxeListener implements Listener {
                 return;
 
             // Damage armor
-            for (ItemStack d : victim.getInventory().getArmorContents()) {
-                if (!(d.getItemMeta() instanceof Damageable))
+            for (ItemStack armor : victim.getInventory().getArmorContents()) {
+                if (!(armor.getItemMeta() instanceof Damageable))
                     continue;
 
-                ((Damageable) d.getItemMeta()).setDamage(rand.nextInt(5));
+                Damageable d = (Damageable) armor.getItemMeta();
+                int current = d.getDamage();
+
+                // 0-5 damage
+                d.setDamage(current + rand.nextInt(6));
             }
 
             // 1/5 chance to add slowness

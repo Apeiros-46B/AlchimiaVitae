@@ -37,7 +37,7 @@ public class BowListener implements Listener {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
-    // {{{ Main event to spawn and add data to projectiles and play effects (fires when an entity shoots a bow)
+    // {{{ Main handler to spawn and add data to projectiles and play effects (fires when an entity shoots a bow)
     @EventHandler(ignoreCancelled = true)
     public void onBowShoot(EntityShootBowEvent e) {
         // Make sure shooter is a player
@@ -125,7 +125,7 @@ public class BowListener implements Listener {
     }
     // }}}
 
-    // {{{ Event for Volatility infusion effects (fires when an entity explodes)
+    // {{{ Handler for Volatility infusion effects (fires when an entity explodes)
     @EventHandler(ignoreCancelled = true)
     public void onFireballExplode(EntityExplodeEvent e) {
         // Make sure the exploding entity is a fireball
@@ -159,7 +159,7 @@ public class BowListener implements Listener {
     }
     // }}}
 
-    // {{{ Event for Healing infusion effects (fires when a projectile hits)
+    // {{{ Handler for Healing infusion effects (fires when a projectile hits)
     @EventHandler(ignoreCancelled = true)
     public void onArrowHit(ProjectileHitEvent e) {
         // Make sure the hit entity is a non-null living entity
@@ -178,7 +178,7 @@ public class BowListener implements Listener {
         if (!arrow.getPersistentDataContainer().has(AltarOfInfusion.HEALING, PersistentDataType.BYTE))
             return;
 
-        // Cancel event to prevent damage
+        // Cancel Handler to prevent damage
         e.setCancelled(true);
 
         // Heal entity
