@@ -37,22 +37,38 @@ import java.util.List;
 
 public class AltarOfInfusion extends CraftingBlock {
 
-    // Keys
+    // Infusion keys
     public static final NamespacedKey DESTRUCTIVE_CRITS = AbstractAddon.createKey("infusion_destructivecrits");
     public static final NamespacedKey PHANTOM_CRITS = AbstractAddon.createKey("infusion_phantomcrits");
     public static final NamespacedKey TRUE_AIM = AbstractAddon.createKey("infusion_trueaim");
     public static final NamespacedKey FORCEFUL = AbstractAddon.createKey("infusion_forceful");
-    public static final NamespacedKey VOLATILE = AbstractAddon.createKey("infusion_volatile");
+    public static final NamespacedKey VOLATILITY = AbstractAddon.createKey("infusion_volatile");
     public static final NamespacedKey HEALING = AbstractAddon.createKey("infusion_healing");
-    public static final NamespacedKey REPLANT = AbstractAddon.createKey("infusion_autoreplant");
-    public static final NamespacedKey TOTEM_STORAGE = AbstractAddon.createKey("infusion_totemstorage");
+    public static final NamespacedKey AUTO_REPLANT = AbstractAddon.createKey("infusion_autoreplant");
+    public static final NamespacedKey TOTEM_BATTERY = AbstractAddon.createKey("infusion_totemstorage");
     public static final NamespacedKey KNOCKBACK = AbstractAddon.createKey("infusion_knockback");
 
-    // Tool Utils.ItemGroups
-    private static final List<Material> VALID_AXE = Arrays.asList(Material.GOLDEN_AXE, Material.IRON_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
+    // Tool types
+    private static final List<Material> VALID_AXE = Arrays.asList(
+            Material.GOLDEN_AXE,
+            Material.IRON_AXE,
+            Material.DIAMOND_AXE,
+            Material.NETHERITE_AXE);
+
     private static final List<Material> VALID_BOW = Arrays.asList(Material.BOW, Material.CROSSBOW);
-    private static final List<Material> VALID_HOE = Arrays.asList(Material.GOLDEN_HOE, Material.IRON_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE);
-    private static final List<Material> VALID_CHESTPLATE = Arrays.asList(Material.GOLDEN_CHESTPLATE, Material.IRON_CHESTPLATE, Material.DIAMOND_CHESTPLATE, Material.NETHERITE_CHESTPLATE);
+
+    private static final List<Material> VALID_HOE = Arrays.asList(
+            Material.GOLDEN_HOE,
+            Material.IRON_HOE,
+            Material.DIAMOND_HOE,
+            Material.NETHERITE_HOE);
+
+    private static final List<Material> VALID_CHESTPLATE = Arrays.asList(
+            Material.GOLDEN_CHESTPLATE,
+            Material.IRON_CHESTPLATE,
+            Material.DIAMOND_CHESTPLATE,
+            Material.NETHERITE_CHESTPLATE);
+
     private static final List<Material> VALID_FISHING_ROD = Collections.singletonList(Material.FISHING_ROD);
 
     // Slots
@@ -182,7 +198,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     new ItemStack(Material.BLAZE_ROD), SlimefunItems.STAFF_FIRE, SlimefunItems.TALISMAN_FIRE,
                     Items.DARKSTEEL, SlimefunItems.LAVA_GENERATOR_2,
                     new ItemStack(Material.TNT), SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.LAVA_CRYSTAL
-            }, VOLATILE);
+            }, VOLATILITY);
 
             item = new SlimefunItemStack("AV_VOLATILE_INFUSION", Material.FIRE_CHARGE, "&4&lVolatility",
                     "&cThis extremely dangerous infusion creates", "&cspheres made of pure superheated lava,",
@@ -215,19 +231,19 @@ public class AltarOfInfusion extends CraftingBlock {
 
         if (autoReplantEnabled) {
             recipes.put(new ItemStack[] {
-                    new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
+                    new ItemStack(Material.COMPOSTER), Items.LIGHT_ESSENCE, new ItemStack(Material.WATER_BUCKET),
                     Items.ILLUMIUM, SlimefunItems.FLUID_PUMP,
-                    new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
-            }, REPLANT);
+                    new ItemStack(Material.BONE_BLOCK), Items.LIGHT_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
+            }, AUTO_REPLANT);
 
             item = new SlimefunItemStack("AV_AUTO_REPLANT_INFUSION", Material.WHEAT, "&aAutomatic Re-plant",
                     "&2Any fully-grown crops broken",
                     "&2with a hoe infused with this", "&2will &aautomatically &2be replanted");
 
             new SlimefunItem(Utils.ItemGroups.INFUSIONS, item, Utils.RecipeTypes.INFUSION_ALTAR_TYPE, new ItemStack[] {
-                    new ItemStack(Material.COMPOSTER), Items.GOOD_ESSENCE, new ItemStack(Material.WATER_BUCKET),
+                    new ItemStack(Material.COMPOSTER), Items.LIGHT_ESSENCE, new ItemStack(Material.WATER_BUCKET),
                     Items.ILLUMIUM, validInfuseHoe, SlimefunItems.FLUID_PUMP,
-                    new ItemStack(Material.BONE_BLOCK), Items.GOOD_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
+                    new ItemStack(Material.BONE_BLOCK), Items.LIGHT_MAGIC_PLANT, new ItemStack(Material.GRINDSTONE)
             }, item).register(av);
         }
 
@@ -236,7 +252,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     SlimefunItems.NECROTIC_SKULL, Items.CONDENSED_SOUL, Items.BENEVOLENT_BREW,
                     Items.ILLUMIUM, Items.EXP_CRYSTAL,
                     SlimefunItems.ESSENCE_OF_AFTERLIFE, SlimefunItems.ENERGIZED_CAPACITOR, SlimefunItems.ESSENCE_OF_AFTERLIFE
-            }, TOTEM_STORAGE);
+            }, TOTEM_BATTERY);
 
             item = new SlimefunItemStack("AV_TOTEM_BATTERY_INFUSION", Material.TOTEM_OF_UNDYING, "&6&lTotem Battery",
                     "&eA built-in pocket dimension that holds the energy", "&eof up to 8 Totems of Undying",
@@ -340,7 +356,7 @@ public class AltarOfInfusion extends CraftingBlock {
                     (((VALID_BOW.contains(mat) ||
                     VALID_HOE.contains(mat) ||
                     VALID_CHESTPLATE.contains(mat)) ||
-                    VALID_FISHING_ROD.contains(mat)))) {
+                    mat == Material.FISHING_ROD))) {
                 // Valid item
             } else {
                 // Invalid item
@@ -372,10 +388,10 @@ public class AltarOfInfusion extends CraftingBlock {
                 pdc.has(PHANTOM_CRITS, PersistentDataType.BYTE) ||
                 pdc.has(TRUE_AIM, PersistentDataType.BYTE) ||
                 pdc.has(FORCEFUL, PersistentDataType.BYTE) ||
-                pdc.has(VOLATILE, PersistentDataType.BYTE) ||
+                pdc.has(VOLATILITY, PersistentDataType.BYTE) ||
                 pdc.has(HEALING, PersistentDataType.BYTE) ||
-                pdc.has(TOTEM_STORAGE, PersistentDataType.INTEGER) ||
-                pdc.has(REPLANT, PersistentDataType.BYTE) ||
+                pdc.has(TOTEM_BATTERY, PersistentDataType.INTEGER) ||
+                pdc.has(AUTO_REPLANT, PersistentDataType.BYTE) ||
                 pdc.has(KNOCKBACK, PersistentDataType.BYTE)) {
             // Tool is already infused
             p.sendMessage(Utils.format("<red>You have already applied an Infusion to this item!"));
@@ -383,7 +399,7 @@ public class AltarOfInfusion extends CraftingBlock {
         }
 
         // Check if the tool can be infused
-        if (canBeInfused(tool, infusion) && !infusion.equals(TOTEM_STORAGE)) {
+        if (canBeInfused(tool, infusion) && !infusion.equals(TOTEM_BATTERY)) {
             // Tool can be infused and the Infusion is not the totem battery
             pdc.set(infusion, PersistentDataType.BYTE, (byte) 1);
 
@@ -403,11 +419,11 @@ public class AltarOfInfusion extends CraftingBlock {
                 lore.add(Utils.format("<dark_gray>› <light_purple>True Aim"));
             } else if (infusion.equals(FORCEFUL)) {
                 lore.add(Utils.format("<dark_gray>› <dark_green>Forceful"));
-            } else if (infusion.equals(VOLATILE)) {
+            } else if (infusion.equals(VOLATILITY)) {
                 lore.add(Utils.format("<dark_gray>› <dark_red><bold>Volatility"));
             } else if (infusion.equals(HEALING)) {
                 lore.add(Utils.format("<dark_gray>› <red>Healing"));
-            } else if (infusion.equals(REPLANT)) {
+            } else if (infusion.equals(AUTO_REPLANT)) {
                 lore.add(Utils.format("<dark_gray>› <green>Automatic Re-plant"));
             } else if (infusion.equals(KNOCKBACK)) {
                 lore.add(Utils.format("<dark_gray>› <green>Knockback"));
@@ -416,7 +432,7 @@ public class AltarOfInfusion extends CraftingBlock {
             // Set lore and meta
             meta.setLore(lore);
             tool.setItemMeta(meta);
-        } else if (canBeInfused(tool, infusion) && infusion.equals(TOTEM_STORAGE)) {
+        } else if (canBeInfused(tool, infusion) && infusion.equals(TOTEM_BATTERY)) {
             // Tool can be infused and the Infusion is the totem battery
             pdc.set(infusion, PersistentDataType.INTEGER, 0);
 
@@ -496,17 +512,14 @@ public class AltarOfInfusion extends CraftingBlock {
             } else if (VALID_BOW.contains(mat) &&
                     (infusion.equals(TRUE_AIM) ||
                             infusion.equals(FORCEFUL) ||
-                            infusion.equals(VOLATILE) ||
+                            infusion.equals(VOLATILITY) ||
                             infusion.equals(HEALING))) {
                 return true;
-            } else if (VALID_HOE.contains(mat) &&
-                    infusion.equals(REPLANT)) {
+            } else if (VALID_HOE.contains(mat) && infusion.equals(AUTO_REPLANT)) {
                 return true;
-            } else if (VALID_CHESTPLATE.contains(mat) &&
-                    infusion.equals(TOTEM_STORAGE)) {
+            } else if (VALID_CHESTPLATE.contains(mat) && infusion.equals(TOTEM_BATTERY)) {
                 return true;
-            } else if (VALID_FISHING_ROD.contains(mat) &&
-                    infusion.equals(KNOCKBACK)) {
+            } else if (mat == Material.FISHING_ROD && infusion.equals(KNOCKBACK)) {
                 return true;
             } else {
                 return false;
@@ -515,4 +528,63 @@ public class AltarOfInfusion extends CraftingBlock {
 
         return false;
     }
+
+    public class Infusion {
+
+        public boolean infusable(@NotNull ItemStack tool) {
+            Material mat = tool.getType();
+
+            return switch (mat) {
+                case GOLDEN_AXE,
+                     IRON_AXE,
+                     DIAMOND_AXE,
+                     NETHERITE_AXE -> true;
+
+                case BOW, CROSSBOW -> true;
+
+                case GOLDEN_HOE,
+                     IRON_HOE,
+                     DIAMOND_HOE,
+                     NETHERITE_HOE -> true;
+
+                case GOLDEN_CHESTPLATE,
+                     IRON_CHESTPLATE,
+                     DIAMOND_CHESTPLATE,
+                     NETHERITE_CHESTPLATE -> true;
+
+                case FISHING_ROD -> true;
+
+                default -> false;
+            };
+        }
+
+        public boolean infusable(@NotNull ItemStack tool, @NotNull NamespacedKey infusion) {
+            Material mat = tool.getType();
+
+            return switch (mat) {
+                case GOLDEN_AXE,
+                     IRON_AXE,
+                     DIAMOND_AXE,
+                     NETHERITE_AXE -> Utils.equalsAny(infusion, DESTRUCTIVE_CRITS, PHANTOM_CRITS);
+
+                case BOW, CROSSBOW -> Utils.equalsAny(infusion, FORCEFUL, HEALING, TRUE_AIM, VOLATILITY);
+
+                case GOLDEN_HOE,
+                     IRON_HOE,
+                     DIAMOND_HOE,
+                     NETHERITE_HOE -> infusion.equals(AUTO_REPLANT);
+
+                case GOLDEN_CHESTPLATE,
+                     IRON_CHESTPLATE,
+                     DIAMOND_CHESTPLATE,
+                     NETHERITE_CHESTPLATE -> infusion.equals(TOTEM_BATTERY);
+
+                case FISHING_ROD -> infusion.equals(KNOCKBACK);
+
+                default -> false;
+            };
+        }
+
+    }
+
 }

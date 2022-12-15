@@ -22,7 +22,7 @@ import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.utils.Utils;
 
 /**
- * Holds {@link SlimefunItemStack} constants
+ * Holds {@link SlimefunItemStack} constants used in {@link AlchimiaVitae}
  */
 public class Items {
 
@@ -40,17 +40,15 @@ public class Items {
             Utils.format("<gradient:#5cb8ff:#39f7e1>Output</gradient>"));
     // }}}
 
-    // {{{ Soul Collector
+    // {{{ Tools
     public static final SlimefunItemStack SOUL_COLLECTOR = new SlimefunItemStack("AV_SOUL_COLLECTOR",
             Material.DIAMOND_SWORD, Utils.format("<gradient:#6baefa:#7145b0>Soul Collector</gradient>"),
-            "&bCollects Souls",
-            "&bKill any mob with this",
-            "&bto extract its Soul",
-            "&a3x EXP drops from all mobs",
-            "&9Wither-related mobs will",
-            "&9drop more souls");
-
-    private static final Configuration cfg = AlchimiaVitae.i().getConfig();
+            "&bExtracts souls", "",
+            "&7Killed mobs will drop souls",
+            "&73x EXP drops from all mobs",
+            "&7Wither-related mobs will",
+            "&7drop additional souls",
+            "", Utils.itemType("Tool"));
 
     static {
         ItemMeta meta = SOUL_COLLECTOR.getItemMeta();
@@ -58,20 +56,6 @@ public class Items {
 
         SOUL_COLLECTOR.setItemMeta(meta);
         SOUL_COLLECTOR.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    }
-
-    public static final SlimefunItemStack CONDENSED_SOUL = new SlimefunItemStack("AV_CONDENSED_SOUL",
-            Material.LIGHT_BLUE_DYE, Utils.format("<gradient:#6baefa:#7145b0>Condensed Soul</gradient>"),
-            "&bA Soul, condensed into an orb",
-            "&9&oPerhaps there is a way",
-            "&9&oto manipulate its power...");
-
-    static {
-        ItemMeta meta = CONDENSED_SOUL.getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-
-        CONDENSED_SOUL.setItemMeta(meta);
-        CONDENSED_SOUL.addUnsafeEnchantment(Enchantment.LUCK, 1);
     }
     // }}}
 
@@ -98,53 +82,55 @@ public class Items {
     // }}}
 
     // {{{ Resources
-    public static final SlimefunItemStack GOOD_MAGIC_PLANT = new SlimefunItemStack("AV_GOOD_MAGIC_PLANT",
-            Material.OAK_SAPLING,
-            Utils.format("<gradient:#2ddae0:#31f876>Plant of Light Magic</gradient>"),
-            "&aRadiates an empyreal glow",
+    public static final SlimefunItemStack CONDENSED_SOUL = new SlimefunItemStack("AV_CONDENSED_SOUL",
+            Material.LIGHT_BLUE_DYE, Utils.format("<gradient:#6baefa:#7145b0>Condensed Soul</gradient>"),
+            "&bA soul, condensed into an orb",
+            "&9&oPerhaps there is a way",
+            "&9&oto manipulate its power...",
             "", Utils.itemType("Raw Magic Resource"));
 
     static {
-        ItemMeta meta = GOOD_MAGIC_PLANT.getItemMeta();
+        ItemMeta meta = CONDENSED_SOUL.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-        GOOD_MAGIC_PLANT.setItemMeta(meta);
-        GOOD_MAGIC_PLANT.addUnsafeEnchantment(Enchantment.LUCK, 1);
+        CONDENSED_SOUL.setItemMeta(meta);
+        CONDENSED_SOUL.addUnsafeEnchantment(Enchantment.LUCK, 1);
     }
 
-    public static final SlimefunItemStack EVIL_MAGIC_PLANT = new SlimefunItemStack("AV_EVIL_MAGIC_PLANT",
+    public static final SlimefunItemStack LIGHT_MAGIC_PLANT = new SlimefunItemStack("AV_GOOD_MAGIC_PLANT",
+            Material.OAK_SAPLING,
+            Utils.format("<gradient:#2ddae0:#31f876>Plant of Light Magic</gradient>"),
+            "&aRadiates an empyreal glow",
+            "", Utils.itemType("Base Magic Resource"));
+
+    static {
+        ItemMeta meta = LIGHT_MAGIC_PLANT.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        LIGHT_MAGIC_PLANT.setItemMeta(meta);
+        LIGHT_MAGIC_PLANT.addUnsafeEnchantment(Enchantment.LUCK, 1);
+    }
+
+    public static final SlimefunItemStack DARK_MAGIC_PLANT = new SlimefunItemStack("AV_EVIL_MAGIC_PLANT",
             Material.OAK_SAPLING,
             Utils.format("<gradient:#ff5555:#ffa012>Plant of Dark Magic</gradient>"),
             "&cIt's taking in a bit too much",
             "&clight to be photosynthesizing",
-            "", Utils.itemType("Raw Magic Resource"));
+            "", Utils.itemType("Base Magic Resource"));
 
     static {
-        ItemMeta meta = EVIL_MAGIC_PLANT.getItemMeta();
+        ItemMeta meta = DARK_MAGIC_PLANT.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-        EVIL_MAGIC_PLANT.setItemMeta(meta);
-        EVIL_MAGIC_PLANT.addUnsafeEnchantment(Enchantment.LUCK, 1);
+        DARK_MAGIC_PLANT.setItemMeta(meta);
+        DARK_MAGIC_PLANT.addUnsafeEnchantment(Enchantment.LUCK, 1);
     }
-
-    public static final SlimefunItemStack GOOD_ESSENCE = new SlimefunItemStack("AV_GOOD_ESSENCE",
-            Material.SUGAR,
-            Utils.format("<gradient:#2ddae0:#31f876>Light Essence</gradient>"),
-            "&aPulsates with luminescence",
-            "", Utils.itemType("Processed Magic Resource"));
-
-    public static final SlimefunItemStack EVIL_ESSENCE = new SlimefunItemStack("AV_EVIL_ESSENCE",
-            Material.GUNPOWDER,
-            Utils.format("<gradient:#ff5555:#ffa012>Dark Essence</gradient>"),
-            "&cAbsorbs light like a",
-            "&csponge absorbs water",
-            "", Utils.itemType("Processed Magic Resource"));
 
     public static final SlimefunItemStack EXP_CRYSTAL = new SlimefunItemStack("AV_EXP_CRYSTAL",
             Material.EMERALD,
             Utils.format("<gradient:#50fa75:#3dd2ff>Experience Crystal</gradient>"),
             "&aCrystallized.",
-            "", Utils.itemType("Processed Magic Resource"));
+            "", Utils.itemType("Base Magic Resource"));
 
     static {
         ItemMeta meta = EXP_CRYSTAL.getItemMeta();
@@ -153,6 +139,19 @@ public class Items {
         EXP_CRYSTAL.setItemMeta(meta);
         EXP_CRYSTAL.addUnsafeEnchantment(Enchantment.LUCK, 1);
     }
+
+    public static final SlimefunItemStack LIGHT_ESSENCE = new SlimefunItemStack("AV_GOOD_ESSENCE",
+            Material.SUGAR,
+            Utils.format("<gradient:#2ddae0:#31f876>Light Essence</gradient>"),
+            "&aPulsates with luminescence",
+            "", Utils.itemType("Processed Magic Resource"));
+
+    public static final SlimefunItemStack DARK_ESSENCE = new SlimefunItemStack("AV_EVIL_ESSENCE",
+            Material.GUNPOWDER,
+            Utils.format("<gradient:#ff5555:#ffa012>Dark Essence</gradient>"),
+            "&cAbsorbs light like a",
+            "&csponge absorbs water",
+            "", Utils.itemType("Processed Magic Resource"));
 
     public static final SlimefunItemStack ILLUMIUM = new SlimefunItemStack("AV_ILLUMIUM",
             Material.IRON_INGOT,
@@ -183,7 +182,7 @@ public class Items {
     }
     // }}}
 
-    // {{{ Divine Altar
+    // {{{ Divine Altar (Transmutation)
     public static final SlimefunItemStack DIVINE_ALTAR = new SlimefunItemStack("AV_DIVINE_ALTAR",
             Material.ENCHANTING_TABLE,
             Utils.format("<gradient:#ff5555:#ff6cfd>Divine Altar</gradient>"),
@@ -195,19 +194,19 @@ public class Items {
             Material.LAVA_BUCKET,
             Utils.format("<gradient:#ff6745:#ff5555>Molten Mystery Metal</gradient>"),
             "&6A conglomerate of different metals",
-            "", Utils.itemType("Transmutation Base"));
+            "", Utils.itemType("Transmutation Resource"));
 
     public static final SlimefunItemStack MYSTERY_METAL = new SlimefunItemStack("AV_MYSTERY_METAL",
             Material.IRON_INGOT,
             Utils.format("<gradient:#ff6745:#ff5555>Mystery Metal Ingot</gradient>"),
             "&6Contains many metals",
-            "", Utils.itemType("Transmutation Base"));
+            "", Utils.itemType("Transmutation Resource"));
     // }}}
 
-    // {{{ Ornate Cauldron
-    public static final SlimefunItemStack COSMIC_CAULDRON = new SlimefunItemStack("AV_COSMIC_CAULDRON",
+    // {{{ Cosmic Cauldron (Potions)
+    public static final SlimefunItemStack COSMIC_CAULDRON = new SlimefunItemStack("AV_ORNATE_CAULDRON",
             Material.CAULDRON,
-            Utils.format("<gradient:#57ebbe:#f6fa2a>Ornate Cauldron</gradient>"),
+            Utils.format("<gradient:#57ebbe:#f6fa2a>Cosmic Cauldron</gradient>"),
             "&2An altar for brewing advanced potions",
             "", Utils.itemType("Altar"));
 
@@ -219,6 +218,8 @@ public class Items {
             "", Utils.itemType("Potion"));
 
     private static final Map<PotionEffectType, int[]> potEffectsMap = new HashMap<>();
+
+    private static final Configuration cfg = AlchimiaVitae.i().getConfig();
 
     static {
         // Add effects
@@ -282,7 +283,7 @@ public class Items {
             "", Utils.itemType("Potion"));
     // }}}
 
-    // {{{ Altar of Infusion
+    // {{{ Altar of Infusion (Infusion)
     public static final SlimefunItemStack ALTAR_OF_INFUSION = new SlimefunItemStack("AV_ALTAR_OF_INFUSION",
             Material.LODESTONE, Utils.format("<gradient:#f78770:#ff607b>Altar of Infusion</gradient>"),
             "&5Adds powerful effects to tools", "",

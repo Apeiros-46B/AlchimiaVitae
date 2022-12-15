@@ -70,7 +70,7 @@ public class BowListener implements Listener {
         // }}}
 
         // {{{ Volatility infusion
-        else if (pdc.has(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE)) {
+        else if (pdc.has(AltarOfInfusion.VOLATILITY, PersistentDataType.BYTE)) {
             // Calculate new velocity
             Fireball fb;
             Vector newVelocity = e.getProjectile().getVelocity().multiply(5).normalize();
@@ -94,7 +94,7 @@ public class BowListener implements Listener {
 
             // Add data (for explosion event)
             fb.setShooter(p);
-            fb.getPersistentDataContainer().set(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE, (byte) 1);
+            fb.getPersistentDataContainer().set(AltarOfInfusion.VOLATILITY, PersistentDataType.BYTE, (byte) 1);
 
             // Remove the original projectile
             e.getProjectile().remove();
@@ -141,7 +141,7 @@ public class BowListener implements Listener {
         Player shooter = (Player) fb.getShooter();
 
         // Make sure fireball is from an infused bow
-        if (!e.getEntity().getPersistentDataContainer().has(AltarOfInfusion.VOLATILE, PersistentDataType.BYTE))
+        if (!e.getEntity().getPersistentDataContainer().has(AltarOfInfusion.VOLATILITY, PersistentDataType.BYTE))
             return;
 
         // Get the protection manager

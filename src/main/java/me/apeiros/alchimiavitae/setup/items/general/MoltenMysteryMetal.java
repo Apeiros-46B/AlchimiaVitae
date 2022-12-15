@@ -15,18 +15,19 @@ import javax.annotation.Nonnull;
 public class MoltenMysteryMetal extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
 
     public MoltenMysteryMetal(ItemGroup c) {
-
         super(c, Items.MOLTEN_MYSTERY_METAL, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.DARKSTEEL,
                 Items.EXP_CRYSTAL, Items.ILLUMIUM, Items.EXP_CRYSTAL
         });
-
     }
 
+    // {{{ Prevent placing the lava
     @Nonnull
     @Override
     public ItemUseHandler getItemHandler() {
         return PlayerRightClickEvent::cancel;
     }
+    // }}}
+
 }

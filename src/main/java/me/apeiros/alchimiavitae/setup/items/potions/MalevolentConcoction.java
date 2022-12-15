@@ -19,9 +19,9 @@ public class MalevolentConcoction extends SlimefunItem implements Listener {
 
     public MalevolentConcoction(ItemGroup c) {
 
-        super(c, Items.MALEVOLENT_CONCOCTION, Utils.RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
+        super(c, Items.MALEVOLENT_CONCOCTION, Utils.RecipeTypes.COSMIC_CAULDRON_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
-                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
+                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
                 Items.DARKSTEEL, Items.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH)
         });
 

@@ -27,7 +27,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
 
         super(c, Items.POTION_OF_OSMOSIS, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,
-                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.GOOD_ESSENCE,
+                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.LIGHT_ESSENCE,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.ILLUMIUM
         });
 
@@ -94,7 +94,10 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
                     p.sendMessage(Utils.format("<green>Successfully bottled your active effects into a potion!"));
 
                     // Add new potion
-                    p.getInventory().addItem(newPotion);
+                    if (!p.getInventory().addItem(newPotion).isEmpty()) {
+                        // Drop it on the ground if no inventory space
+                        p.getWorld().dropItemNaturally(p.getLocation(), newPotion);
+                    }
                 }, 30);
             }, 30);
         };

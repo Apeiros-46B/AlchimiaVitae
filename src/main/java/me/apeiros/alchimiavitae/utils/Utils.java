@@ -60,9 +60,9 @@ public class Utils {
                 AbstractAddon.createKey("divine_altar_type"), Items.DIVINE_ALTAR,
                 "", "&b&oFabricate using the Divine Altar");
 
-        public static final RecipeType ORNATE_CAULDRON_TYPE = new RecipeType(
-                AbstractAddon.createKey("ornate_cauldron_type"), Items.COSMIC_CAULDRON,
-                "", "&b&oBrew using the Ornate Cauldron");
+        public static final RecipeType COSMIC_CAULDRON_TYPE = new RecipeType(
+                AbstractAddon.createKey("cosmic_cauldron_type"), Items.COSMIC_CAULDRON,
+                "", "&b&oBrew using the Cosmic Cauldron");
 
         public static final RecipeType INFUSION_ALTAR_TYPE = new RecipeType(
                 AbstractAddon.createKey("infusion_altar_type"), Items.ALTAR_OF_INFUSION,
@@ -161,6 +161,30 @@ public class Utils {
         }
 
         return makePotion(name, color, new_effects, splash, lore);
+    }
+    // }}}
+
+    // {{{ Other utility methods
+    public static boolean equalsAny(Object base, Object... comparisons) {
+        boolean first = base.equals(comparisons[0]);
+
+        for (int i = 1; i < comparisons.length; i++) {
+            if (first) return first;
+            first = first || base.equals(comparisons[i]);
+        }
+
+        return first;
+    }
+
+    public static boolean equalsAll(Object base, Object... comparisons) {
+        boolean first = base.equals(comparisons[0]);
+
+        for (int i = 1; i < comparisons.length; i++) {
+            if (!first) return first;
+            first = first && base.equals(comparisons[i]);
+        }
+
+        return first;
     }
     // }}}
 

@@ -68,11 +68,11 @@ public class TotemListener implements Listener {
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         // Make sure the chestplate has the infusion
-        if (!pdc.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER))
+        if (!pdc.has(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER))
             return;
 
         // Get the number of totems stored in the chestplate
-        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
+        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER);
 
         // Make sure the item is a totem
         if (e.getItem() == null || !e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING))) {
@@ -103,7 +103,7 @@ public class TotemListener implements Listener {
 
         // Increase the number of totems in the battery
         totemsStored++;
-        pdc.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
+        pdc.set(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER, totemsStored);
         p.getInventory().getChestplate().setItemMeta(meta);
 
         // Inform the player of the new number of totems
@@ -164,22 +164,22 @@ public class TotemListener implements Listener {
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         // Make sure the chestplate has the infusion
-        if (!pdc.has(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER))
+        if (!pdc.has(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER))
             return;
 
         // Make sure there are totems stored
-        if (pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER) <= 0)
+        if (pdc.get(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER) <= 0)
             return;
 
         // Cancel damage
         e.setCancelled(true);
 
         // Get the number of totems stored in the chestplate
-        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER);
+        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER);
 
         // Decrease the number of totems in the chestplate
         totemsStored--;
-        pdc.set(AltarOfInfusion.TOTEM_STORAGE, PersistentDataType.INTEGER, totemsStored);
+        pdc.set(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER, totemsStored);
         p.getInventory().getChestplate().setItemMeta(meta);
 
         // Set health to half a heart, add absorption, and add potion effects

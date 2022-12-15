@@ -19,9 +19,9 @@ public class BenevolentBrew extends SlimefunItem implements Listener {
 
     public BenevolentBrew(ItemGroup c) {
 
-        super(c, Items.BENEVOLENT_BREW, Utils.RecipeTypes.ORNATE_CAULDRON_TYPE, new ItemStack[] {
+        super(c, Items.BENEVOLENT_BREW, Utils.RecipeTypes.COSMIC_CAULDRON_TYPE, new ItemStack[] {
                 Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
-                Items.GOOD_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
+                Items.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
                 Items.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
         });
 

@@ -45,7 +45,7 @@ public class HoeListener implements Listener {
             return;
 
         // Make sure the tool has the infusion
-        if (!meta.getPersistentDataContainer().has(AltarOfInfusion.REPLANT, PersistentDataType.BYTE))
+        if (!meta.getPersistentDataContainer().has(AltarOfInfusion.AUTO_REPLANT, PersistentDataType.BYTE))
             return;
 
         // Make sure the crop is at maximum age

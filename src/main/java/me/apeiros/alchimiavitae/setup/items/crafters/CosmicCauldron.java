@@ -21,7 +21,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class OrnateCauldron extends CraftingBlock {
+public class CosmicCauldron extends CraftingBlock {
 
     private static final int[] IN_SLOTS = {0, 1, 2, 9, 10, 11, 18, 19, 20};
     private static final int[] IN_BG = {3, 12, 21};
@@ -31,7 +31,7 @@ public class OrnateCauldron extends CraftingBlock {
     private static final int[] OUT_BG = {5, 14, 23};
     private static final int[] OUT_SLOTS = {6, 7, 8, 15, 16, 17, 24, 25, 26};
 
-    public OrnateCauldron(ItemGroup c) {
+    public CosmicCauldron(ItemGroup c) {
 
         super(c, Items.COSMIC_CAULDRON, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
                 Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
@@ -42,17 +42,17 @@ public class OrnateCauldron extends CraftingBlock {
         // Add recipes to recipe map
         this.addRecipe(Items.POTION_OF_OSMOSIS,
                 Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,
-                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.GOOD_ESSENCE,
+                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.LIGHT_ESSENCE,
                 Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.ILLUMIUM);
 
         this.addRecipe(Items.BENEVOLENT_BREW,
                 Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
-                Items.GOOD_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
+                Items.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
                 Items.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY));
 
         this.addRecipe(Items.MALEVOLENT_CONCOCTION,
                 Items.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
-                Items.EVIL_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
+                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
                 Items.DARKSTEEL, Items.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH));
     }
 
