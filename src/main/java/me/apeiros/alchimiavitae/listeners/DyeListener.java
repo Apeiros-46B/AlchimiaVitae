@@ -8,7 +8,7 @@ import org.bukkit.inventory.PlayerInventory;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 
 /**
  * {@link Listener} to prevent Condensed Souls from being used as sheep dye
@@ -25,10 +25,10 @@ public class DyeListener implements Listener {
         PlayerInventory inventory = e.getPlayer().getInventory();
 
         // If player isn't holding a condensed soul in either hand, exit early
-        if (!SlimefunUtils.isItemSimilar(inventory.getItemInMainHand(), Items.CONDENSED_SOUL, true))
+        if (!SlimefunUtils.isItemSimilar(inventory.getItemInMainHand(), AlchimiaItems.CONDENSED_SOUL, true))
             return;
 
-        if (!SlimefunUtils.isItemSimilar(inventory.getItemInOffHand(), Items.CONDENSED_SOUL, true))
+        if (!SlimefunUtils.isItemSimilar(inventory.getItemInOffHand(), AlchimiaItems.CONDENSED_SOUL, true))
             return;
 
         // Cancel event

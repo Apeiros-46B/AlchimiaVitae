@@ -1,11 +1,5 @@
 package me.apeiros.alchimiavitae.setup.items.potions;
 
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -15,14 +9,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+
+import me.apeiros.alchimiavitae.AlchimiaUtils;
+import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
+
 public class BenevolentBrew extends SlimefunItem implements Listener {
 
     public BenevolentBrew(ItemGroup c) {
 
-        super(c, Items.BENEVOLENT_BREW, Utils.RecipeTypes.COSMIC_CAULDRON_TYPE, new ItemStack[] {
-                Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
-                Items.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
-                Items.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
+        super(c, AlchimiaItems.BENEVOLENT_BREW, AlchimiaUtils.RecipeTypes.COSMIC_CAULDRON_TYPE, new ItemStack[] {
+                AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
+                AlchimiaItems.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
+                AlchimiaItems.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
         });
 
         AlchimiaVitae p = AlchimiaVitae.i();
@@ -32,7 +34,7 @@ public class BenevolentBrew extends SlimefunItem implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPotionDrink(PlayerItemConsumeEvent e) {
-        if (SlimefunUtils.isItemSimilar(e.getItem(), Items.BENEVOLENT_BREW, true, false)) {
+        if (SlimefunUtils.isItemSimilar(e.getItem(), AlchimiaItems.BENEVOLENT_BREW, true, false)) {
             e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ITEM_BOTTLE_EMPTY, 1, 1);
             e.getPlayer().setAbsorptionAmount(e.getPlayer().getAbsorptionAmount() + AlchimiaVitae.i().getConfig().getDouble(
                     "options.potions.benevolent-brew.absorption-halfhearts"));

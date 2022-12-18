@@ -1,4 +1,4 @@
-package me.apeiros.alchimiavitae.utils;
+package me.apeiros.alchimiavitae;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -28,14 +28,13 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
-import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 
 /**
- * Holds utility classes and methods
+ * Holds utility classes and methods of {@link AlchimiaVitae}
  */
 @UtilityClass
-public class Utils {
+public class AlchimiaUtils {
 
     // {{{ Recipe types
     /**
@@ -45,27 +44,27 @@ public class Utils {
     public class RecipeTypes {
 
         public static final RecipeType SOUL_COLLECTOR_TYPE = new RecipeType(
-                AbstractAddon.createKey("soul_collector_type"), Items.SOUL_COLLECTOR,
+                AbstractAddon.createKey("soul_collector_type"), AlchimiaItems.SOUL_COLLECTOR,
                 "", "&b&oExtract using the Soul Collector");
 
         public static final RecipeType PLANT_INFUSION_CHAMBER_TYPE = new RecipeType(
-                AbstractAddon.createKey("plant_infusion_chamber_type"), Items.PLANT_INFUSION_CHAMBER,
+                AbstractAddon.createKey("plant_infusion_chamber_type"), AlchimiaItems.PLANT_INFUSION_CHAMBER,
                 "", "&b&oInfuse using the Plant Infusion Chamber");
 
         public static final RecipeType EXP_CRYSTALLIZER_TYPE = new RecipeType(
-                AbstractAddon.createKey("exp_crystallizer_type"), Items.EXP_CRYSTALLIZER,
+                AbstractAddon.createKey("exp_crystallizer_type"), AlchimiaItems.EXP_CRYSTALLIZER,
                 "", "&b&oCrystallize using the Experience Crystallizer");
 
         public static final RecipeType DIVINE_ALTAR_TYPE = new RecipeType(
-                AbstractAddon.createKey("divine_altar_type"), Items.DIVINE_ALTAR,
+                AbstractAddon.createKey("divine_altar_type"), AlchimiaItems.DIVINE_ALTAR,
                 "", "&b&oFabricate using the Divine Altar");
 
         public static final RecipeType COSMIC_CAULDRON_TYPE = new RecipeType(
-                AbstractAddon.createKey("cosmic_cauldron_type"), Items.COSMIC_CAULDRON,
+                AbstractAddon.createKey("cosmic_cauldron_type"), AlchimiaItems.COSMIC_CAULDRON,
                 "", "&b&oBrew using the Cosmic Cauldron");
 
         public static final RecipeType INFUSION_ALTAR_TYPE = new RecipeType(
-                AbstractAddon.createKey("infusion_altar_type"), Items.ALTAR_OF_INFUSION,
+                AbstractAddon.createKey("infusion_altar_type"), AlchimiaItems.ALTAR_OF_INFUSION,
                 "", "&b&oInfuse using the Altar of Infusion");
 
     }

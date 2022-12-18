@@ -1,11 +1,9 @@
 package me.apeiros.alchimiavitae.setup.items.potions;
 
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
-import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Utils;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -17,18 +15,22 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
+
+import me.apeiros.alchimiavitae.AlchimiaUtils;
+import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 
 public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
 
     public PotionOfOsmosis(ItemGroup c) {
 
-        super(c, Items.POTION_OF_OSMOSIS, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
-                Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,
-                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.LIGHT_ESSENCE,
-                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.ILLUMIUM
+        super(c, AlchimiaItems.POTION_OF_OSMOSIS, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+                AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), AlchimiaItems.EXP_CRYSTAL,
+                AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.LIGHT_ESSENCE,
+                AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.ILLUMIUM
         });
 
     }
@@ -43,7 +45,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
 
             // If player has no effects
             if (p.getActivePotionEffects().isEmpty()) {
-                p.sendMessage(Utils.format("<red>There are no effects to absorb!"));
+                p.sendMessage(AlchimiaUtils.format("<red>There are no effects to absorb!"));
                 return;
             }
 
@@ -56,15 +58,15 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
             }
 
             // Make a new potion
-            ItemStack newPotion = Utils.makePotion(Utils.format("<gradient:#6fe3e1:#53e6a6>Coruscating Potion</gradient>"), Color.FUCHSIA, playerEffectsList, false);
+            ItemStack newPotion = AlchimiaUtils.makePotion(AlchimiaUtils.format("<gradient:#6fe3e1:#53e6a6>Coruscating Potion</gradient>"), Color.FUCHSIA, playerEffectsList, false);
             PotionMeta meta = (PotionMeta) newPotion.getItemMeta();
 
             // Make a lore
             List<String> lore = new ArrayList<>();
-            lore.add(Utils.format("<green>Created from a"));
-            lore.add(Utils.format("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"));
+            lore.add(AlchimiaUtils.format("<green>Created from a"));
+            lore.add(AlchimiaUtils.format("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"));
             lore.add("");
-            lore.add(Utils.itemType("Potion"));
+            lore.add(AlchimiaUtils.itemType("Potion"));
 
             // Set the lore
             meta.setLore(lore);
@@ -91,7 +93,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
                     p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 60, 1, 1, 1);
 
                     // Message
-                    p.sendMessage(Utils.format("<green>Successfully bottled your active effects into a potion!"));
+                    p.sendMessage(AlchimiaUtils.format("<green>Successfully bottled your active effects into a potion!"));
 
                     // Add new potion
                     if (!p.getInventory().addItem(newPotion).isEmpty()) {

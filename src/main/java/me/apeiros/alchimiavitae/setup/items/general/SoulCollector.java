@@ -16,13 +16,13 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.EntityKillHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.WeaponUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 
-import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Utils;
+import me.apeiros.alchimiavitae.AlchimiaUtils;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 
 public class SoulCollector extends SlimefunItem {
 
     public SoulCollector(ItemGroup ig) {
-        super(ig, Items.SOUL_COLLECTOR, RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+        super(ig, AlchimiaItems.SOUL_COLLECTOR, RecipeType.ANCIENT_ALTAR, new ItemStack[] {
                 SlimefunItems.EARTH_RUNE, SlimefunItems.SYNTHETIC_DIAMOND, SlimefunItems.AIR_RUNE,
                 SlimefunItems.WATER_RUNE, SlimefunItems.NECROTIC_SKULL, SlimefunItems.FIRE_RUNE,
                 SlimefunItems.ESSENCE_OF_AFTERLIFE, new ItemStack(Material.TOTEM_OF_UNDYING), SlimefunItems.ESSENCE_OF_AFTERLIFE
@@ -38,7 +38,7 @@ public class SoulCollector extends SlimefunItem {
 
             // The Soul Collector cannot be used on players
             e.setCancelled(true);
-            p.sendMessage(Utils.format("<red>You cannot hurt a player using the Soul Collector!"));
+            p.sendMessage(AlchimiaUtils.format("<red>You cannot hurt a player using the Soul Collector!"));
             p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 1);
         };
     }
@@ -68,7 +68,7 @@ public class SoulCollector extends SlimefunItem {
 
             // Add souls to drops
             for (int i = 0; i < souls; i++) {
-                e.getDrops().add(Items.CONDENSED_SOUL.clone());
+                e.getDrops().add(AlchimiaItems.CONDENSED_SOUL.clone());
             }
 
             // Multiple dropped experience

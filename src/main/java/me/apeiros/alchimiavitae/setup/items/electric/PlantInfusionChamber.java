@@ -10,13 +10,13 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 
-import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 
 public class PlantInfusionChamber extends AContainer implements RecipeDisplayItem {
 
     public PlantInfusionChamber(ItemGroup ig) {
-        super(ig, Items.PLANT_INFUSION_CHAMBER, RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+        super(ig, AlchimiaItems.PLANT_INFUSION_CHAMBER, RecipeType.ANCIENT_ALTAR, new ItemStack[] {
                 SlimefunItems.ELECTRIC_PRESS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.ELECTRIC_PRESS,
                 SlimefunItems.HARDENED_GLASS, SlimefunItems.HEATED_PRESSURE_CHAMBER_2, SlimefunItems.HARDENED_GLASS,
                 SlimefunItems.HEATING_COIL, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.HEATING_COIL
@@ -34,18 +34,18 @@ public class PlantInfusionChamber extends AContainer implements RecipeDisplayIte
             },
 
             new ItemStack[] {
-                Items.LIGHT_MAGIC_PLANT
+                AlchimiaItems.LIGHT_MAGIC_PLANT
             }
         );
 
         this.registerRecipe(60,
             new ItemStack[] {
                 new ItemStack(Material.OAK_SAPLING),
-                Items.CONDENSED_SOUL
+                AlchimiaItems.CONDENSED_SOUL
             },
 
             new ItemStack[] {
-                Items.DARK_MAGIC_PLANT
+                AlchimiaItems.DARK_MAGIC_PLANT
             }
         );
     }

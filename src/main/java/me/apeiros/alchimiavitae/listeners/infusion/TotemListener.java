@@ -20,9 +20,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import me.apeiros.alchimiavitae.AlchimiaUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
-import me.apeiros.alchimiavitae.utils.Utils;
 
 /**
  * {@link Listener} for Totem Battery (chestplate) infusion
@@ -77,7 +77,7 @@ public class TotemListener implements Listener {
         // Make sure the item is a totem
         if (e.getItem() == null || !e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING))) {
             // If the item isn't a totem, inform the player of the current number of totems
-            p.sendMessage(Utils.format(
+            p.sendMessage(AlchimiaUtils.format(
                     "<green>There "
                     + (totemsStored == 1
                           ? "is 1 totem"
@@ -93,7 +93,7 @@ public class TotemListener implements Listener {
 
         // Check if there are already 8 totems
         if (totemsStored == 8) {
-            p.sendMessage(Utils.format("<red>There is no more space for this totem!"));
+            p.sendMessage(AlchimiaUtils.format("<red>There is no more space for this totem!"));
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
             return;
         }
@@ -107,8 +107,8 @@ public class TotemListener implements Listener {
         p.getInventory().getChestplate().setItemMeta(meta);
 
         // Inform the player of the new number of totems
-        p.sendMessage(Utils.format("<green>Your totem has been added to the Battery of Totems."));
-        p.sendMessage(Utils.format(
+        p.sendMessage(AlchimiaUtils.format("<green>Your totem has been added to the Battery of Totems."));
+        p.sendMessage(AlchimiaUtils.format(
                 "<green>There "
                 + (totemsStored == 1
                       ? "is now 1 totem"
@@ -197,7 +197,7 @@ public class TotemListener implements Listener {
             case 0 -> "<dark_red>";
         };
 
-        p.sendMessage(Utils.format(
+        p.sendMessage(AlchimiaUtils.format(
                 color + "There "
                 + (totemsStored == 1
                       ? "is 1 totem"

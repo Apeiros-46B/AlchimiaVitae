@@ -11,13 +11,13 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 
-import me.apeiros.alchimiavitae.setup.Items;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 
 public class EXPCrystallizer extends AContainer implements RecipeDisplayItem {
 
     public EXPCrystallizer(ItemGroup ig) {
-        super(ig, Items.EXP_CRYSTALLIZER, RecipeType.ANCIENT_ALTAR, new ItemStack[]{
+        super(ig, AlchimiaItems.EXP_CRYSTALLIZER, RecipeType.ANCIENT_ALTAR, new ItemStack[]{
                 SlimefunItems.TALISMAN_WISE, SlimefunItems.MAGICAL_GLASS, SlimefunItems.TALISMAN_WISE,
                 SlimefunItems.HARDENED_GLASS, SlimefunItems.EXP_COLLECTOR, SlimefunItems.HARDENED_GLASS,
                 SlimefunItems.HEATING_COIL, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.HEATING_COIL
@@ -34,7 +34,7 @@ public class EXPCrystallizer extends AContainer implements RecipeDisplayItem {
             },
 
             new ItemStack[] {
-                new SlimefunItemStack(Items.EXP_CRYSTAL, 1),
+                new SlimefunItemStack(AlchimiaItems.EXP_CRYSTAL, 1),
                 new SlimefunItemStack(SlimefunItems.FLASK_OF_KNOWLEDGE, 4)
             }
         );

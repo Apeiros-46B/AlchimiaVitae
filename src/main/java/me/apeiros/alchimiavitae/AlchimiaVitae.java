@@ -10,7 +10,7 @@ import me.apeiros.alchimiavitae.setup.Setup;
  */
 public class AlchimiaVitae extends AbstractAddon {
 
-    private static AlchimiaVitae i;
+    private static AlchimiaVitae instance;
 
     public AlchimiaVitae() {
         super("Apeiros-46B", "AlchimiaVitae", "master", "options.auto-update");
@@ -19,7 +19,7 @@ public class AlchimiaVitae extends AbstractAddon {
     @Override
     public void enable() {
         // Set instance
-        i = this;
+        instance = this;
 
         // Set up items and listeners
         Setup.setup(this);
@@ -31,11 +31,11 @@ public class AlchimiaVitae extends AbstractAddon {
     @Override
     public void disable() {
         // Set instance to null
-        i = null;
+        instance = null;
     }
 
     public static AlchimiaVitae i() {
-        return i;
+        return instance;
     }
 
 }

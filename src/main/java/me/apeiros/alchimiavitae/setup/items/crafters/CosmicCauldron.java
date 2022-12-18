@@ -1,181 +1,133 @@
 package me.apeiros.alchimiavitae.setup.items.crafters;
 
-import io.github.mooy1.infinitylib.machines.CraftingBlock;
-import io.github.mooy1.infinitylib.machines.CraftingBlockRecipe;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.Items;
-import me.apeiros.alchimiavitae.utils.Utils;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-public class CosmicCauldron extends CraftingBlock {
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 
-    private static final int[] IN_SLOTS = {0, 1, 2, 9, 10, 11, 18, 19, 20};
-    private static final int[] IN_BG = {3, 12, 21};
+import me.apeiros.alchimiavitae.AlchimiaUtils;
+import me.apeiros.alchimiavitae.AlchimiaVitae;
+import me.apeiros.alchimiavitae.setup.AlchimiaItems;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 
-    private static final int[] CRAFT_BUTTON = {4, 13, 22};
+public class CosmicCauldron extends Crafter<SlimefunItemStack> {
 
-    private static final int[] OUT_BG = {5, 14, 23};
-    private static final int[] OUT_SLOTS = {6, 7, 8, 15, 16, 17, 24, 25, 26};
-
-    public CosmicCauldron(ItemGroup c) {
-
-        super(c, Items.COSMIC_CAULDRON, Utils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
-                Items.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, Items.EXP_CRYSTAL,
-                Items.DARKSTEEL, Items.DIVINE_ALTAR, Items.ILLUMIUM,
+    public CosmicCauldron(ItemGroup ig) {
+        super(ig, AlchimiaItems.COSMIC_CAULDRON, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[]{
+                AlchimiaItems.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, AlchimiaItems.EXP_CRYSTAL,
+                AlchimiaItems.DARKSTEEL, AlchimiaItems.DIVINE_ALTAR, AlchimiaItems.ILLUMIUM,
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
         });
 
-        // Add recipes to recipe map
-        this.addRecipe(Items.POTION_OF_OSMOSIS,
-                Items.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), Items.EXP_CRYSTAL,
-                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), Items.LIGHT_ESSENCE,
-                Items.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), Items.ILLUMIUM);
-
-        this.addRecipe(Items.BENEVOLENT_BREW,
-                Items.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
-                Items.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
-                Items.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY));
-
-        this.addRecipe(Items.MALEVOLENT_CONCOCTION,
-                Items.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
-                Items.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
-                Items.DARKSTEEL, Items.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH));
+        // Set up recipes
+        this.setupRecipes();
     }
 
+    // {{{ Set up recipes
     @Override
-    protected void setup(@NotNull BlockMenuPreset blockMenuPreset) {
-        // Input background
-        for (int slot : IN_BG) {
-            blockMenuPreset.addItem(slot, Items.IN_BG, ChestMenuUtils.getEmptyClickHandler());
-        }
+    protected void setupRecipes() {
+        // Instantiate map
+        this.recipes = new RecipeMap<>();
 
-        // Input slots
-        for (int slot : IN_SLOTS) {
-            blockMenuPreset.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> i == slot || i > 26);
-        }
+        // Potion of Osmosis
+        this.newRecipe(null, null,
+            // Out
+            AlchimiaItems.POTION_OF_OSMOSIS,
 
-        // Output background
-        for (int slot : OUT_BG) {
-            blockMenuPreset.addItem(slot, Items.OUT_BG, ChestMenuUtils.getEmptyClickHandler());
-        }
+            // In
+            AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), AlchimiaItems.EXP_CRYSTAL,
+            AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.LIGHT_ESSENCE,
+            AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.ILLUMIUM
+        );
 
-        // Output slots
-        for (int slot : OUT_SLOTS) {
-            blockMenuPreset.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> i == slot || i > 26);
-        }
+        // Benevolent Brew
+        this.newRecipe(null, null,
+            AlchimiaItems.BENEVOLENT_BREW,
 
-        // Craft button
-        for (int slot : CRAFT_BUTTON) {
-            blockMenuPreset.addItem(slot, Items.CRAFT_BTN);
-        }
+            AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
+            AlchimiaItems.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
+            AlchimiaItems.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
+        );
+
+        // Malevolent Concoction
+        this.newRecipe(null, null,
+            AlchimiaItems.MALEVOLENT_CONCOCTION,
+
+            AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
+            AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
+            AlchimiaItems.DARKSTEEL, AlchimiaItems.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH)
+        );
+    }
+    // }}}
+
+    // {{{ Set up effects
+    // On instance creation
+    @Override
+    protected void newInstanceEffects(World w, Location l) {
+        // Play effects
+        w.spawnParticle(Particle.TOTEM, l, 100, 3, 3, 3);
+        w.playSound(l, Sound.BLOCK_BEACON_ACTIVATE, 1F, 1F);
     }
 
+    // On craft
     @Override
-    protected void onNewInstance(@NotNull BlockMenu menu, @NotNull Block b) {
-        // Spawn ender particles
-        b.getWorld().spawnParticle(Particle.TOTEM, b.getLocation().add(0.5, 0.5, 0.5), 100, 3, 3, 3);
+    protected void finish(
+            int layer,
+            long delay,
+            World w,
+            Location l,
+            BlockMenu menu,
+            SlimefunItemStack item) {
 
-        // Sound effect
-        b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_ACTIVATE, 1F, 1F);
-
-        // Craft button click handler
-        for (int slot : CRAFT_BUTTON) {
-            menu.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> {
-                // Craft item
-                craft(b, menu, player);
-                return false;
-            });
-        }
-    }
-
-    @Override
-    protected void onBreak(BlockBreakEvent e, BlockMenu menu) {
-        Location l = menu.getLocation();
-        menu.dropItems(l, IN_SLOTS);
-        e.getBlock().getWorld().playSound(e.getBlock().getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BEACON_DEACTIVATE, 1F, 1F);
-    }
-
-    @Override
-    protected void craft(@NotNull Block b, @NotNull BlockMenu inv, @NotNull Player p) {
-        // Get expected output
-        ItemStack[] input = new ItemStack[9];
-
-        int index = 0;
-        for (int i : IN_SLOTS) {
-            input[index] = inv.getItemInSlot(i);
-            index++;
-        }
-
-        CraftingBlockRecipe output = this.getOutput(input);
-        ItemStack item = null;
-
-        if (output != null) {
-            item = output.output();
-        }
-
-        // Invalid recipe
-        if (item == null) {
-            p.sendMessage(Utils.format("<red>That recipe is invalid!"));
-            p.sendMessage(Utils.format("<red>Please try again."));
-            return;
-        }
-
-        // Check for space
-        if (!inv.fits(item, OUT_SLOTS)) {
-            p.sendMessage(Utils.format("<red>There is not enough space in the output slots!"));
-            return;
-        }
-
-        // Consume items
-        for (int slot : IN_SLOTS) {
-            if (inv.getItemInSlot(slot) != null) {
-                inv.consumeItem(slot, 1);
-            }
-        }
-
-        // First pre-craft effect burst
-        ItemStack finalItem = item;
+        // Schedule task
         Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-            b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
-            b.getWorld().spawnParticle(Particle.SPELL_WITCH, b.getLocation().add(0.5, 0.5, 0.5), 2, 1, 1, 1);
+            switch (layer) {
+                case 0 -> {
+                    // Pre-craft
+                    w.playSound(l, Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
+                    w.spawnParticle(Particle.SPELL_WITCH, l, 2, 1, 1, 1);
 
-            // Pre-craft effects
-            Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
-                b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
-                b.getWorld().spawnParticle(Particle.CRIT_MAGIC, b.getLocation().add(0.5, 0.5, 0.5), 200, 1, 1, 1);
+                    // Call the method again with the next layer
+                    this.finish(layer + 1, delay, w, l, menu, item);
+                }
+                case 1 -> {
+                    // Pre-craft
+                    w.playSound(l, Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
+                    w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
+                    w.spawnParticle(Particle.CRIT_MAGIC, l, 200, 1, 1, 1);
 
-                Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-                    // Post-craft effects
-                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_BOTTLE_FILL, 1, 1);
-                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.5F, 1);
-                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
-                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
-                    b.getWorld().playSound(b.getLocation().add(0.5, 0.5, 0.5), Sound.ITEM_LODESTONE_COMPASS_LOCK, 2, 1);
-                    b.getWorld().spawnParticle(Particle.FLASH, b.getLocation().add(0.5, 0.5, 0.5), 1, 0.1, 0.1, 0.1);
-                    b.getWorld().spawnParticle(Particle.END_ROD, b.getLocation().add(0.5, 0.5, 0.5), 200, 0.1, 4, 0.1);
-
-                    // Send message
-                    p.sendMessage(Utils.format("<gradient:#50fa75:#3dd2ff>Successful brew!</gradient>"));
-
+                    // Call the method again with the next layer
+                    this.finish(layer + 1, delay, w, l, menu, item);
+                }
+                default -> {
                     // Output the item
-                    inv.pushItem(finalItem.clone(), OUT_SLOTS);
-                }, 30);
-            }, 30);
-        }, 30);
+                    ItemStack newItem = item.clone();
+
+                    if (menu.fits(newItem, OUT_SLOTS)) {
+                        menu.pushItem(newItem, OUT_SLOTS);
+                    } else {
+                        w.dropItemNaturally(l.add(0, 0.5, 0), newItem);
+                    }
+
+                    // Post-craft
+                    w.playSound(l, Sound.ITEM_BOTTLE_FILL, 1, 1);
+                    w.playSound(l, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.5F, 1);
+                    w.playSound(l, Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
+                    w.playSound(l, Sound.BLOCK_BREWING_STAND_BREW, 1, 1);
+                    w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 2, 1);
+                    w.spawnParticle(Particle.FLASH, l, 1, 0.1, 0.1, 0.1);
+                    w.spawnParticle(Particle.END_ROD, l, 200, 0.1, 4, 0.1);
+                }
+            }
+        }, delay);
     }
+    // }}}
+
 }
