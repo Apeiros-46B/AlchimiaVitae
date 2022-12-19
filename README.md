@@ -1,11 +1,12 @@
 # Alchimia Vitae
-Slimefun addon that adds some alchemy and herbalism mechanics to the game, as well as some other features  
+Slimefun addon that adds some alchemy, herbalism and other mechanics to the game  
 (My entry to the [2021 Slimefun Addon Jam](https://github.com/Slimefun/Slimefun4/wiki/Addon-Jam-2021))
 
 **Requires Slimefun RC-28 or above, Minecraft 1.17 or above, and Java 16 or above!**
 
-Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/)  
-![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
+Click below to download
+
+[![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/)
 
 ## Features
 Check the Slimefun guide for more information
