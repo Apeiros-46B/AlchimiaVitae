@@ -27,7 +27,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
 
     public PotionOfOsmosis(ItemGroup c) {
 
-        super(c, AlchimiaItems.POTION_OF_OSMOSIS, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+        super(c, AlchimiaItems.POTION_OF_OSMOSIS, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR, new ItemStack[] {
                 AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), AlchimiaItems.EXP_CRYSTAL,
                 AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.LIGHT_ESSENCE,
                 AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.ILLUMIUM

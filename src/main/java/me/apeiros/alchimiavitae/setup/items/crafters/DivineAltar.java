@@ -1,6 +1,5 @@
 package me.apeiros.alchimiavitae.setup.items.crafters;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -8,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -35,14 +35,20 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
         this.setupRecipes();
     }
 
+    // {{{ Set up effects
+    @Override
+    protected void newInstanceEffects(World w, Location l) {
+        // Play effects
+        w.spawnParticle(Particle.REVERSE_PORTAL, l, 100, 0.5, 0.5, 0.5);
+        w.playSound(l, Sound.BLOCK_BEACON_ACTIVATE, 1F, 1F);
+    }
+    // }}}
+
     // {{{ Set up recipes
     @Override
     protected void setupRecipes() {
         // {{{ Prepare
-        // Instantiate map
-        this.recipes = new RecipeMap<>();
-
-        // Get plugin and config
+        // Get plugin instance and config
         AlchimiaVitae instance = AlchimiaVitae.i();
         Configuration cfg = instance.getConfig();
 
@@ -55,7 +61,7 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
 
         // Get ItemGroup and RecipeType
         ItemGroup ig = AlchimiaUtils.ItemGroups.ALTAR_RECIPES;
-        RecipeType rt = AlchimiaUtils.RecipeTypes.DIVINE_ALTAR_TYPE;
+        RecipeType rt = AlchimiaUtils.RecipeTypes.DIVINE_ALTAR;
         // }}}
 
         // {{{ Transmutations
@@ -146,53 +152,53 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
     }
     // }}}
 
-    // {{{ Set up effects
-    // On instance creation
+    // {{{ Finish crafting
     @Override
-    protected void newInstanceEffects(World w, Location l) {
-        // Play effects
-        w.spawnParticle(Particle.REVERSE_PORTAL, l, 100, 0.5, 0.5, 0.5);
-        w.playSound(l, Sound.BLOCK_BEACON_ACTIVATE, 1F, 1F);
-    }
-
-    // On craft
-    @Override
-    protected void finish(
-            int layer,
-            long delay,
-            World w,
-            Location l,
-            BlockMenu menu,
-            SlimefunItemStack item) {
-
+    protected void finish(World w, Location l, BlockMenu menu, SlimefunItemStack item) {
         // Schedule task
-        Bukkit.getScheduler().runTaskLater(AlchimiaVitae.i(), () -> {
-            if (layer == 3) {
-                // Output the item
-                ItemStack newItem = item.clone();
+        new BukkitRunnable() {
+            private int layer = 4;
 
-                if (menu.fits(newItem, OUT_SLOTS)) {
-                    menu.pushItem(newItem, OUT_SLOTS);
+            @Override
+            public void run() {
+                if (layer == 4) {
+                    // Pre-craft
+                    w.playSound(l, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1, 1);
+                    w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
+
+                    // Reduce layer
+                    layer--;
+                } else if (layer > 0) {
+                    // Pre-craft
+                    w.playSound(l, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                    w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
+                    w.spawnParticle(Particle.FLASH, l, 2, 0.1, 0.1, 0.1);
+
+                    // Reduce layer
+                    layer--;
                 } else {
-                    w.dropItemNaturally(l.add(0, 0.5, 0), newItem);
+                    // Output the item
+                    ItemStack newItem = item.clone();
+
+                    if (menu.fits(newItem, OUT_SLOTS)) {
+                        menu.pushItem(newItem, OUT_SLOTS);
+                    } else {
+                        // Drop if it doesn't fit
+                        w.dropItemNaturally(l.add(0, 0.5, 0), newItem);
+                    }
+
+                    // Post-craft
+                    w.strikeLightningEffect(l.add(0, 0.5, 0));
+                    w.playSound(l, Sound.ITEM_TRIDENT_THUNDER, 1, 1);
+                    w.playSound(l, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
+                    w.spawnParticle(Particle.FLASH, l, 5, 0.1, 0.1, 0.1);
+                    w.spawnParticle(Particle.REVERSE_PORTAL, l, 300, 2, 2, 2);
+
+                    // Cancel
+                    this.cancel();
                 }
-
-                // Post-craft
-                w.strikeLightningEffect(l.add(0, 0.5, 0));
-                w.playSound(l, Sound.ITEM_TRIDENT_THUNDER, 1, 1);
-                w.playSound(l, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-                w.spawnParticle(Particle.FLASH, l, 5, 0.1, 0.1, 0.1);
-                w.spawnParticle(Particle.REVERSE_PORTAL, l, 300, 2, 2, 2);
-            } else {
-                // Pre-craft
-                w.playSound(l, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 1);
-                w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
-                w.spawnParticle(Particle.FLASH, l, 2, 0.1, 0.1, 0.1);
-
-                // Call the method again with the next layer
-                this.finish(layer + 1, delay, w, l, menu, item);
             }
-        }, delay);
+        }.runTaskTimer(AlchimiaVitae.i(), 0, 30);
     }
     // }}}
 

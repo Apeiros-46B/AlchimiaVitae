@@ -43,27 +43,27 @@ public class AlchimiaUtils {
     @UtilityClass
     public class RecipeTypes {
 
-        public static final RecipeType SOUL_COLLECTOR_TYPE = new RecipeType(
+        public static final RecipeType SOUL_COLLECTOR = new RecipeType(
                 AbstractAddon.createKey("soul_collector_type"), AlchimiaItems.SOUL_COLLECTOR,
                 "", "&b&oExtract using the Soul Collector");
 
-        public static final RecipeType PLANT_INFUSION_CHAMBER_TYPE = new RecipeType(
+        public static final RecipeType PLANT_INFUSION_CHAMBER = new RecipeType(
                 AbstractAddon.createKey("plant_infusion_chamber_type"), AlchimiaItems.PLANT_INFUSION_CHAMBER,
                 "", "&b&oInfuse using the Plant Infusion Chamber");
 
-        public static final RecipeType EXP_CRYSTALLIZER_TYPE = new RecipeType(
+        public static final RecipeType EXP_CRYSTALLIZER = new RecipeType(
                 AbstractAddon.createKey("exp_crystallizer_type"), AlchimiaItems.EXP_CRYSTALLIZER,
                 "", "&b&oCrystallize using the Experience Crystallizer");
 
-        public static final RecipeType DIVINE_ALTAR_TYPE = new RecipeType(
+        public static final RecipeType DIVINE_ALTAR = new RecipeType(
                 AbstractAddon.createKey("divine_altar_type"), AlchimiaItems.DIVINE_ALTAR,
                 "", "&b&oFabricate using the Divine Altar");
 
-        public static final RecipeType COSMIC_CAULDRON_TYPE = new RecipeType(
+        public static final RecipeType COSMIC_CAULDRON = new RecipeType(
                 AbstractAddon.createKey("cosmic_cauldron_type"), AlchimiaItems.COSMIC_CAULDRON,
                 "", "&b&oBrew using the Cosmic Cauldron");
 
-        public static final RecipeType INFUSION_ALTAR_TYPE = new RecipeType(
+        public static final RecipeType INFUSION_ALTAR = new RecipeType(
                 AbstractAddon.createKey("infusion_altar_type"), AlchimiaItems.ALTAR_OF_INFUSION,
                 "", "&b&oInfuse using the Altar of Infusion");
 

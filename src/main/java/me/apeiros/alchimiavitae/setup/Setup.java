@@ -15,10 +15,10 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.apeiros.alchimiavitae.AlchimiaUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.listeners.DyeListener;
-import me.apeiros.alchimiavitae.listeners.infusion.AxeListener;
-import me.apeiros.alchimiavitae.listeners.infusion.BowListener;
+import me.apeiros.alchimiavitae.listeners.infusion.MeleeWeaponListener;
+import me.apeiros.alchimiavitae.listeners.infusion.RangedWeaponListener;
 import me.apeiros.alchimiavitae.listeners.infusion.HoeListener;
-import me.apeiros.alchimiavitae.listeners.infusion.RodListener;
+import me.apeiros.alchimiavitae.listeners.infusion.FishingRodListener;
 import me.apeiros.alchimiavitae.listeners.infusion.TotemListener;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.apeiros.alchimiavitae.setup.items.crafters.CosmicCauldron;
@@ -37,26 +37,26 @@ import me.apeiros.alchimiavitae.setup.items.potions.PotionOfOsmosis;
 public class Setup {
 
     // {{{ Main
-    public static void setup(AlchimiaVitae p) {
+    public static void setup(AlchimiaVitae instance) {
         // Register main item group
-        AlchimiaUtils.ItemGroups.MAIN.register(p);
+        AlchimiaUtils.ItemGroups.MAIN.register(instance);
 
         // Items
-        setupItems(p);
+        setupItems(instance);
 
         // Listeners
-        setupListeners(p);
+        setupListeners(instance);
 
         // Researches
-        setupResearches(p);
+        setupResearches(instance);
     }
     // }}}
 
     // {{{ Items
-    private static void setupItems(AlchimiaVitae p) {
+    private static void setupItems(AlchimiaVitae instance) {
         // Items
         // {{{ Soul Collector & Condensed Soul
-        new SoulCollector(AlchimiaUtils.ItemGroups.GENERAL).register(p);
+        new SoulCollector(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
 
         CustomItemStack condensedSoulRecipeItem = new CustomItemStack(
                 Material.DROWNED_SPAWN_EGG,
@@ -65,52 +65,52 @@ public class Setup {
                 "&7Withers have a chance",
                 "&7to drop more souls...");
 
-        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.CONDENSED_SOUL, AlchimiaUtils.RecipeTypes.SOUL_COLLECTOR_TYPE, new ItemStack[] {
+        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.CONDENSED_SOUL, AlchimiaUtils.RecipeTypes.SOUL_COLLECTOR, new ItemStack[] {
                 null, null, null,
                 null, condensedSoulRecipeItem, null,
                 null, null, null
-        }).register(p);
+        }).register(instance);
         // }}}
 
         // {{{ Plants
         // Machine
-        new PlantInfusionChamber(AlchimiaUtils.ItemGroups.GENERAL).register(p);
+        new PlantInfusionChamber(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
 
         // Plants
-        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.LIGHT_MAGIC_PLANT, AlchimiaUtils.RecipeTypes.PLANT_INFUSION_CHAMBER_TYPE, new ItemStack[] {
+        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.LIGHT_MAGIC_PLANT, AlchimiaUtils.RecipeTypes.PLANT_INFUSION_CHAMBER, new ItemStack[] {
                 new ItemStack(Material.OAK_SAPLING), SlimefunItems.MAGIC_LUMP_3, null,
                 null, null, null,
                 null, null, null
-        }).register(p);
+        }).register(instance);
 
-        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.DARK_MAGIC_PLANT, AlchimiaUtils.RecipeTypes.PLANT_INFUSION_CHAMBER_TYPE, new ItemStack[] {
+        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.DARK_MAGIC_PLANT, AlchimiaUtils.RecipeTypes.PLANT_INFUSION_CHAMBER, new ItemStack[] {
                 new ItemStack(Material.OAK_SAPLING), AlchimiaItems.CONDENSED_SOUL, null,
                 null, null, null,
                 null, null, null
-        }).register(p);
+        }).register(instance);
 
         // Essence
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.LIGHT_ESSENCE, RecipeType.GRIND_STONE, new ItemStack[] {
                 AlchimiaItems.LIGHT_MAGIC_PLANT, null, null,
                 null, null, null,
                 null, null, null
-        }, new SlimefunItemStack(AlchimiaItems.LIGHT_ESSENCE, 4)).register(p);
+        }, new SlimefunItemStack(AlchimiaItems.LIGHT_ESSENCE, 4)).register(instance);
 
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.DARK_ESSENCE, RecipeType.GRIND_STONE, new ItemStack[] {
                 AlchimiaItems.DARK_MAGIC_PLANT, null, null,
                 null, null, null,
                 null, null, null
-        }, new SlimefunItemStack(AlchimiaItems.DARK_ESSENCE, 4)).register(p);
+        }, new SlimefunItemStack(AlchimiaItems.DARK_ESSENCE, 4)).register(instance);
         // }}}
 
         // {{{ EXP Crystallizer
-        new EXPCrystallizer(AlchimiaUtils.ItemGroups.GENERAL).register(p);
+        new EXPCrystallizer(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
 
-        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.EXP_CRYSTAL, AlchimiaUtils.RecipeTypes.EXP_CRYSTALLIZER_TYPE, new ItemStack[] {
+        new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.EXP_CRYSTAL, AlchimiaUtils.RecipeTypes.EXP_CRYSTALLIZER, new ItemStack[] {
                 new SlimefunItemStack(SlimefunItems.FILLED_FLASK_OF_KNOWLEDGE, 4), null, null,
                 null, null, null,
                 null, null, null
-        }).register(p);
+        }).register(instance);
         // }}}
 
         // {{{ Ingots
@@ -119,55 +119,55 @@ public class Setup {
                 SlimefunItems.MAGIC_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.MAGIC_LUMP_1,
                 AlchimiaItems.LIGHT_MAGIC_PLANT, SlimefunItems.STEEL_INGOT, AlchimiaItems.LIGHT_MAGIC_PLANT,
                 SlimefunItems.MAGIC_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.MAGIC_LUMP_1
-        }, new SlimefunItemStack(AlchimiaItems.ILLUMIUM, 4)).register(p);
+        }, new SlimefunItemStack(AlchimiaItems.ILLUMIUM, 4)).register(instance);
 
         // Darksteel
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.DARKSTEEL, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.ENDER_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.ENDER_LUMP_1,
                 AlchimiaItems.DARK_MAGIC_PLANT, SlimefunItems.STEEL_INGOT, AlchimiaItems.DARK_MAGIC_PLANT,
                 SlimefunItems.ENDER_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.ENDER_LUMP_1
-        }, new SlimefunItemStack(AlchimiaItems.DARKSTEEL, 4)).register(p);
+        }, new SlimefunItemStack(AlchimiaItems.DARKSTEEL, 4)).register(instance);
         // }}}
 
         // {{{ Divine Altar
-        new DivineAltar(AlchimiaUtils.ItemGroups.GENERAL).register(p);
-        new MoltenMysteryMetal(AlchimiaUtils.ItemGroups.GENERAL).register(p);
+        new DivineAltar(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        new MoltenMysteryMetal(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
 
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.MYSTERY_METAL, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 AlchimiaItems.MOLTEN_MYSTERY_METAL, null, null,
                 null, null, null,
                 null, null, null
-        }, new SlimefunItemStack(AlchimiaItems.MYSTERY_METAL, 16)).register(p);
+        }, new SlimefunItemStack(AlchimiaItems.MYSTERY_METAL, 16)).register(instance);
         // }}}
 
         // {{{ Cosmic Cauldron
-        new CosmicCauldron(AlchimiaUtils.ItemGroups.GENERAL).register(p);
-        new PotionOfOsmosis(AlchimiaUtils.ItemGroups.GENERAL).register(p);
-        new BenevolentBrew(AlchimiaUtils.ItemGroups.GENERAL).register(p);
-        new MalevolentConcoction(AlchimiaUtils.ItemGroups.GENERAL).register(p);
+        new CosmicCauldron(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        new PotionOfOsmosis(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        new BenevolentBrew(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        new MalevolentConcoction(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
         // }}}
 
         // {{{ Altar of Infusion
-        new AltarOfInfusion(AlchimiaUtils.ItemGroups.INFUSIONS).register(p);
+        new AltarOfInfusion(AlchimiaUtils.ItemGroups.INFUSIONS).register(instance);
         // }}}
     }
     // }}}
 
     // {{{ Listeners
-    private static void setupListeners(AlchimiaVitae p) {
-        new DyeListener(p);
+    private static void setupListeners(AlchimiaVitae instance) {
+        new DyeListener(instance);
 
         // Infusion listeners
-        new AxeListener(p);
-        new BowListener(p);
-        new HoeListener(p);
-        new TotemListener(p);
-        new RodListener(p);
+        new MeleeWeaponListener(instance);
+        new RangedWeaponListener(instance);
+        new HoeListener(instance);
+        new TotemListener(instance);
+        new FishingRodListener(instance);
     }
     // }}}
 
     // {{{ Researches
-    private static void setupResearches(AlchimiaVitae p) {
+    private static void setupResearches(AlchimiaVitae instance) {
         new Research(AbstractAddon.createKey("soul"), 131072,
                 "Manipulation of life force", 15)
                 .addItems(AlchimiaItems.CONDENSED_SOUL, AlchimiaItems.SOUL_COLLECTOR)

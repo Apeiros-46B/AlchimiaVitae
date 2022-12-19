@@ -40,7 +40,7 @@ abstract class Crafter<T> extends CraftingBlock {
     }
 
     // Recipe map
-    protected RecipeMap<T> recipes;
+    protected RecipeMap<T> recipes = new RecipeMap<T>();
 
     // {{{ Slot numbers
     protected final int[] IN_SLOTS = { 0, 1, 2, 9, 10, 11, 18, 19, 20 };
@@ -67,12 +67,10 @@ abstract class Crafter<T> extends CraftingBlock {
     protected abstract void newInstanceEffects(@Nonnull World w, @Nonnull Location l);
 
     protected abstract void finish(
-            @Nonnull int layer,
-            @Nonnull long delay,
             @Nonnull World w,
             @Nonnull Location l,
             @Nonnull BlockMenu menu,
-            @Nonnull SlimefunItemStack item);
+            @Nonnull T result);
     // }}}
 
     // {{{ Our own implemented methods
@@ -100,18 +98,6 @@ abstract class Crafter<T> extends CraftingBlock {
         String id = "AV_" + stack.getItemId();
 
         new SlimefunItem(ig, new SlimefunItemStack(id, stack), rt, input).register(AlchimiaVitae.i());
-    }
-
-    /**
-     * Get the output of a recipe
-     *
-     * @param input Recipe used to craft the output
-     *
-     * @return Crafting output
-     */
-    @Nullable
-    protected T output(@Nonnull ItemStack... input) {
-        return this.recipes.get(input);
     }
     // }}}
 
@@ -188,18 +174,13 @@ abstract class Crafter<T> extends CraftingBlock {
             index++;
         }
 
-        T t = this.output(input);
+        T item = this.recipes.get(input);
 
         // Invalid recipe
-        if (t == null) {
+        if (item == null) {
             p.sendMessage(AlchimiaUtils.format("<red>That recipe is invalid!"));
             return;
         }
-
-        if (!(t instanceof SlimefunItemStack))
-            return;
-
-        SlimefunItemStack item = (SlimefunItemStack) t;
 
         // Consume items
         for (int slot : IN_SLOTS) {
@@ -209,7 +190,7 @@ abstract class Crafter<T> extends CraftingBlock {
         }
 
         // Finish crafting
-        this.finish(0, 30, b.getWorld(), b.getLocation().add(0.5, 0.5, 0.5), menu, item);
+        this.finish(b.getWorld(), b.getLocation().add(0.5, 0.5, 0.5), menu, item);
     }
     // }}}
     // }}}
@@ -218,7 +199,8 @@ abstract class Crafter<T> extends CraftingBlock {
 
 // {{{ RecipeMap class
 /**
- * Class to hold a map of arrays to values for {@link Crafter} recipes
+ * Class to hold a map of {@link ItemStack} arrays
+ * (recipes) to values for {@link Crafter} recipes
  */
 class RecipeMap<T> {
 

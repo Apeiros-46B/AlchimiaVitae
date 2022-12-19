@@ -16,7 +16,6 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -26,14 +25,14 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.ProtectionManager;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion.Infusion;
 
 /**
- * {@link Listener} for bow infusions
+ * {@link Listener} for ranged weapon infusions
  */
-public class BowListener implements Listener {
+public class RangedWeaponListener implements Listener {
 
-    public BowListener(AlchimiaVitae p) {
+    public RangedWeaponListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
@@ -59,7 +58,7 @@ public class BowListener implements Listener {
 
         // Check what infusion the bow has
         // {{{ True Aim infusion
-        if (pdc.has(AltarOfInfusion.TRUE_AIM, PersistentDataType.BYTE)) {
+        if (Infusion.TRUE_AIM.has(pdc)) {
             // No gravity
             e.getProjectile().setGravity(false);
 
@@ -70,7 +69,7 @@ public class BowListener implements Listener {
         // }}}
 
         // {{{ Volatility infusion
-        else if (pdc.has(AltarOfInfusion.VOLATILITY, PersistentDataType.BYTE)) {
+        else if (Infusion.VOLATILITY.has(pdc)) {
             // Calculate new velocity
             Fireball fb;
             Vector newVelocity = e.getProjectile().getVelocity().multiply(5).normalize();
@@ -92,9 +91,9 @@ public class BowListener implements Listener {
             fb.setFireTicks(0);
             fb.setIsIncendiary(false);
 
-            // Add data (for explosion event)
+            // Add infusion (for explosion event)
             fb.setShooter(p);
-            fb.getPersistentDataContainer().set(AltarOfInfusion.VOLATILITY, PersistentDataType.BYTE, (byte) 1);
+            Infusion.VOLATILITY.apply(fb.getPersistentDataContainer());
 
             // Remove the original projectile
             e.getProjectile().remove();
@@ -106,7 +105,7 @@ public class BowListener implements Listener {
         // }}}
 
         // {{{ Forceful infusion
-        else if (pdc.has(AltarOfInfusion.FORCEFUL, PersistentDataType.BYTE)) {
+        else if (Infusion.FORCEFUL.has(pdc)) {
             // Multiply velocity
             e.getProjectile().setVelocity(e.getProjectile().getVelocity().multiply(2));
 
@@ -117,9 +116,9 @@ public class BowListener implements Listener {
         // }}}
 
         // {{{ Healing infusion
-        else if (pdc.has(AltarOfInfusion.HEALING, PersistentDataType.BYTE)) {
-            // Add data
-            e.getProjectile().getPersistentDataContainer().set(AltarOfInfusion.HEALING, PersistentDataType.BYTE, (byte) 1);
+        else if (Infusion.HEALING.has(pdc)) {
+            // Add infusion
+            Infusion.HEALING.apply(e.getProjectile().getPersistentDataContainer());
         }
         // }}}
     }
@@ -141,7 +140,7 @@ public class BowListener implements Listener {
         Player shooter = (Player) fb.getShooter();
 
         // Make sure fireball is from an infused bow
-        if (!e.getEntity().getPersistentDataContainer().has(AltarOfInfusion.VOLATILITY, PersistentDataType.BYTE))
+        if (!Infusion.VOLATILITY.has(fb.getPersistentDataContainer()))
             return;
 
         // Get the protection manager
@@ -175,7 +174,7 @@ public class BowListener implements Listener {
         AbstractArrow arrow = (AbstractArrow) e.getEntity();
 
         // Make sure arrow is from an infused bow
-        if (!arrow.getPersistentDataContainer().has(AltarOfInfusion.HEALING, PersistentDataType.BYTE))
+        if (!Infusion.HEALING.has(arrow.getPersistentDataContainer()))
             return;
 
         // Cancel Handler to prevent damage

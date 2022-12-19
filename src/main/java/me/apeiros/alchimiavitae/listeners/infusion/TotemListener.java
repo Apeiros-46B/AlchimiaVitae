@@ -16,13 +16,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import me.apeiros.alchimiavitae.AlchimiaUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion.Infusion;
 
 /**
  * {@link Listener} for Totem Battery (chestplate) infusion
@@ -37,7 +36,7 @@ public class TotemListener implements Listener {
     // Don't ignore cancelled events
     @EventHandler(ignoreCancelled = false)
     public void onShiftRightClick(PlayerInteractEvent e) {
-        // TODO: figure out what this does
+        // TODO: test if this is necessary
         if (e.getHand() != EquipmentSlot.HAND)
             return;
 
@@ -68,20 +67,20 @@ public class TotemListener implements Listener {
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         // Make sure the chestplate has the infusion
-        if (!pdc.has(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER))
+        if (!Infusion.TOTEM_BATTERY.has(pdc))
             return;
 
         // Get the number of totems stored in the chestplate
-        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER);
+        int totems = Infusion.TOTEM_BATTERY.getTotems(pdc);
 
         // Make sure the item is a totem
         if (e.getItem() == null || !e.getItem().isSimilar(new ItemStack(Material.TOTEM_OF_UNDYING))) {
             // If the item isn't a totem, inform the player of the current number of totems
             p.sendMessage(AlchimiaUtils.format(
                     "<green>There "
-                    + (totemsStored == 1
+                    + (totems == 1
                           ? "is 1 totem"
-                          : "are " + totemsStored + " totems"
+                          : "are " + totems + " totems"
                       )
                     + " stored in the Battery of Totems."
                 )
@@ -92,27 +91,33 @@ public class TotemListener implements Listener {
         }
 
         // Check if there are already 8 totems
-        if (totemsStored == 8) {
+        if (totems > 8) {
             p.sendMessage(AlchimiaUtils.format("<red>There is no more space for this totem!"));
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
             return;
         }
 
+        ItemStack mainHand = p.getInventory().getItemInMainHand();
+
+        // This should never happen
+        if (mainHand.getType() != Material.TOTEM_OF_UNDYING)
+            return;
+
         // Remove the totem in the hand
-        p.getInventory().getItemInMainHand().setAmount(0);
+        mainHand.setAmount(0);
 
         // Increase the number of totems in the battery
-        totemsStored++;
-        pdc.set(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER, totemsStored);
+        totems++;
+        Infusion.TOTEM_BATTERY.setTotems(pdc, totems);
         p.getInventory().getChestplate().setItemMeta(meta);
 
         // Inform the player of the new number of totems
         p.sendMessage(AlchimiaUtils.format("<green>Your totem has been added to the Battery of Totems."));
         p.sendMessage(AlchimiaUtils.format(
                 "<green>There "
-                + (totemsStored == 1
+                + (totems == 1
                       ? "is now 1 totem"
-                      : "are now " + totemsStored + " totems"
+                      : "are now " + totems + " totems"
                   )
                 + " stored."
             )
@@ -164,22 +169,22 @@ public class TotemListener implements Listener {
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         // Make sure the chestplate has the infusion
-        if (!pdc.has(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER))
+        if (!Infusion.TOTEM_BATTERY.has(pdc))
             return;
 
+        // Get the number of totems stored in the chestplate
+        int totems = Infusion.TOTEM_BATTERY.getTotems(pdc);
+
         // Make sure there are totems stored
-        if (pdc.get(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER) <= 0)
+        if (totems <= 0)
             return;
 
         // Cancel damage
         e.setCancelled(true);
 
-        // Get the number of totems stored in the chestplate
-        int totemsStored = pdc.get(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER);
-
         // Decrease the number of totems in the chestplate
-        totemsStored--;
-        pdc.set(AltarOfInfusion.TOTEM_BATTERY, PersistentDataType.INTEGER, totemsStored);
+        totems--;
+        Infusion.TOTEM_BATTERY.setTotems(pdc, totems);
         p.getInventory().getChestplate().setItemMeta(meta);
 
         // Set health to half a heart, add absorption, and add potion effects
@@ -189,7 +194,7 @@ public class TotemListener implements Listener {
         p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 800, 1));
 
         // Inform the player of remaining totems
-        String color = switch (totemsStored) {
+        String color = switch (totems) {
             default -> "<green>";
             case 3 -> "<yellow>";
             case 2 -> "<gold>";
@@ -199,9 +204,9 @@ public class TotemListener implements Listener {
 
         p.sendMessage(AlchimiaUtils.format(
                 color + "There "
-                + (totemsStored == 1
+                + (totems == 1
                       ? "is 1 totem"
-                      : "are " + (totemsStored == 0 ? "no" : totemsStored) + " totems"
+                      : "are " + (totems == 0 ? "no" : totems) + " totems"
                   )
                 + " left in the Battery of Totems."
             )

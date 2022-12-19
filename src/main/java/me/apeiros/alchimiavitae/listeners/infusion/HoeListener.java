@@ -11,12 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion.Infusion;
 
 /**
  * {@link Listener} for Auto-Replant (hoe) infusion
@@ -45,7 +44,7 @@ public class HoeListener implements Listener {
             return;
 
         // Make sure the tool has the infusion
-        if (!meta.getPersistentDataContainer().has(AltarOfInfusion.AUTO_REPLANT, PersistentDataType.BYTE))
+        if (!Infusion.AUTO_REPLANT.has(meta.getPersistentDataContainer()))
             return;
 
         // Make sure the crop is at maximum age

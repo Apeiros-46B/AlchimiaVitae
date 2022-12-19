@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -20,14 +19,14 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.ProtectionManager;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion.Infusion;
 
 /**
- * {@link Listener} for axe infusions
+ * {@link Listener} for melee weapon infusions
  */
-public class AxeListener implements Listener {
+public class MeleeWeaponListener implements Listener {
 
-    public AxeListener(AlchimiaVitae p) {
+    public MeleeWeaponListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
@@ -57,7 +56,7 @@ public class AxeListener implements Listener {
 
         // Check what infusion the axe has
         // {{{ Destructive Criticals
-        if (e.getEntity() instanceof Player victim && pdc.has(AltarOfInfusion.DESTRUCTIVE_CRITS, PersistentDataType.BYTE)) {
+        if (e.getEntity() instanceof Player victim && Infusion.DESTRUCTIVE_CRITS.has(pdc)) {
             // Make sure attacker has permission
             if (!pm.hasPermission(p, victim.getLocation(), Interaction.ATTACK_PLAYER))
                 return;
@@ -92,7 +91,7 @@ public class AxeListener implements Listener {
         // }}}
 
         // {{{ Phantom Criticals
-        else if (e.getEntity() instanceof LivingEntity victim && pdc.has(AltarOfInfusion.PHANTOM_CRITS, PersistentDataType.BYTE)) {
+        else if (e.getEntity() instanceof LivingEntity victim && Infusion.PHANTOM_CRITS.has(pdc)) {
             // Make sure attacker has permission
             if (!pm.hasPermission(p, victim.getLocation(), victim instanceof Player ? Interaction.ATTACK_PLAYER : Interaction.ATTACK_ENTITY))
                 return;

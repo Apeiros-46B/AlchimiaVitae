@@ -17,7 +17,7 @@ import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 public class MoltenMysteryMetal extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
 
     public MoltenMysteryMetal(ItemGroup c) {
-        super(c, AlchimiaItems.MOLTEN_MYSTERY_METAL, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR_TYPE, new ItemStack[] {
+        super(c, AlchimiaItems.MOLTEN_MYSTERY_METAL, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR, new ItemStack[] {
                 AlchimiaItems.EXP_CRYSTAL, AlchimiaItems.ILLUMIUM, AlchimiaItems.EXP_CRYSTAL,
                 AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.DARKSTEEL,
                 AlchimiaItems.EXP_CRYSTAL, AlchimiaItems.ILLUMIUM, AlchimiaItems.EXP_CRYSTAL

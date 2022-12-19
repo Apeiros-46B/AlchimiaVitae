@@ -10,20 +10,19 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 
 import me.apeiros.alchimiavitae.AlchimiaVitae;
-import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
+import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion.Infusion;
 
 /**
  * {@link Listener} for Knockback (fishing rod) infusion
  */
-public class RodListener implements Listener {
+public class FishingRodListener implements Listener {
 
-    public RodListener(AlchimiaVitae p) {
+    public FishingRodListener(AlchimiaVitae p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
@@ -52,11 +51,11 @@ public class RodListener implements Listener {
         PersistentDataContainer pdc = rod.getItemMeta().getPersistentDataContainer();
 
         // Make sure the rod has the infusion
-        if (!pdc.has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE))
+        if (!Infusion.KNOCKBACK.has(pdc))
             return;
 
         // Add the infusion data to the hook
-        h.getPersistentDataContainer().set(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE, (byte) 1);
+        Infusion.KNOCKBACK.apply(pdc);
 
         // Make the hook fly further
         h.setVelocity(h.getVelocity().multiply(2));
@@ -74,7 +73,7 @@ public class RodListener implements Listener {
             return;
 
         // Make sure the hook was thrown by a Knockback-infused fishing rod
-        if (!h.getPersistentDataContainer().has(AltarOfInfusion.KNOCKBACK, PersistentDataType.BYTE))
+        if (!Infusion.KNOCKBACK.has(h.getPersistentDataContainer()))
             return;
 
         // Get protection interaction and player
@@ -89,7 +88,7 @@ public class RodListener implements Listener {
         en.setVelocity(en.getVelocity().add(p.getEyeLocation().getDirection().setY(0).multiply(3).normalize()));
 
         // Remove hook
-        h.setHookedEntity(null); // TODO: is this necessary?
+        h.setHookedEntity(null); // TODO: test if this is necessary
         h.remove();
 
         // Cancel event
