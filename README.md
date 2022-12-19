@@ -1,16 +1,16 @@
 # Alchimia Vitae
-Slimefun addon that adds some magic, alchemy, and herbalism mechanics to the game
-
-My entry to the **2021 Slimefun Addon Jam**
-
-Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/)
-
-![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
+Slimefun addon that adds some alchemy and herbalism mechanics to the game, as well as some other features  
+(My entry to the [2021 Slimefun Addon Jam](https://github.com/Slimefun/Slimefun4/wiki/Addon-Jam-2021))
 
 **Requires Slimefun RC-28 or above, Minecraft 1.17 or above, and Java 16 or above!**
 
-### Main Features
-#### Tools and Resources
+Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/)  
+![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
+
+## Features
+Check the Slimefun guide for more information
+
+### Tools and Resources
 - Soul Collector
   - Drops more experience from mobs
   - Has a chance to drop a Condensed Soul, a crafting ingredient, when killing a mob
@@ -18,7 +18,7 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
   - Used as a crafting ingredient for potions and other resources
   - Created by infusing saplings with either Condensed Souls or Magical Lumps
 
-#### Crafters
+### Crafters
 - Divine Altar
   - Used for crafting of advanced items
   - Used for transmuting items into other products, allowing slightly easier but not automatable crafting of materials such as Reinforced Alloy Ingots
@@ -30,4 +30,3 @@ Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVita
 - Altar of Infusion
   - Allows you to infuse tools and weapons with powerful effects called infusions
   - Infusions are not compatible with each other, you must choose wisely
-  - Check the Slimefun guide for more information
