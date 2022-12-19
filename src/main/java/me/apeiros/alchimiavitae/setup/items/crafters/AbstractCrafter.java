@@ -17,6 +17,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.mooy1.infinitylib.machines.CraftingBlock;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -94,19 +95,13 @@ abstract class AbstractCrafter<T> extends CraftingBlock {
      * @param input Recipe used to craft the output
      */
     public void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, @Nonnull T output, @Nonnull ItemStack... input) {
-        this.newRecipe(ig, rt, 1, output, input);
-    }
+        // Because this method is overriden by the Altar of Infusion, we can safely assume that the output is a SlimefunItemStack
+        if (!(output instanceof SlimefunItemStack))
+            return;
 
-    /**
-     * Add a new recipe and register it as a {@link SlimefunItem}
-     *
-     * @param ig {@link ItemGroup} to use for registration
-     * @param rt {@link RecipeType} to use for registration
-     * @param amount Crafting output amount
-     * @param output Crafting output
-     * @param input Recipe used to craft the output
-     */
-    public void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, int amount, @Nonnull T output, @Nonnull ItemStack... input) {
+        SlimefunItemStack stack = (SlimefunItemStack) output;
+        int amount = stack.getAmount();
+
         // Add the recipe to the map
         this.newRecipe(output, input);
 
@@ -114,13 +109,10 @@ abstract class AbstractCrafter<T> extends CraftingBlock {
         if (ig == null)
             return;
 
-        if (!(output instanceof SlimefunItemStack))
-            return;
-
         // Modify the ID for double registration
-        SlimefunItemStack stack = (SlimefunItemStack) output;
         String id = "AV_" + stack.getItemId();
         stack = new SlimefunItemStack(id, stack);
+        stack = new SlimefunItemStack(stack, 1);
 
         // Register item
         new SlimefunItem(ig, stack, rt, input, new SlimefunItemStack(stack, amount)).register(AlchimiaVitae.i());
@@ -182,6 +174,7 @@ abstract class AbstractCrafter<T> extends CraftingBlock {
 
         // Drop menu items
         menu.dropItems(l, IN_SLOTS);
+        menu.dropItems(l, OUT_SLOTS);
 
         // Play sound
         e.getBlock().getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 1F, 1F);
@@ -217,6 +210,16 @@ abstract class AbstractCrafter<T> extends CraftingBlock {
 
         // Finish crafting
         this.finish(b.getWorld(), b.getLocation().add(0.5, 0.5, 0.5), menu, item);
+    }
+    // }}}
+
+    // {{{ Register
+    @Override
+    public void register(SlimefunAddon instance) {
+        super.register(instance);
+
+        // Add default recipes
+        this.addDefaultRecipes();
     }
     // }}}
     // }}}

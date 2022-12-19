@@ -30,9 +30,6 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.ANCIENT_ALTAR, SlimefunItems.BLISTERING_INGOT_3,
                 SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.ANCIENT_PEDESTAL
         });
-
-        // Set up transmutation recipes
-        this.addDefaultRecipes();
     }
 
     // {{{ Set up effects
@@ -68,8 +65,7 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         if (reinforcedTransmutation) {
             this.newRecipe(ig, rt,
                 // Out
-                2,
-                SlimefunItems.REINFORCED_ALLOY_INGOT,
+                new SlimefunItemStack(SlimefunItems.REINFORCED_ALLOY_INGOT, 2),
 
                 // In
                 null, SlimefunItems.DAMASCUS_STEEL_INGOT, null,
@@ -82,8 +78,7 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         // {{{ Hardened Metal
         if (hardenedTransmutation) {
             this.newRecipe(ig, rt,
-                2,
-                SlimefunItems.HARDENED_METAL_INGOT,
+                new SlimefunItemStack(SlimefunItems.HARDENED_METAL_INGOT, 2),
 
                 null, SlimefunItems.STEEL_INGOT, null,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.MYSTERY_METAL, AlchimiaItems.ILLUMIUM,
@@ -95,8 +90,7 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         // {{{ Steel Ingot
         if (steelTransmutation) {
             this.newRecipe(ig, rt,
-                8,
-                SlimefunItems.STEEL_INGOT,
+                new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8),
 
                 null, new ItemStack(Material.IRON_BLOCK), null,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.MYSTERY_METAL, AlchimiaItems.ILLUMIUM,
@@ -108,8 +102,7 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         // {{{ Damascus Steel Ingot
         if (damascusTransmutation) {
             this.newRecipe(ig, rt,
-                8,
-                SlimefunItems.DAMASCUS_STEEL_INGOT,
+                new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8),
 
                 null, new ItemStack(Material.IRON_BLOCK), null,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.MYSTERY_METAL, AlchimiaItems.ILLUMIUM,

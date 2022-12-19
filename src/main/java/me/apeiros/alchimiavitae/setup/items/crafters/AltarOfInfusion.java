@@ -46,11 +46,8 @@ public class AltarOfInfusion extends AbstractCrafter<Infusion> {
                 SlimefunItems.BLISTERING_INGOT_3, AlchimiaItems.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
         });
 
-        // Set up recipes
-        this.addDefaultRecipes();
-
         // Add recipe to Divine Altar
-        divineAltar.newRecipe(AlchimiaItems.ALTAR_OF_INFUSION, this.getItem());
+        divineAltar.newRecipe(AlchimiaItems.ALTAR_OF_INFUSION, this.getRecipe());
     }
 
     // {{{ Set up effects
@@ -264,7 +261,7 @@ public class AltarOfInfusion extends AbstractCrafter<Infusion> {
 
         // Make sure the recipe is valid
         if (infusion == null) {
-            p.sendMessage(AlchimiaUtils.format("<red>Invalid recipe!"));
+            p.sendMessage(AlchimiaUtils.format("<red>That recipe is invalid!"));
             return;
         }
         // }}}
@@ -327,7 +324,7 @@ public class AltarOfInfusion extends AbstractCrafter<Infusion> {
     @Override
     protected void finish(World w, Location l, BlockMenu menu, Infusion infusion) {
         // Get item
-        ItemStack tool = menu.getItemInSlot(TOOL_SLOT);
+        ItemStack tool = menu.getItemInSlot(TOOL_SLOT).clone();
 
         // Consume items
         for (int slot : IN_SLOTS) {
@@ -373,13 +370,11 @@ public class AltarOfInfusion extends AbstractCrafter<Infusion> {
                     layer--;
                 } else {
                     // Output the item
-                    ItemStack newTool = tool.clone();
-
-                    if (menu.fits(newTool, OUT_SLOTS)) {
-                        menu.pushItem(newTool, OUT_SLOTS);
+                    if (menu.fits(tool, OUT_SLOTS)) {
+                        menu.pushItem(tool, OUT_SLOTS);
                     } else {
                         // Drop if it doesn't fit
-                        w.dropItemNaturally(l.add(0, 0.5, 0), newTool);
+                        w.dropItemNaturally(l.add(0, 0.5, 0), tool);
                     }
 
                     // Post-craft
@@ -557,12 +552,10 @@ public class AltarOfInfusion extends AbstractCrafter<Infusion> {
 
         // {{{ Check and apply infusions
         public boolean has(@Nonnull PersistentDataContainer pdc) {
-            for (Infusion infusion : Infusion.values()) {
-                if (infusion == TOTEM_BATTERY) {
-                    if (pdc.has(infusion.key(), PersistentDataType.INTEGER)) return true;
-                } else {
-                    if (pdc.has(infusion.key(), PersistentDataType.BYTE)) return true;
-                }
+            if (this == TOTEM_BATTERY) {
+                if (pdc.has(this.key(), PersistentDataType.INTEGER)) return true;
+            } else {
+                if (pdc.has(this.key(), PersistentDataType.BYTE)) return true;
             }
 
             return false;

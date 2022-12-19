@@ -91,7 +91,7 @@ public class TotemListener implements Listener {
         }
 
         // Check if there are already 8 totems
-        if (totems > 8) {
+        if (totems > 7) {
             p.sendMessage(AlchimiaUtils.format("<red>There is no more space for this totem!"));
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
             return;

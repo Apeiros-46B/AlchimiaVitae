@@ -1,73 +1,33 @@
 # Alchimia Vitae
-Slimefun addon that adds various magic, alchemy, and herbalism techniques and aspects to the game
+Slimefun addon that adds some magic, alchemy, and herbalism mechanics to the game
 
 My entry to the **2021 Slimefun Addon Jam**
 
-Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/) 
+Download [here](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/)
 
 ![Build status](https://thebusybiscuit.github.io/builds/Apeiros-46B/AlchimiaVitae/master/badge.svg)
 
-**Requires Slimefun, at least Minecraft 1.17, and at least Java 16!**
+**Requires Slimefun RC-28 or above, Minecraft 1.17 or above, and Java 16 or above!**
 
-### Features:
+### Main Features
+#### Tools and Resources
+- Soul Collector
+  - Drops more experience from mobs
+  - Has a chance to drop a Condensed Soul, a crafting ingredient, when killing a mob
 - Plants of Dark and Light Magic
-  - Used to brew potions
-  - Used to create Darksteel and Illumium, magical steel ingots
-  - Created by infusing Oak Saplings with either Souls or Magical Lumps
+  - Used as a crafting ingredient for potions and other resources
+  - Created by infusing saplings with either Condensed Souls or Magical Lumps
+
+#### Crafters
 - Divine Altar
-  - Used for rituals to craft more advanced items
-  - Used to change metals into other metals
-  - Used to change various forms of life into pure carbon
+  - Used for crafting of advanced items
+  - Used for transmuting items into other products, allowing slightly easier but not automatable crafting of materials such as Reinforced Alloy Ingots
 - Ornate Cauldron
   - Used to create powerful potions
-    - Benevolent Brew and Malevolent Concoction
+    - Benevolent Brew, a strong beneficial potion
+    - Malevolent Concoction, a strong harmful splash potion
+    - Potion of Osmosis, a potion that absorbs your current effects when you drink it
 - Altar of Infusion
-  - Allows you to infuse tools and weapons with powerful effects called Infusions
+  - Allows you to infuse tools and weapons with powerful effects called infusions
   - Infusions are not compatible with each other, you must choose wisely
-- Potion of Osmosis
-  - Absorbs your effects when you drink it
-  - Brewed using the Ornate Cauldron
-
-
-### List of infusions:
-- Destructive Criticals
-  - Applicable items: Axe
-  - Effects:
-    - 1/20 chance to give opponent 8 second Mining Fatigue III on crit
-    - 1/5 chance to give opponent 15 second Slowness I on crit
-    - 1/5 chance to give opponent 15 second Weakness I on crit
-    - Deals 0-5 extra damage to opponent's armor 
-- Phantom Criticals
-  - Applicable items: Axe
-  - Effects:
-    - 1/4 chance to partially bypass armor and do the attack's damage raised to the power of 1.15 multiplied by 5/8 on a crit
-- True Aim
-  - Applicable items: Bow, Crossbow
-  - Effects:
-    - Arrows fly straight with no gravity
-- Forceful
-  - Applicable items: Bow, Crossbow
-  - Effects:
-    - Arrows fly 2x further and deal more damage
-- Healing
-  - Applicable items: Bow, Crossbow
-  - Effects:
-    - Arrows heal instead of doing damage
-- Volatile
-  - Applicable items: Bow, Crossbow
-  - Effects:
-    - Shoots fireballs instead of arrows (Does no block damage, does not cause fire)
-- Automatic Replant
-  - Applicable items: Hoe
-  - Effects:
-    - If the harvested crop is fully grown, it will be automatically replanted without using an extra seed
-- Battery of Totems
-  - Applicable items: Chestplate
-  - Effects:
-    - Allows you to store up to 8 Totems of Undying inside a pocket dimension, resurrecting you upon death, but then being consumed.
-    - Totems are added to this battery by shift-right-clicking with one while a chestplate infused with this Infusion is worn
-- Knockback
-  - Applicable items: Fishing Rod
-  - Effects:
-    - Whenever an entity is reeled by a fishing rod infused with Knockback, it gets pushed away instead of being pulled.
-    - The fishing hook from the infused fishing rod flies 2x farther.
+  - Check the Slimefun guide for more information

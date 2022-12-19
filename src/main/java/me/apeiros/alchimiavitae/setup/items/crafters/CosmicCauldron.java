@@ -29,9 +29,6 @@ public class CosmicCauldron extends AbstractCrafter<SlimefunItemStack> {
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
         });
 
-        // Set up recipes
-        this.addDefaultRecipes();
-
         // Add recipe to Divine Altar
         divineAltar.newRecipe(AlchimiaItems.COSMIC_CAULDRON, this.getRecipe());
     }
