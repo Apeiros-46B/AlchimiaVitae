@@ -20,9 +20,9 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 /**
  * Cosmic Cauldron
  */
-public class CosmicCauldron extends Crafter<SlimefunItemStack> {
+public class CosmicCauldron extends AbstractCrafter<SlimefunItemStack> {
 
-    public CosmicCauldron(ItemGroup ig) {
+    public CosmicCauldron(ItemGroup ig, DivineAltar divineAltar) {
         super(ig, AlchimiaItems.COSMIC_CAULDRON, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR, new ItemStack[]{
                 AlchimiaItems.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, AlchimiaItems.EXP_CRYSTAL,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.DIVINE_ALTAR, AlchimiaItems.ILLUMIUM,
@@ -30,7 +30,10 @@ public class CosmicCauldron extends Crafter<SlimefunItemStack> {
         });
 
         // Set up recipes
-        this.setupRecipes();
+        this.addDefaultRecipes();
+
+        // Add recipe to Divine Altar
+        divineAltar.newRecipe(AlchimiaItems.COSMIC_CAULDRON, this.getRecipe());
     }
 
     // {{{ Set up effects
@@ -44,9 +47,9 @@ public class CosmicCauldron extends Crafter<SlimefunItemStack> {
 
     // {{{ Set up recipes
     @Override
-    protected void setupRecipes() {
+    protected void addDefaultRecipes() {
         // {{{ Potion of Osmosis
-        this.newRecipe(null, null,
+        this.newRecipe(
             // Out
             AlchimiaItems.POTION_OF_OSMOSIS,
 
@@ -54,26 +57,6 @@ public class CosmicCauldron extends Crafter<SlimefunItemStack> {
             AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), AlchimiaItems.EXP_CRYSTAL,
             AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.LIGHT_ESSENCE,
             AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.ILLUMIUM
-        );
-        // }}}
-
-        // {{{ Benevolent Brew
-        this.newRecipe(null, null,
-            AlchimiaItems.BENEVOLENT_BREW,
-
-            AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.LILAC), new ItemStack(Material.CORNFLOWER),
-            AlchimiaItems.LIGHT_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), new ItemStack(Material.TOTEM_OF_UNDYING),
-            AlchimiaItems.ILLUMIUM, new ItemStack(Material.LILY_OF_THE_VALLEY), new ItemStack(Material.POPPY)
-        );
-        // }}}
-
-        // {{{ Malevolent Concoction
-        this.newRecipe(null, null,
-            AlchimiaItems.MALEVOLENT_CONCOCTION,
-
-            AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.FERMENTED_SPIDER_EYE), new ItemStack(Material.BONE_BLOCK),
-            AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), new ItemStack(Material.LAVA_BUCKET),
-            AlchimiaItems.DARKSTEEL, AlchimiaItems.CONDENSED_SOUL, new ItemStack(Material.ROTTEN_FLESH)
         );
         // }}}
     }
@@ -93,7 +76,7 @@ public class CosmicCauldron extends Crafter<SlimefunItemStack> {
                     w.playSound(l, Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1, 1);
                     w.spawnParticle(Particle.SPELL_WITCH, l, 2, 1, 1, 1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else if (layer > 0) {
                     // Pre-craft
@@ -101,7 +84,7 @@ public class CosmicCauldron extends Crafter<SlimefunItemStack> {
                     w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 1);
                     w.spawnParticle(Particle.CRIT_MAGIC, l, 200, 1, 1, 1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else {
                     // Output the item
@@ -123,7 +106,7 @@ public class CosmicCauldron extends Crafter<SlimefunItemStack> {
                     w.spawnParticle(Particle.FLASH, l, 1, 0.1, 0.1, 0.1);
                     w.spawnParticle(Particle.END_ROD, l, 200, 0.1, 4, 0.1);
 
-                    // Cancel
+                    // Cancel runnable
                     this.cancel();
                 }
             }

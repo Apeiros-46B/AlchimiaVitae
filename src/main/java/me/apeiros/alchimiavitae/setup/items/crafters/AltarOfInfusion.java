@@ -34,12 +34,12 @@ import me.apeiros.alchimiavitae.setup.AlchimiaItems;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion.Infusion;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 
-public class AltarOfInfusion extends Crafter<Infusion> {
+public class AltarOfInfusion extends AbstractCrafter<Infusion> {
 
     // Slot where the tool is placed
     private static final int TOOL_SLOT = 10;
 
-    public AltarOfInfusion(ItemGroup ig) {
+    public AltarOfInfusion(ItemGroup ig, DivineAltar divineAltar) {
         super(ig, AlchimiaItems.ALTAR_OF_INFUSION, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR, new ItemStack[]{
                 AlchimiaItems.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, AlchimiaItems.EXP_CRYSTAL,
                 SlimefunItems.REINFORCED_PLATE, new ItemStack(Material.BEACON), SlimefunItems.REINFORCED_PLATE,
@@ -47,7 +47,10 @@ public class AltarOfInfusion extends Crafter<Infusion> {
         });
 
         // Set up recipes
-        this.setupRecipes();
+        this.addDefaultRecipes();
+
+        // Add recipe to Divine Altar
+        divineAltar.newRecipe(AlchimiaItems.ALTAR_OF_INFUSION, this.getItem());
     }
 
     // {{{ Set up effects
@@ -61,7 +64,7 @@ public class AltarOfInfusion extends Crafter<Infusion> {
     // {{{ Set up recipes
     // {{{ Add all recipes
     @Override
-    protected void setupRecipes() {
+    protected void addDefaultRecipes() {
         // {{{ Prepare
         // Get plugin instance and config
         AlchimiaVitae instance = AlchimiaVitae.i();
@@ -214,7 +217,7 @@ public class AltarOfInfusion extends Crafter<Infusion> {
 
     // {{{ Add a new recipe
     @Override
-    protected void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, @Nonnull Infusion output, @Nonnull ItemStack... input) {
+    public void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, @Nonnull Infusion output, @Nonnull ItemStack... input) {
         ItemStack[] newInput = new ItemStack[8];
 
         // Add outer items (items excluding middle slot) to new recipe
@@ -343,7 +346,7 @@ public class AltarOfInfusion extends Crafter<Infusion> {
                     w.playSound(l, Sound.BLOCK_BEACON_POWER_SELECT, 1.5F, 1);
                     w.spawnParticle(Particle.FLASH, l, 2, 0.1, 0.1, 0.1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else if (layer == 2) {
                     // Pre-craft
@@ -355,7 +358,7 @@ public class AltarOfInfusion extends Crafter<Infusion> {
                     w.playSound(l, Sound.BLOCK_LODESTONE_PLACE, 1.5F, 1);
                     w.spawnParticle(Particle.FLASH, l, 2, 0.1, 0.1, 0.1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else if (layer == 1) {
                     // Pre-craft
@@ -366,7 +369,7 @@ public class AltarOfInfusion extends Crafter<Infusion> {
                     w.playSound(l, Sound.ITEM_TOTEM_USE, 0.3F, 1);
                     w.spawnParticle(Particle.FLASH, l, 2, 0.1, 0.1, 0.1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else {
                     // Output the item
@@ -388,7 +391,7 @@ public class AltarOfInfusion extends Crafter<Infusion> {
                     w.spawnParticle(Particle.END_ROD, l, 5, 0, 8, 0);
                     w.spawnParticle(Particle.PORTAL, l, 300, 2, 2, 2);
 
-                    // Cancel
+                    // Cancel runnable
                     this.cancel();
                 }
             }

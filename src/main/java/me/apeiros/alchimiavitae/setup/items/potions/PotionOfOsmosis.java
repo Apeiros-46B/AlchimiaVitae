@@ -28,9 +28,9 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
     public PotionOfOsmosis(ItemGroup c) {
 
         super(c, AlchimiaItems.POTION_OF_OSMOSIS, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR, new ItemStack[] {
-                AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), AlchimiaItems.EXP_CRYSTAL,
-                AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.LIGHT_ESSENCE,
-                AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.ILLUMIUM
+                AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_SCRAP), AlchimiaItems.EXP_CRYSTAL,
+                AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), AlchimiaItems.LIGHT_ESSENCE,
+                AlchimiaItems.DARKSTEEL, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.ILLUMIUM
         });
 
     }
@@ -58,7 +58,7 @@ public class PotionOfOsmosis extends SimpleSlimefunItem<ItemUseHandler> {
             }
 
             // Make a new potion
-            ItemStack newPotion = AlchimiaUtils.makePotion(AlchimiaUtils.format("<gradient:#6fe3e1:#53e6a6>Coruscating Potion</gradient>"), Color.FUCHSIA, playerEffectsList, false);
+            ItemStack newPotion = AlchimiaUtils.makePotion("AV_CORUSCATING_POTION", AlchimiaUtils.format("<gradient:#6fe3e1:#53e6a6>Coruscating Potion</gradient>"), Color.FUCHSIA, playerEffectsList, false);
             PotionMeta meta = (PotionMeta) newPotion.getItemMeta();
 
             // Make a lore

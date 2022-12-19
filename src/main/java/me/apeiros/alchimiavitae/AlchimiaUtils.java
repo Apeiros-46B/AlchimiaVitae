@@ -7,7 +7,6 @@ import java.util.Map;
 
 import lombok.experimental.UtilityClass;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -124,6 +123,7 @@ public class AlchimiaUtils {
 
     // {{{ Methods for making potions
     public static SlimefunItemStack makePotion(
+            String id,
             String name,
             Color color,
             Collection<PotionEffect> effects,
@@ -140,13 +140,13 @@ public class AlchimiaUtils {
             potionMeta.addCustomEffect(e, true);
         }
 
-        String id = "AV_" + ChatColor.stripColor(name).toUpperCase().replace(" ", "_") + (splash ? "_SPLASH_POTION" : "_POTION");
         potion.setItemMeta(potionMeta);
 
         return new SlimefunItemStack(id, potion, name, lore);
     }
 
     public static SlimefunItemStack makePotion(
+            String id,
             String name,
             Color color,
             Map<PotionEffectType, int[]> effects,
@@ -159,7 +159,7 @@ public class AlchimiaUtils {
             new_effects.add(new PotionEffect(e.getKey(), e.getValue()[0], e.getValue()[1], true, true, true));
         }
 
-        return makePotion(name, color, new_effects, splash, lore);
+        return makePotion(id, name, color, new_effects, splash, lore);
     }
     // }}}
 

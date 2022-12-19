@@ -33,10 +33,10 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
  * Shared superclass which {@link AlchimiaVitae}'s
  * custom crafters inherit from
  */
-abstract class Crafter<T> extends CraftingBlock {
+abstract class AbstractCrafter<T> extends CraftingBlock {
 
-    public Crafter(ItemGroup ig, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(ig, item, recipeType, recipe);
+    public AbstractCrafter(ItemGroup ig, SlimefunItemStack item, RecipeType rt, ItemStack[] recipe) {
+        super(ig, item, rt, recipe);
     }
 
     // Recipe map
@@ -62,7 +62,7 @@ abstract class Crafter<T> extends CraftingBlock {
     // }}}
 
     // {{{ Abstract methods
-    protected abstract void setupRecipes();
+    protected abstract void addDefaultRecipes();
 
     protected abstract void newInstanceEffects(@Nonnull World w, @Nonnull Location l);
 
@@ -77,13 +77,25 @@ abstract class Crafter<T> extends CraftingBlock {
     /**
      * Add a new recipe
      *
-     * @param ig ItemGroup to register item in, null to prevent registration
      * @param output Crafting output
      * @param input Recipe used to craft the output
      */
-    protected void newRecipe(@Nullable ItemGroup ig, @Nullable RecipeType rt, @Nonnull T output, @Nonnull ItemStack... input) {
+    public void newRecipe(@Nonnull T output, @Nonnull ItemStack... input) {
         // Add the recipe to the map
         this.recipes.put(output, input);
+    }
+
+    /**
+     * Add a new recipe and register it as a {@link SlimefunItem}
+     *
+     * @param ig {@link ItemGroup} to use for registration
+     * @param rt {@link RecipeType} to use for registration
+     * @param output Crafting output
+     * @param input Recipe used to craft the output
+     */
+    public void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, @Nonnull T output, @Nonnull ItemStack... input) {
+        // Add the recipe to the map
+        this.newRecipe(output, input);
 
         // If ItemGroup is null, don't register the item
         if (ig == null)
@@ -200,7 +212,7 @@ abstract class Crafter<T> extends CraftingBlock {
 // {{{ RecipeMap class
 /**
  * Class to hold a map of {@link ItemStack} arrays
- * (recipes) to values for {@link Crafter} recipes
+ * (recipes) to values for {@link AbstractCrafter} recipes
  */
 class RecipeMap<T> {
 

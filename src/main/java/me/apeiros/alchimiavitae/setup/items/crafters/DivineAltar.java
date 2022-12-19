@@ -22,7 +22,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 /**
  * Divine Altar
  */
-public class DivineAltar extends Crafter<SlimefunItemStack> {
+public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
 
     public DivineAltar(ItemGroup ig) {
         super(ig, AlchimiaItems.DIVINE_ALTAR, RecipeType.ANCIENT_ALTAR, new ItemStack[] {
@@ -31,8 +31,8 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                 SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.ANCIENT_PEDESTAL
         });
 
-        // Set up recipes
-        this.setupRecipes();
+        // Set up transmutation recipes
+        this.addDefaultRecipes();
     }
 
     // {{{ Set up effects
@@ -44,9 +44,9 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
     }
     // }}}
 
-    // {{{ Set up recipes
+    // {{{ Default recipes
     @Override
-    protected void setupRecipes() {
+    protected void addDefaultRecipes() {
         // {{{ Prepare
         // Get plugin instance and config
         AlchimiaVitae instance = AlchimiaVitae.i();
@@ -64,8 +64,7 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
         RecipeType rt = AlchimiaUtils.RecipeTypes.DIVINE_ALTAR;
         // }}}
 
-        // {{{ Transmutations
-        // Reinforced Alloy Ingot
+        // {{{ Reinforced Alloy Ingot
         if (reinforcedTransmutation) {
             this.newRecipe(ig, rt,
                 // Out
@@ -77,8 +76,9 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                 null, SlimefunItems.DAMASCUS_STEEL_INGOT, null
             );
         }
+        // }}}
 
-        // Hardened Metal
+        // {{{ Hardened Metal
         if (hardenedTransmutation) {
             this.newRecipe(ig, rt,
                 new SlimefunItemStack(SlimefunItems.HARDENED_METAL_INGOT, 2),
@@ -88,8 +88,9 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                 null, SlimefunItems.STEEL_INGOT, null
             );
         }
+        // }}}
 
-        // Steel Ingot
+        // {{{ Steel Ingot
         if (steelTransmutation) {
             this.newRecipe(ig, rt,
                 new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8),
@@ -99,8 +100,9 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                 null, SlimefunItems.CARBON, null
             );
         }
+        // }}}
 
-        // Damascus Steel Ingot
+        // {{{ Damascus Steel Ingot
         if (damascusTransmutation) {
             this.newRecipe(ig, rt,
                 new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8),
@@ -110,8 +112,9 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                 null, SlimefunItems.COMPRESSED_CARBON, null
             );
         }
+        // }}}
 
-        // Compressed Carbon
+        // {{{ Compressed Carbon
         if (compressedCarbonTransmutation) {
             this.newRecipe(ig, rt,
                 SlimefunItems.COMPRESSED_CARBON,
@@ -121,33 +124,6 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                 new ItemStack(Material.COAL), new ItemStack(Material.ROTTEN_FLESH), new ItemStack(Material.COAL)
             );
         }
-        // }}}
-
-        // {{{ Normal recipes
-        // Null ItemGroup and RecipeType because we're registering these elsewhere
-        this.newRecipe(null, null,
-            AlchimiaItems.MOLTEN_MYSTERY_METAL,
-
-            AlchimiaItems.EXP_CRYSTAL, AlchimiaItems.ILLUMIUM, AlchimiaItems.EXP_CRYSTAL,
-            AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.DARKSTEEL,
-            AlchimiaItems.EXP_CRYSTAL, AlchimiaItems.ILLUMIUM, AlchimiaItems.EXP_CRYSTAL
-        );
-
-        this.newRecipe(null, null,
-            AlchimiaItems.COSMIC_CAULDRON,
-
-            AlchimiaItems.EXP_CRYSTAL, SlimefunItems.AUTO_BREWER, AlchimiaItems.EXP_CRYSTAL,
-            AlchimiaItems.DARKSTEEL, AlchimiaItems.DIVINE_ALTAR, AlchimiaItems.ILLUMIUM,
-            SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.FLUID_PUMP, SlimefunItems.BLISTERING_INGOT_3
-        );
-
-        this.newRecipe(null, null,
-            AlchimiaItems.ALTAR_OF_INFUSION,
-
-            AlchimiaItems.EXP_CRYSTAL, SlimefunItems.WITHER_PROOF_GLASS, AlchimiaItems.EXP_CRYSTAL,
-            SlimefunItems.REINFORCED_PLATE, new ItemStack(Material.BEACON), SlimefunItems.REINFORCED_PLATE,
-            SlimefunItems.BLISTERING_INGOT_3, AlchimiaItems.DIVINE_ALTAR, SlimefunItems.BLISTERING_INGOT_3
-        );
         // }}}
     }
     // }}}
@@ -166,7 +142,7 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                     w.playSound(l, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1, 1);
                     w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else if (layer > 0) {
                     // Pre-craft
@@ -174,7 +150,7 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                     w.playSound(l, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.5F, 1);
                     w.spawnParticle(Particle.FLASH, l, 2, 0.1, 0.1, 0.1);
 
-                    // Reduce layer
+                    // Decrease layer
                     layer--;
                 } else {
                     // Output the item
@@ -194,7 +170,7 @@ public class DivineAltar extends Crafter<SlimefunItemStack> {
                     w.spawnParticle(Particle.FLASH, l, 5, 0.1, 0.1, 0.1);
                     w.spawnParticle(Particle.REVERSE_PORTAL, l, 300, 2, 2, 2);
 
-                    // Cancel
+                    // Cancel runnable
                     this.cancel();
                 }
             }

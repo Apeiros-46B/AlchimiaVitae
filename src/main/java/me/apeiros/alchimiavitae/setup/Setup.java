@@ -15,10 +15,10 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.apeiros.alchimiavitae.AlchimiaUtils;
 import me.apeiros.alchimiavitae.AlchimiaVitae;
 import me.apeiros.alchimiavitae.listeners.DyeListener;
+import me.apeiros.alchimiavitae.listeners.infusion.FishingRodListener;
+import me.apeiros.alchimiavitae.listeners.infusion.HoeListener;
 import me.apeiros.alchimiavitae.listeners.infusion.MeleeWeaponListener;
 import me.apeiros.alchimiavitae.listeners.infusion.RangedWeaponListener;
-import me.apeiros.alchimiavitae.listeners.infusion.HoeListener;
-import me.apeiros.alchimiavitae.listeners.infusion.FishingRodListener;
 import me.apeiros.alchimiavitae.listeners.infusion.TotemListener;
 import me.apeiros.alchimiavitae.setup.items.crafters.AltarOfInfusion;
 import me.apeiros.alchimiavitae.setup.items.crafters.CosmicCauldron;
@@ -130,8 +130,10 @@ public class Setup {
         // }}}
 
         // {{{ Divine Altar
-        new DivineAltar(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
-        new MoltenMysteryMetal(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        DivineAltar divineAltar = new DivineAltar(AlchimiaUtils.ItemGroups.GENERAL);
+        divineAltar.register(instance);
+
+        new MoltenMysteryMetal(AlchimiaUtils.ItemGroups.GENERAL, divineAltar).register(instance);
 
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.MYSTERY_METAL, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 AlchimiaItems.MOLTEN_MYSTERY_METAL, null, null,
@@ -141,14 +143,16 @@ public class Setup {
         // }}}
 
         // {{{ Cosmic Cauldron
-        new CosmicCauldron(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        CosmicCauldron cauldron = new CosmicCauldron(AlchimiaUtils.ItemGroups.GENERAL, divineAltar);
+        cauldron.register(instance);
+
         new PotionOfOsmosis(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
-        new BenevolentBrew(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
-        new MalevolentConcoction(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        new BenevolentBrew(AlchimiaUtils.ItemGroups.GENERAL, cauldron).register(instance);
+        new MalevolentConcoction(AlchimiaUtils.ItemGroups.GENERAL, cauldron).register(instance);
         // }}}
 
         // {{{ Altar of Infusion
-        new AltarOfInfusion(AlchimiaUtils.ItemGroups.INFUSIONS).register(instance);
+        new AltarOfInfusion(AlchimiaUtils.ItemGroups.INFUSIONS, divineAltar).register(instance);
         // }}}
     }
     // }}}

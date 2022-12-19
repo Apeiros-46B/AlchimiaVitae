@@ -210,14 +210,15 @@ public class AlchimiaItems {
             "&2An altar for brewing advanced potions",
             "", AlchimiaUtils.itemType("Altar"));
 
-    public static final SlimefunItemStack POTION_OF_OSMOSIS = new SlimefunItemStack("AV_POTION_OF_OSMOSIS",
-            Material.DRAGON_BREATH,
+    private static final Map<PotionEffectType, int[]> potEffectsMap = new HashMap<>();
+
+    public static final SlimefunItemStack POTION_OF_OSMOSIS = AlchimiaUtils.makePotion(
+            "AV_POTION_OF_OSMOSIS",
             AlchimiaUtils.format("<gradient:#6274e7:#8752a3>Potion of Osmosis</gradient>"),
+            Color.SILVER, potEffectsMap, false,
             "&6Absorbs your potion effects",
             "&6and stores them in a bottle on &eRight Click",
             "", AlchimiaUtils.itemType("Potion"));
-
-    private static final Map<PotionEffectType, int[]> potEffectsMap = new HashMap<>();
 
     private static final Configuration cfg = AlchimiaVitae.i().getConfig();
 
@@ -246,6 +247,7 @@ public class AlchimiaItems {
     }
 
     public static final SlimefunItemStack BENEVOLENT_BREW = AlchimiaUtils.makePotion(
+            "AV_BENEVOLENT_BREW_POTION",
             AlchimiaUtils.format("<gradient:#2ddae0:#31f876>Benevolent Brew</gradient>"),
             Color.LIME, potEffectsMap, false,
             "", AlchimiaUtils.itemType("Potion"));
@@ -278,6 +280,7 @@ public class AlchimiaItems {
     }
 
     public static final SlimefunItemStack MALEVOLENT_CONCOCTION = AlchimiaUtils.makePotion(
+            "AV_MALEVOLENT_CONCOCTION_SPLASH_POTION",
             AlchimiaUtils.format("<gradient:#ff5555:#ffa012>Malevolent Concoction</gradient>"),
             Color.MAROON, potEffectsMap, true,
             "", AlchimiaUtils.itemType("Potion"));
