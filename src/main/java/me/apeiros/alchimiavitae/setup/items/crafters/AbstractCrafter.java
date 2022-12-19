@@ -94,6 +94,19 @@ abstract class AbstractCrafter<T> extends CraftingBlock {
      * @param input Recipe used to craft the output
      */
     public void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, @Nonnull T output, @Nonnull ItemStack... input) {
+        this.newRecipe(ig, rt, 1, output, input);
+    }
+
+    /**
+     * Add a new recipe and register it as a {@link SlimefunItem}
+     *
+     * @param ig {@link ItemGroup} to use for registration
+     * @param rt {@link RecipeType} to use for registration
+     * @param amount Crafting output amount
+     * @param output Crafting output
+     * @param input Recipe used to craft the output
+     */
+    public void newRecipe(@Nonnull ItemGroup ig, @Nonnull RecipeType rt, int amount, @Nonnull T output, @Nonnull ItemStack... input) {
         // Add the recipe to the map
         this.newRecipe(output, input);
 
@@ -101,15 +114,16 @@ abstract class AbstractCrafter<T> extends CraftingBlock {
         if (ig == null)
             return;
 
-        // Register the item
         if (!(output instanceof SlimefunItemStack))
             return;
 
         // Modify the ID for double registration
         SlimefunItemStack stack = (SlimefunItemStack) output;
         String id = "AV_" + stack.getItemId();
+        stack = new SlimefunItemStack(id, stack);
 
-        new SlimefunItem(ig, new SlimefunItemStack(id, stack), rt, input).register(AlchimiaVitae.i());
+        // Register item
+        new SlimefunItem(ig, stack, rt, input, new SlimefunItemStack(stack, amount)).register(AlchimiaVitae.i());
     }
     // }}}
 

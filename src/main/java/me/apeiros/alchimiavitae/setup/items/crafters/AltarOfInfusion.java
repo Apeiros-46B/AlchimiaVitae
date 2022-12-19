@@ -487,7 +487,7 @@ public class AltarOfInfusion extends AbstractCrafter<Infusion> {
         // }}}
 
         // Dummy value for checking if an item is infusable in general
-        ANY(null, null, null);
+        ANY("infusion_dummy_any", "", null);
         // }}}
 
         // {{{ Fields & constructors

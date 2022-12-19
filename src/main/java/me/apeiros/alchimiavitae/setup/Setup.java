@@ -146,7 +146,7 @@ public class Setup {
         CosmicCauldron cauldron = new CosmicCauldron(AlchimiaUtils.ItemGroups.GENERAL, divineAltar);
         cauldron.register(instance);
 
-        new PotionOfOsmosis(AlchimiaUtils.ItemGroups.GENERAL).register(instance);
+        new PotionOfOsmosis(AlchimiaUtils.ItemGroups.GENERAL, cauldron).register(instance);
         new BenevolentBrew(AlchimiaUtils.ItemGroups.GENERAL, cauldron).register(instance);
         new MalevolentConcoction(AlchimiaUtils.ItemGroups.GENERAL, cauldron).register(instance);
         // }}}

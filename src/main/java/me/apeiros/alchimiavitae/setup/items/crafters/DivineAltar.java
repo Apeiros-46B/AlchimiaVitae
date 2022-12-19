@@ -68,7 +68,8 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         if (reinforcedTransmutation) {
             this.newRecipe(ig, rt,
                 // Out
-                new SlimefunItemStack(SlimefunItems.REINFORCED_ALLOY_INGOT, 2),
+                2,
+                SlimefunItems.REINFORCED_ALLOY_INGOT,
 
                 // In
                 null, SlimefunItems.DAMASCUS_STEEL_INGOT, null,
@@ -81,7 +82,8 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         // {{{ Hardened Metal
         if (hardenedTransmutation) {
             this.newRecipe(ig, rt,
-                new SlimefunItemStack(SlimefunItems.HARDENED_METAL_INGOT, 2),
+                2,
+                SlimefunItems.HARDENED_METAL_INGOT,
 
                 null, SlimefunItems.STEEL_INGOT, null,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.MYSTERY_METAL, AlchimiaItems.ILLUMIUM,
@@ -93,7 +95,8 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         // {{{ Steel Ingot
         if (steelTransmutation) {
             this.newRecipe(ig, rt,
-                new SlimefunItemStack(SlimefunItems.STEEL_INGOT, 8),
+                8,
+                SlimefunItems.STEEL_INGOT,
 
                 null, new ItemStack(Material.IRON_BLOCK), null,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.MYSTERY_METAL, AlchimiaItems.ILLUMIUM,
@@ -105,7 +108,8 @@ public class DivineAltar extends AbstractCrafter<SlimefunItemStack> {
         // {{{ Damascus Steel Ingot
         if (damascusTransmutation) {
             this.newRecipe(ig, rt,
-                new SlimefunItemStack(SlimefunItems.DAMASCUS_STEEL_INGOT, 8),
+                8,
+                SlimefunItems.DAMASCUS_STEEL_INGOT,
 
                 null, new ItemStack(Material.IRON_BLOCK), null,
                 AlchimiaItems.DARKSTEEL, AlchimiaItems.MYSTERY_METAL, AlchimiaItems.ILLUMIUM,
