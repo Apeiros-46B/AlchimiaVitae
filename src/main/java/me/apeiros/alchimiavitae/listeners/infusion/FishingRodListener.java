@@ -1,13 +1,14 @@
 package me.apeiros.alchimiavitae.listeners.infusion;
 
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 
@@ -28,19 +29,20 @@ public class FishingRodListener implements Listener {
 
     // {{{ Main handler to increase the range of and add data to fish hooks (fires when a hook is thrown)
     @EventHandler(ignoreCancelled = true)
-    public void onHookThrow(ProjectileLaunchEvent e) {
+    public void onHookLaunch(ProjectileLaunchEvent e) {
         Projectile en = e.getEntity();
 
         // Make sure the shooter is a non-null player
         if (en.getShooter() == null || !(en.getShooter() instanceof Player))
             return;
 
+        Player p = (Player) en.getShooter();
+
         // Make sure the projectile is a fish hook
         if (!(en instanceof FishHook))
             return;
 
         FishHook h = (FishHook) en;
-        Player p = (Player) en.getShooter();
         ItemStack rod = p.getInventory().getItemInMainHand();
 
         // Make sure the rod has meta
@@ -55,44 +57,47 @@ public class FishingRodListener implements Listener {
             return;
 
         // Add the infusion data to the hook
-        Infusion.KNOCKBACK.apply(pdc);
-
-        // Make the hook fly further
-        h.setVelocity(h.getVelocity().multiply(2));
+        Infusion.KNOCKBACK.apply(h.getPersistentDataContainer());
     }
     // }}}
 
-    // {{{ Handler to deal knockback (fires when a hook is retracted)
+    // {{{ Handler to deal knockback (fires when a hook hits an entity)
     @EventHandler(ignoreCancelled = true)
-    public void onHookRetract(PlayerFishEvent e) {
-        FishHook h = e.getHook();
-        Entity en = h.getHookedEntity();
-
-        // Make sure there is a hooked entity
-        if (en == null)
+    public void onHookHit(ProjectileHitEvent e) {
+        // Make sure the hook hit an entity
+        if (e.getHitEntity() == null)
             return;
 
-        // Make sure the hook was thrown by a Knockback-infused fishing rod
+        Projectile en = e.getEntity();
+
+        // Make sure the shooter is a non-null player
+        if (en.getShooter() == null || !(en.getShooter() instanceof Player))
+            return;
+
+        // Make sure the projectile is a fish hook
+        if (!(en instanceof FishHook))
+            return;
+
+        FishHook h = (FishHook) en;
+        Player p = (Player) en.getShooter();
+        Entity victim = e.getHitEntity();
+
+        // Make sure the hook was launched by a Knockback-infused fishing rod
         if (!Infusion.KNOCKBACK.has(h.getPersistentDataContainer()))
             return;
 
-        // Get protection interaction and player
-        Interaction interaction = (en instanceof Player ? Interaction.ATTACK_PLAYER : Interaction.ATTACK_ENTITY);
-        Player p = e.getPlayer();
-
         // Make sure player has permission
-        if (!Slimefun.getProtectionManager().hasPermission(p, en.getLocation(), interaction))
+        Interaction interaction = (victim instanceof Player ? Interaction.ATTACK_PLAYER : Interaction.ATTACK_ENTITY);
+        if (!Slimefun.getProtectionManager().hasPermission(p, victim.getLocation(), interaction))
             return;
 
-        // Deal knockback
-        en.setVelocity(en.getVelocity().add(p.getEyeLocation().getDirection().setY(0).multiply(3).normalize()));
+        // Cause a damage tick if the entity is damagable
+        // (This deals knockback the same way Minecraft 1.8 fishing rods did)
+        if (victim instanceof Damageable d)
+            d.damage(0, p);
 
         // Remove hook
-        h.setHookedEntity(null); // TODO: test if this is necessary
         h.remove();
-
-        // Cancel event
-        e.setCancelled(true);
     }
     // }}}
 

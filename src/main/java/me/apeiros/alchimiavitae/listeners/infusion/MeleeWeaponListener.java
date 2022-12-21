@@ -2,6 +2,11 @@ package me.apeiros.alchimiavitae.listeners.infusion;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,36 +61,52 @@ public class MeleeWeaponListener implements Listener {
 
         // Check what infusion the axe has
         // {{{ Destructive Criticals
-        if (e.getEntity() instanceof Player victim && Infusion.DESTRUCTIVE_CRITS.has(pdc)) {
+        if (e.getEntity() instanceof LivingEntity victim && Infusion.DESTRUCTIVE_CRITS.has(pdc)) {
             // Make sure attacker has permission
             if (!pm.hasPermission(p, victim.getLocation(), Interaction.ATTACK_PLAYER))
                 return;
 
             // Damage armor
-            for (ItemStack armor : victim.getInventory().getArmorContents()) {
-                if (!(armor.getItemMeta() instanceof Damageable))
-                    continue;
+            if (victim instanceof Player victimPlayer) {
+                for (ItemStack armor : victimPlayer.getInventory().getArmorContents()) {
+                    // Make sure the worn item is damageable
+                    if (!(armor.getItemMeta() instanceof Damageable))
+                        continue;
 
-                Damageable d = (Damageable) armor.getItemMeta();
-                int current = d.getDamage();
+                    Damageable d = (Damageable) armor.getItemMeta();
+                    int current = d.getDamage();
 
-                // 0-5 damage
-                d.setDamage(current + rand.nextInt(6));
+                    // 0-5 damage
+                    d.setDamage(current + rand.nextInt(6));
+                }
             }
 
-            // 1/5 chance to add slowness
-            if (rand.nextInt(5) == 0) {
+            // Variables for effects
+            World w = victim.getWorld();
+            Location l = victim.getLocation();
+
+            // 1/4 chance to add slowness
+            if (rand.nextInt(4) == 0) {
                 victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 15, 1));
+
+                w.spawnParticle(Particle.BLOCK_CRACK, l, 100, Material.STONE.createBlockData());
+                w.playSound(l, Sound.BLOCK_STONE_BREAK, 1, 1);
             }
 
-            // 1/5 chance to add weakness
-            if (rand.nextInt(5) == 0) {
-                victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 15, 1));
+            // 1/4 chance to add weakness
+            if (rand.nextInt(4) == 0) {
+                victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 1));
+
+                w.spawnParticle(Particle.BLOCK_CRACK, l, 100, Material.DEEPSLATE.createBlockData());
+                w.playSound(l, Sound.BLOCK_DEEPSLATE_BREAK, 1, 1);
             }
 
-            // 1/20 Chance to add brief mining fatigue
-            if (rand.nextInt(20) == 0) {
-                victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 8, 3));
+            // 1/8 Chance to add brief mining fatigue
+            if (rand.nextInt(8) == 0) {
+                victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 5, 3));
+
+                w.spawnParticle(Particle.BLOCK_CRACK, l, 100, Material.REDSTONE_BLOCK.createBlockData());
+                w.playSound(l, Sound.BLOCK_METAL_BREAK, 1, 1);
             }
         }
         // }}}
@@ -99,6 +120,9 @@ public class MeleeWeaponListener implements Listener {
             // Reduce victim's health
             if (rand.nextInt(4) == 0) {
                 victim.setHealth(victim.getHealth() - Math.pow(e.getFinalDamage(), 1.15) * 5 / 8);
+
+                // Effect
+                victim.getWorld().playSound(victim.getLocation(), Sound.ENTITY_PHANTOM_BITE, 0.7F, 1);
             }
         }
         // }}}

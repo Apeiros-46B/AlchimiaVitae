@@ -117,14 +117,14 @@ public class Setup {
         // Illumium
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.ILLUMIUM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.MAGIC_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.MAGIC_LUMP_1,
-                AlchimiaItems.LIGHT_MAGIC_PLANT, SlimefunItems.STEEL_INGOT, AlchimiaItems.LIGHT_MAGIC_PLANT,
+                AlchimiaItems.LIGHT_ESSENCE, SlimefunItems.STEEL_INGOT, AlchimiaItems.LIGHT_ESSENCE,
                 SlimefunItems.MAGIC_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.MAGIC_LUMP_1
         }, new SlimefunItemStack(AlchimiaItems.ILLUMIUM, 4)).register(instance);
 
         // Darksteel
         new SlimefunItem(AlchimiaUtils.ItemGroups.GENERAL, AlchimiaItems.DARKSTEEL, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.ENDER_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.ENDER_LUMP_1,
-                AlchimiaItems.DARK_MAGIC_PLANT, SlimefunItems.STEEL_INGOT, AlchimiaItems.DARK_MAGIC_PLANT,
+                AlchimiaItems.DARK_ESSENCE, SlimefunItems.STEEL_INGOT, AlchimiaItems.DARK_ESSENCE,
                 SlimefunItems.ENDER_LUMP_1, AlchimiaItems.EXP_CRYSTAL, SlimefunItems.ENDER_LUMP_1
         }, new SlimefunItemStack(AlchimiaItems.DARKSTEEL, 4)).register(instance);
         // }}}

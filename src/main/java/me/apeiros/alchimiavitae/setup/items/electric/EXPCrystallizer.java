@@ -30,12 +30,12 @@ public class EXPCrystallizer extends AContainer implements RecipeDisplayItem {
     public void registerDefaultRecipes() {
         this.registerRecipe(10,
             new ItemStack[] {
-                new SlimefunItemStack(SlimefunItems.FILLED_FLASK_OF_KNOWLEDGE, 4)
+                new SlimefunItemStack(SlimefunItems.FILLED_FLASK_OF_KNOWLEDGE, 2)
             },
 
             new ItemStack[] {
                 new SlimefunItemStack(AlchimiaItems.EXP_CRYSTAL, 1),
-                new SlimefunItemStack(SlimefunItems.FLASK_OF_KNOWLEDGE, 4)
+                new SlimefunItemStack(SlimefunItems.FLASK_OF_KNOWLEDGE, 2)
             }
         );
     }
