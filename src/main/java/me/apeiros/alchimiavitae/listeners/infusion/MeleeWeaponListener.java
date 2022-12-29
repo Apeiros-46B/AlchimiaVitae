@@ -74,10 +74,9 @@ public class MeleeWeaponListener implements Listener {
                         continue;
 
                     Damageable d = (Damageable) armor.getItemMeta();
-                    int current = d.getDamage();
 
-                    // 0-5 damage
-                    d.setDamage(current + rand.nextInt(6));
+                    // 1-5 damage
+                    d.setDamage(d.getDamage() + rand.nextInt(1, 6));
                 }
             }
 
