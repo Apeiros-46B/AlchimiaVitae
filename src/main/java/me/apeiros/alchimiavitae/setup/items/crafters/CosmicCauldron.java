@@ -42,21 +42,9 @@ public class CosmicCauldron extends AbstractCrafter<SlimefunItemStack> {
     }
     // }}}
 
-    // {{{ Set up recipes
+    // {{{ Potion recipes are registered in the potion classes
     @Override
-    protected void addDefaultRecipes() {
-        // {{{ Potion of Osmosis
-        this.newRecipe(
-            // Out
-            AlchimiaItems.POTION_OF_OSMOSIS,
-
-            // In
-            AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_BLOCK), AlchimiaItems.EXP_CRYSTAL,
-            AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.LIGHT_ESSENCE,
-            AlchimiaItems.DARKSTEEL, new ItemStack(Material.LAVA_BUCKET), AlchimiaItems.ILLUMIUM
-        );
-        // }}}
-    }
+    protected void addDefaultRecipes() {}
     // }}}
 
     // {{{ Finish crafting

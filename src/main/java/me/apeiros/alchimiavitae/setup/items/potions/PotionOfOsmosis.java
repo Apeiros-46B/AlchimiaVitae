@@ -25,7 +25,7 @@ import me.apeiros.alchimiavitae.setup.items.crafters.CosmicCauldron;
 public class PotionOfOsmosis extends AbstractListenerPotion {
 
     public PotionOfOsmosis(ItemGroup ig, CosmicCauldron cauldron) {
-        super(ig, AlchimiaItems.POTION_OF_OSMOSIS, AlchimiaUtils.RecipeTypes.DIVINE_ALTAR, new ItemStack[] {
+        super(ig, AlchimiaItems.POTION_OF_OSMOSIS, AlchimiaUtils.RecipeTypes.COSMIC_CAULDRON, new ItemStack[] {
                 AlchimiaItems.EXP_CRYSTAL, new ItemStack(Material.NETHERITE_SCRAP), AlchimiaItems.EXP_CRYSTAL,
                 AlchimiaItems.DARK_ESSENCE, new ItemStack(Material.HONEY_BOTTLE), AlchimiaItems.LIGHT_ESSENCE,
                 AlchimiaItems.DARKSTEEL, new ItemStack(Material.DRAGON_BREATH), AlchimiaItems.ILLUMIUM
